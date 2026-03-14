@@ -121,6 +121,7 @@
 .page-header {
   background-color: #155757;
   background-image: linear-gradient(120deg, #155757, #157878);
+  padding: 2rem 4rem;
 }
 
 /* ── Page content entrance ───────────────────── */
@@ -716,6 +717,221 @@
   font-size: 0.78rem;
   color: #777;
   line-height: 1.4;
+}
+
+/* ── Newsletter page ─────────────────────────── */
+
+.newsletter-page {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.newsletter-hero {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.newsletter-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #157878;
+  margin: 0 0 0.75rem 0;
+}
+
+.newsletter-heading {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #155757;
+  line-height: 1.25;
+  margin: 0 0 0.85rem 0;
+}
+
+.newsletter-sub {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.newsletter-card {
+  background: #fff;
+  border: 1px solid #d0e8e8;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(21,120,120,0.07);
+}
+
+.newsletter-perks {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #e8f0f0;
+}
+
+.perk {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.perk-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+.perk strong {
+  display: block;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+  margin-bottom: 0.2rem;
+}
+
+.perk p {
+  font-size: 0.83rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.newsletter-input-row {
+  display: flex;
+  gap: 0.65rem;
+}
+
+.newsletter-email-input {
+  flex: 1;
+  padding: 0.7rem 1rem;
+  border: 1px solid #c8e4e4;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  background: #f9fefe;
+}
+
+.newsletter-email-input:focus {
+  border-color: #157878;
+  box-shadow: 0 0 0 3px rgba(21,120,120,0.12);
+  background: #fff;
+}
+
+.newsletter-submit {
+  background: linear-gradient(120deg, #155757, #157878);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s, transform 0.15s;
+}
+
+.newsletter-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.newsletter-privacy {
+  font-size: 0.75rem;
+  color: #aaa;
+  text-align: center;
+  margin: 0.85rem 0 0 0;
+}
+
+/* ── Newsletter success popup ────────────────── */
+
+.nl-popup-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+}
+
+.nl-popup-overlay.nl-popup--visible {
+  display: flex;
+  animation: fadeUp 0.3s ease both;
+}
+
+.nl-popup-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  max-width: 320px;
+  width: 90%;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.nl-check {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.25rem;
+}
+
+.nl-check svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nl-check-circle {
+  stroke-dasharray: 160;
+  stroke-dashoffset: 160;
+  animation: drawCircle 0.5s ease 0.1s forwards;
+}
+
+.nl-check-tick {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: drawTick 0.35s ease 0.55s forwards;
+}
+
+@keyframes drawCircle {
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes drawTick {
+  to { stroke-dashoffset: 0; }
+}
+
+.nl-popup-card h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.5rem 0;
+}
+
+.nl-popup-card p {
+  font-size: 0.88rem;
+  color: #666;
+  margin: 0 0 1.5rem 0;
+}
+
+.nl-popup-close {
+  background: #22c55e;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.nl-popup-close:hover {
+  background: #16a34a;
 }
 
 /* ── Footer ──────────────────────────────────── */
