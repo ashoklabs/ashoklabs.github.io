@@ -1098,7 +1098,7 @@
 
 /* ── Comment Section (Giscus) ───────────────── */
 .comment-section {
-  display: none;
+  display: block;
   margin-top: 1.5rem;
   background: #fdfdfd;
   border: 1px solid #e1e4e8;

@@ -18,9 +18,6 @@ layout: default
 
   <div class="post-interactions">
 
-    <button class="interaction-btn" id="btn-comment" title="Write a comment">
-      <span class="interaction-icon">💬</span> Comment
-    </button>
     <button class="interaction-btn" id="btn-share" title="Share this post">
       <span class="interaction-icon">🔗</span> Share
     </button>
@@ -50,24 +47,6 @@ layout: default
   </div>
 
   <script>
-
-    // Comment Section Toggle
-    const btnComment = document.getElementById('btn-comment');
-    const commentSection = document.getElementById('comment-section');
-    btnComment.addEventListener('click', () => {
-      commentSection.classList.toggle('active');
-    });
-
-    // Auto-expand comment section if comments exist
-    window.addEventListener('message', (event) => {
-      if (event.origin !== 'https://giscus.app') return;
-      if (!(typeof event.data === 'object' && event.data.giscus)) return;
-
-      const giscusData = event.data.giscus;
-      if (giscusData.discussion && (giscusData.discussion.totalCommentCount > 0 || giscusData.discussion.totalReplyCount > 0)) {
-        commentSection.classList.add('active');
-      }
-    });
 
     // Native Share API
     const btnShare = document.getElementById('btn-share');
