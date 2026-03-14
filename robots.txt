@@ -1,0 +1,40 @@
+---
+---
+# ── Search engines ────────────────────────────
+User-agent: *
+Allow: /
+
+# ── OpenAI (ChatGPT training + live browsing) ─
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+# ── Anthropic (Claude) ────────────────────────
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+# ── Google AI (Gemini) ────────────────────────
+User-agent: Google-Extended
+Allow: /
+
+# ── Perplexity ────────────────────────────────
+User-agent: PerplexityBot
+Allow: /
+
+# ── Meta AI ───────────────────────────────────
+User-agent: FacebookBot
+Allow: /
+
+# ── Common AI scrapers ────────────────────────
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+Sitemap: {{ site.url }}/sitemap.xml

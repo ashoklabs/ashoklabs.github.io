@@ -1,3 +1,23 @@
 theme: jekyll-theme-cayman
 title: Ashoklabs
-description: Welcome to Ashoklabs
+description: Notes on DevOps, platform engineering, and building reliable infrastructure.
+url: "https://ashoklabs.com"
+baseurl: ""
+author:
+  name: Ashok Valakatla
+  url: https://www.linkedin.com/in/ashokvalakatla
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+defaults:
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: post
+  - scope:
+      path: "index.md"
+    values:
+      layout: default

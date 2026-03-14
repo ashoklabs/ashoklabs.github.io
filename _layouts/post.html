@@ -1,0 +1,45 @@
+---
+layout: default
+---
+
+<article class="post">
+  {% if page.image %}
+  <img class="post-cover" src="{{ page.image }}" alt="{{ page.title }}">
+  {% endif %}
+
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title }}</h1>
+    <p class="post-meta">{{ page.date | date: "%B %d, %Y" }}</p>
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <div class="post-back">
+    <a href="{{ '/' | relative_url }}">&larr; Back to all posts</a>
+  </div>
+</article>
+
+{% assign other_posts = site.posts | where_exp: "p", "p.url != page.url" | limit: 3 %}
+{% if other_posts.size > 0 %}
+<section class="recent-posts">
+  <h2 class="recent-posts-title">More Posts</h2>
+  <div class="post-list">
+    {% for post in other_posts %}
+    <a class="post-card" href="{{ post.url | relative_url }}">
+      {% if post.image %}
+      <img class="post-card-image" src="{{ post.image }}" alt="{{ post.title }}">
+      {% else %}
+      <div class="post-card-image post-card-placeholder"></div>
+      {% endif %}
+      <div class="post-card-body">
+        <p class="post-card-title">{{ post.title }}</p>
+        {% if post.description %}<p class="post-card-desc">{{ post.description }}</p>{% endif %}
+        <p class="post-card-date">{{ post.date | date: "%B %d, %Y" }}</p>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}

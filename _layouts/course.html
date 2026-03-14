@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<div class="course-stats-bar">
+  <div class="course-stat">
+    <span class="stat-value">{{ page.duration }}</span>
+    <span class="stat-label">Duration</span>
+  </div>
+  <div class="course-stat">
+    <span class="stat-value">{{ page.level }}</span>
+    <span class="stat-label">Level</span>
+  </div>
+  <div class="course-stat">
+    <span class="stat-value">{{ page.format }}</span>
+    <span class="stat-label">Format</span>
+  </div>
+  <div class="course-stat">
+    <a href="mailto:{{ site.email | default: 'hello@ashoklabs.com' }}" class="btn-enroll">Apply Now</a>
+  </div>
+</div>
+
+<div class="course-body">
+  {{ content }}
+</div>
