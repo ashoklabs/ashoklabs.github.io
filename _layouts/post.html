@@ -16,6 +16,96 @@ layout: default
     {{ content }}
   </div>
 
+  <div class="post-interactions">
+    <button class="interaction-btn" id="btn-react" title="Like this post">
+      <span class="interaction-icon">👍</span> 
+      <span id="reaction-count">Like</span>
+    </button>
+    <button class="interaction-btn" id="btn-comment" title="Write a comment">
+      <span class="interaction-icon">💬</span> Comment
+    </button>
+    <button class="interaction-btn" id="btn-share" title="Share this post">
+      <span class="interaction-icon">🔗</span> Share
+    </button>
+  </div>
+
+  <div class="comment-section" id="comment-section">
+    <h3>Leave a Comment</h3>
+    
+    <!-- Giscus Comments -->
+    <script src="https://giscus.app/client.js"
+            data-repo="ashoklabs/ashoklabs.github.io"
+            data-repo-id="R_kgDOMuBpsQ"
+            data-category="Announcements"
+            data-category-id="DIC_kwDOMuBpsc4Cif0g"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="light"
+            data-lang="en"
+            crossorigin="anonymous"
+            async>
+    </script>
+    <!-- Note: Make sure Giscus is installed on your GitHub repo (ashoklabs/ashoklabs.github.io) and Discussions is enabled -->
+    
+  </div>
+
+  <script>
+    // Reaction Button Toggle
+    const btnReact = document.getElementById('btn-react');
+    const storageKey = 'reacted_' + window.location.pathname;
+    if (localStorage.getItem(storageKey)) {
+      btnReact.classList.add('active');
+      document.getElementById('reaction-count').innerText = 'Liked';
+    }
+    btnReact.addEventListener('click', () => {
+      btnReact.classList.toggle('active');
+      if (btnReact.classList.contains('active')) {
+        localStorage.setItem(storageKey, 'true');
+        document.getElementById('reaction-count').innerText = 'Liked';
+      } else {
+        localStorage.removeItem(storageKey);
+        document.getElementById('reaction-count').innerText = 'Like';
+      }
+    });
+
+    // Comment Section Toggle
+    const btnComment = document.getElementById('btn-comment');
+    const commentSection = document.getElementById('comment-section');
+    btnComment.addEventListener('click', () => {
+      commentSection.classList.toggle('active');
+    });
+
+    // Native Share API
+    const btnShare = document.getElementById('btn-share');
+    btnShare.addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: document.title,
+            text: 'Check out this post: ' + document.title,
+            url: window.location.href
+          });
+        } catch (err) {
+          console.error("Error sharing:", err);
+        }
+      } else {
+        const tempInput = document.createElement('input');
+        document.body.appendChild(tempInput);
+        tempInput.value = window.location.href;
+        tempInput.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempInput);
+        
+        const originalText = btnShare.innerHTML;
+        btnShare.innerHTML = '<span class="interaction-icon">✅</span> Copied!';
+        setTimeout(() => { btnShare.innerHTML = originalText; }, 2000);
+      }
+    });
+  </script>
+
   <div class="post-back">
     <a href="{{ '/' | relative_url }}">&larr; Back to all posts</a>
   </div>

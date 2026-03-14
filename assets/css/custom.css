@@ -1051,3 +1051,133 @@
   color: rgba(255,255,255,0.45);
   margin: 0;
 }
+
+/* ── Post Interactions ────────────────────────── */
+
+.post-interactions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e1e4e8;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.interaction-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f6fafa;
+  border: 1px solid #d0e8e8;
+  color: #155757;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.interaction-btn:hover {
+  background: #e8f4f4;
+  border-color: #b0d8d8;
+  transform: translateY(-1px);
+}
+
+.interaction-btn.active {
+  background: #157878;
+  color: #fff;
+  border-color: #157878;
+}
+
+.interaction-icon {
+  font-size: 1.1rem;
+}
+
+/* ── Comment Section (Giscus) ───────────────── */
+.comment-section {
+  display: none;
+  margin-top: 1.5rem;
+  background: #fdfdfd;
+  border: 1px solid #e1e4e8;
+  border-radius: 8px;
+  padding: 1.5rem;
+  animation: fadeUp 0.3s ease;
+}
+
+.comment-section.active {
+  display: block;
+}
+
+.comment-section h3 {
+  margin-top: 0;
+  font-size: 1.1rem;
+  color: #155757;
+  margin-bottom: 1rem;
+}
+
+/* ── Past Issues ────────────────────────────── */
+.newsletter-issues {
+  margin-top: 3rem;
+  background: #fff;
+  border: 1px solid #d0e8e8;
+  border-radius: 14px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(21,120,120,0.07);
+}
+
+.newsletter-issues h2 {
+  font-size: 1.5rem;
+  color: #155757;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #f0f4f4;
+  padding-bottom: 0.75rem;
+}
+
+.issues-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.issues-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  background: #f9fefe;
+  border: 1px solid #e8f4f4;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.issues-list li:hover {
+  background: #fff;
+  border-color: #b0d8d8;
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(21,120,120,0.05);
+}
+
+.issue-date {
+  font-size: 0.8rem;
+  color: #777;
+  font-weight: 600;
+  min-width: 90px;
+}
+
+.issue-link {
+  font-weight: 600;
+  color: #157878;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.issue-link:hover {
+  text-decoration: underline;
+}
