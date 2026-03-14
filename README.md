@@ -32,17 +32,28 @@ Create a new file in `_posts/` following this naming convention:
 _posts/YYYY-MM-DD-your-post-title.md
 ```
 
-Add this frontmatter at the top, then write your content in Markdown:
+Add this frontmatter at the top, then write your content in Markdown. Notice the `categories` property: we use this to set the URL path (e.g., `/terraform/your-post-title.html`):
 
 ```markdown
 ---
 title: "Your Post Title"
+categories: [terraform]
 date: 2026-03-14
 image: https://images.unsplash.com/photo-xxxxx?w=600&q=80
 description: A one-sentence summary shown on the homepage card.
 ---
 
 Your markdown content here...
+```
+
+## Adding Newsletter Issues
+
+The "Past Issues" list on the Newsletter page is powered by a separate data file, meaning your external Beehiiv newsletters don't mix with your standard blog posts. Provide new Beehiiv issues by editing the `_data/issues.yml` file:
+
+```yaml
+- title: "Practical plays, shipped fast 🧪"
+  date: "Mar 14, 2026"
+  url: "https://newsletter.ashoklabs.com/p/your-post-url"
 ```
 
 ## Project Structure

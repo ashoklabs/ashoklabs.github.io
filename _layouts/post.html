@@ -41,7 +41,7 @@ layout: default
             data-mapping="pathname"
             data-strict="0"
             data-reactions-enabled="1"
-            data-emit-metadata="0"
+            data-emit-metadata="1"
             data-input-position="bottom"
             data-theme="light"
             data-lang="en"
@@ -76,6 +76,17 @@ layout: default
     const commentSection = document.getElementById('comment-section');
     btnComment.addEventListener('click', () => {
       commentSection.classList.toggle('active');
+    });
+
+    // Auto-expand comment section if comments exist
+    window.addEventListener('message', (event) => {
+      if (event.origin !== 'https://giscus.app') return;
+      if (!(typeof event.data === 'object' && event.data.giscus)) return;
+
+      const giscusData = event.data.giscus;
+      if (giscusData.discussion && (giscusData.discussion.totalCommentCount > 0 || giscusData.discussion.totalReplyCount > 0)) {
+        commentSection.classList.add('active');
+      }
     });
 
     // Native Share API
