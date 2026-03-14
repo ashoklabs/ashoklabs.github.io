@@ -65,14 +65,14 @@ description: Weekly insights on DevOps, platform engineering, and building relia
     </form>
   </div>
 
-  {% if site.posts.size > 0 %}
+  {% if site.data.issues.size > 0 %}
   <div class="newsletter-issues">
     <h2>Past Issues</h2>
     <ul class="issues-list">
-      {% for post in site.posts %}
+      {% for issue in site.data.issues %}
       <li>
-        <span class="issue-date">{{ post.date | date: "%b %d, %Y" }}</span>
-        <a class="issue-link" href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="issue-date">{{ issue.date }}</span>
+        <a class="issue-link" href="{{ issue.url }}" target="_blank" rel="noopener">{{ issue.title }}</a>
       </li>
       {% endfor %}
     </ul>
