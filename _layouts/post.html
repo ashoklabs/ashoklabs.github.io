@@ -17,10 +17,7 @@ layout: default
   </div>
 
   <div class="post-interactions">
-    <button class="interaction-btn" id="btn-react" title="Like this post">
-      <span class="interaction-icon">👍</span> 
-      <span id="reaction-count">Like</span>
-    </button>
+
     <button class="interaction-btn" id="btn-comment" title="Write a comment">
       <span class="interaction-icon">💬</span> Comment
     </button>
@@ -53,23 +50,6 @@ layout: default
   </div>
 
   <script>
-    // Reaction Button Toggle
-    const btnReact = document.getElementById('btn-react');
-    const storageKey = 'reacted_' + window.location.pathname;
-    if (localStorage.getItem(storageKey)) {
-      btnReact.classList.add('active');
-      document.getElementById('reaction-count').innerText = 'Liked';
-    }
-    btnReact.addEventListener('click', () => {
-      btnReact.classList.toggle('active');
-      if (btnReact.classList.contains('active')) {
-        localStorage.setItem(storageKey, 'true');
-        document.getElementById('reaction-count').innerText = 'Liked';
-      } else {
-        localStorage.removeItem(storageKey);
-        document.getElementById('reaction-count').innerText = 'Like';
-      }
-    });
 
     // Comment Section Toggle
     const btnComment = document.getElementById('btn-comment');
