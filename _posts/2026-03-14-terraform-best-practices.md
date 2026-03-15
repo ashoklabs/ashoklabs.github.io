@@ -1,7 +1,7 @@
 ---
 title: "Terraform Best Practices for Team Environments"
 categories: [terraform]
-date: 2026-03-01
+date: 2026-03-15
 image: https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&q=80
 description: Remote state, module versioning, variable validation, and drift detection — what it actually takes to run Terraform in a team.
 ---
