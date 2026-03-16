@@ -29,7 +29,7 @@ const SITE_ORIGIN    = 'https://ashoklabs.com';
 const COURSES = {
   'platform-engineering': {
     name:   'AI-Augmented Platform Engineering Bootcamp',
-    amount: 99900, // paise (₹999)
+    amount: 100, // paise (₹1)
   },
 };
 
