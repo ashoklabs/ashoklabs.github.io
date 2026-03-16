@@ -54,6 +54,10 @@
       <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
       Secure payment via Razorpay &middot; 256-bit SSL
     </p>
+    <p class="buy-already-purchased">
+      Already purchased?
+      <button type="button" id="btn-check-access" style="background:none;border:none;color:inherit;text-decoration:underline;cursor:pointer;padding:0;font-size:inherit;">Check access with your email</button>
+    </p>
   </div>
 
   <!-- Post-payment message -->
@@ -81,6 +85,25 @@
   const successBox  = document.getElementById('buy-success');
 
   if (!btn) return;
+
+  // ── On load: check if user already has access ──────────────────────────
+  (async function checkExistingAccess() {
+    const courseId  = btn.dataset.courseId;
+    const email     = sessionStorage.getItem('course_email');
+    if (!email) return;
+    try {
+      const v = await fetch(
+        `${WORKER_URL}/verify-access?email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`
+      );
+      const { hasAccess } = await v.json();
+      if (hasAccess) {
+        form.style.display       = 'none';
+        successBox.style.display = 'block';
+        const display = document.getElementById('success-email-display');
+        if (display) display.textContent = email;
+      }
+    } catch {}
+  })();
 
   btn.addEventListener('click', async function () {
     const courseId   = btn.dataset.courseId;
@@ -183,6 +206,41 @@
   emailInput && emailInput.addEventListener('input', function () {
     emailInput.classList.remove('buy-email-input--error');
     emailInput.removeAttribute('aria-invalid');
+  });
+
+  // "Already purchased?" — check access by email
+  const checkAccessBtn = document.getElementById('btn-check-access');
+  checkAccessBtn && checkAccessBtn.addEventListener('click', async function () {
+    const email = (emailInput.value || '').trim().toLowerCase();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput.classList.add('buy-email-input--error');
+      emailInput.focus();
+      return;
+    }
+    checkAccessBtn.textContent = 'Checking…';
+    checkAccessBtn.disabled = true;
+    try {
+      const courseId = btn.dataset.courseId;
+      const v = await fetch(
+        `${WORKER_URL}/verify-access?email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`
+      );
+      const { hasAccess } = await v.json();
+      if (hasAccess) {
+        sessionStorage.setItem('course_email', email);
+        sessionStorage.setItem('course_id', courseId);
+        form.style.display = 'none';
+        successBox.style.display = 'block';
+        const display = document.getElementById('success-email-display');
+        if (display) display.textContent = email;
+      } else {
+        alert('No access found for ' + email + '. Please purchase the course.');
+        checkAccessBtn.textContent = 'Check access with your email';
+        checkAccessBtn.disabled = false;
+      }
+    } catch {
+      checkAccessBtn.textContent = 'Check access with your email';
+      checkAccessBtn.disabled = false;
+    }
   });
 })();
 </script>
