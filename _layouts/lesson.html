@@ -1,0 +1,275 @@
+---
+layout: default
+---
+
+{% assign course_slug = page.course_id | default: "platform-engineering" %}
+{% assign course_path = "/courses/" | append: course_slug | append: "/lessons/" %}
+
+{% assign course_lessons = site.pages
+  | where_exp: "p", "p.url contains course_path"
+  | where_exp: "p", "p.layout == 'lesson'"
+  | sort: "lesson_number" %}
+
+{% assign total_lessons = course_lessons | size %}
+
+<div class="lesson-wrapper">
+
+  <!-- ── Sidebar ──────────────────────────────────────────────── -->
+  <aside class="lesson-sidebar" id="lesson-sidebar">
+    <div class="sidebar-header">
+      <a href="{{ '/courses/' | append: course_slug | append: '/lessons/' | relative_url }}" class="sidebar-back-link">
+        <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+        My Dashboard
+      </a>
+      <div class="sidebar-mini-progress">
+        <div class="sidebar-mini-bar-track">
+          <div class="sidebar-mini-bar-fill" id="sidebar-mini-fill" style="width: 0%"></div>
+        </div>
+        <span class="sidebar-mini-count" id="sidebar-mini-count">0 / {{ total_lessons }}</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section-label">Course Lessons</div>
+
+    <nav class="sidebar-nav" aria-label="Course lessons">
+      {% for lesson in course_lessons %}
+        {% unless lesson.url contains "index" %}
+        <a href="{{ lesson.url | relative_url }}"
+           class="sidebar-lesson {% if lesson.url == page.url %}sidebar-lesson--active{% endif %}"
+           data-lesson-num="{{ lesson.lesson_number }}">
+          <span class="sidebar-lesson-indicator" data-lesson="{{ lesson.lesson_number }}">
+            <span class="sidebar-lesson-num-txt">{{ lesson.lesson_number | prepend: "00" | slice: -2, 2 }}</span>
+            <svg class="sidebar-lesson-done-icon" width="11" height="11" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+          </span>
+          <span class="sidebar-lesson-title">{{ lesson.title }}</span>
+          {% if lesson.url == page.url %}
+          <span class="sidebar-active-dot" aria-hidden="true"></span>
+          {% endif %}
+        </a>
+        {% endunless %}
+      {% endfor %}
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="{{ '/courses/' | append: course_slug | append: '/' | relative_url }}" class="sidebar-course-link">
+        Course overview
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── Mobile sidebar toggle ──────────────────────────────────── -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle lesson menu">
+    <svg width="17" height="17" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+    Lessons
+  </button>
+
+  <!-- ── Main content ────────────────────────────────────────────── -->
+  <main class="lesson-main" id="lesson-content">
+
+    <!-- Lesson header -->
+    <header class="lesson-header">
+      <div class="lesson-meta-row">
+        <span class="lesson-badge">Lesson {{ page.lesson_number }}</span>
+        {% if page.duration %}
+        <span class="lesson-duration">
+          <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+          {{ page.duration }}
+        </span>
+        {% endif %}
+        {% if page.tags %}
+          {% for tag in page.tags %}
+          <span class="lesson-tag">{{ tag }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <h1 class="lesson-title-main">{{ page.title }}</h1>
+      {% if page.description %}
+      <p class="lesson-description">{{ page.description }}</p>
+      {% endif %}
+    </header>
+
+    <!-- Video player -->
+    {% if page.video_id %}
+    <div class="lesson-video-section">
+      <div class="lesson-video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/{{ page.video_id }}?rel=0&modestbranding=1&color=white&iv_load_policy=3"
+          title="{{ page.title }} — video lesson"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <p class="lesson-video-notice">
+        <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+        This video is unlisted and accessible only to enrolled students. Please do not share the link.
+      </p>
+    </div>
+    {% endif %}
+
+    <!-- Written content -->
+    <div class="lesson-content">
+      {{ content }}
+    </div>
+
+    <!-- Mark as Complete -->
+    <div class="lesson-complete-wrap" id="lesson-complete-wrap">
+      <button class="btn-mark-complete" id="btn-mark-complete" data-lesson="{{ page.lesson_number }}">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+        Mark as Complete
+      </button>
+      <div class="lesson-complete-done" id="lesson-complete-done" style="display:none">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+        Lesson Complete
+      </div>
+    </div>
+
+    <!-- Prev / Next navigation -->
+    <nav class="lesson-pager" aria-label="Lesson navigation">
+      {% if page.prev_lesson %}
+      <a href="{{ page.prev_lesson | relative_url }}" class="lesson-pager-btn lesson-pager-btn--prev">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+        <span>
+          <small>Previous</small>
+          {{ page.prev_lesson_title | default: "Previous Lesson" }}
+        </span>
+      </a>
+      {% else %}
+      <span></span>
+      {% endif %}
+
+      {% if page.next_lesson %}
+      <a href="{{ page.next_lesson | relative_url }}" class="lesson-pager-btn lesson-pager-btn--next" id="btn-next-lesson">
+        <span>
+          <small>Next Lesson</small>
+          {{ page.next_lesson_title | default: "Next Lesson" }}
+        </span>
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      </a>
+      {% else %}
+      <!-- Final lesson — link back to dashboard -->
+      <a href="{{ '/courses/' | append: course_slug | append: '/lessons/' | relative_url }}" class="lesson-pager-btn lesson-pager-btn--next">
+        <span>
+          <small>You're done!</small>
+          Back to Dashboard
+        </span>
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      </a>
+      {% endif %}
+    </nav>
+
+    <!-- Discussion -->
+    <section class="comment-section lesson-discussion" id="lesson-discussion">
+      <h3>Discussion &amp; Questions</h3>
+      <p class="lesson-discussion-note">Ask questions, share what you built, or leave feedback about this lesson. GitHub account required.</p>
+      <script src="https://giscus.app/client.js"
+              data-repo="ashoklabs/ashoklabs.github.io"
+              data-repo-id="R_kgDORmlWbg"
+              data-category="Announcements"
+              data-category-id="DIC_kwDORmlWbs4C4XDI"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="light"
+              data-lang="en"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  var COURSE_KEY = 'pe_progress_v1';
+  var LESSON_NUM = {{ page.lesson_number }};
+  var TOTAL = {{ total_lessons }};
+
+  function getProgress() {
+    try { return JSON.parse(localStorage.getItem(COURSE_KEY)) || { completed: [] }; }
+    catch(e) { return { completed: [] }; }
+  }
+
+  function saveProgress(progress) {
+    try { localStorage.setItem(COURSE_KEY, JSON.stringify(progress)); } catch(e) {}
+  }
+
+  function isCompleted(progress) {
+    return (progress.completed || []).indexOf(LESSON_NUM) !== -1;
+  }
+
+  function markComplete(progress) {
+    if (!isCompleted(progress)) {
+      progress.completed = (progress.completed || []).concat([LESSON_NUM]);
+      saveProgress(progress);
+    }
+    return progress;
+  }
+
+  function updateSidebarProgress(completed) {
+    var count = completed.length;
+    var pct = TOTAL > 0 ? Math.round((count / TOTAL) * 100) : 0;
+
+    var fill = document.getElementById('sidebar-mini-fill');
+    var countEl = document.getElementById('sidebar-mini-count');
+    if (fill) { fill.style.width = pct + '%'; }
+    if (countEl) { countEl.textContent = count + ' / ' + TOTAL; }
+
+    completed.forEach(function(num) {
+      var indicator = document.querySelector('.sidebar-lesson-indicator[data-lesson="' + num + '"]');
+      if (indicator) { indicator.classList.add('sidebar-lesson-indicator--done'); }
+    });
+  }
+
+  function showCompleteState() {
+    var btn = document.getElementById('btn-mark-complete');
+    var done = document.getElementById('lesson-complete-done');
+    if (btn) { btn.style.display = 'none'; }
+    if (done) { done.style.display = 'flex'; }
+  }
+
+  // Init
+  var progress = getProgress();
+  updateSidebarProgress(progress.completed || []);
+
+  if (isCompleted(progress)) {
+    showCompleteState();
+  }
+
+  // Mark Complete button
+  var markBtn = document.getElementById('btn-mark-complete');
+  if (markBtn) {
+    markBtn.addEventListener('click', function () {
+      progress = markComplete(progress);
+      updateSidebarProgress(progress.completed);
+      showCompleteState();
+
+      // Pulse the next-lesson button as encouragement
+      var nextBtn = document.getElementById('btn-next-lesson');
+      if (nextBtn) {
+        nextBtn.classList.add('lesson-pager-btn--pulse');
+        setTimeout(function() { nextBtn.classList.remove('lesson-pager-btn--pulse'); }, 1200);
+      }
+    });
+  }
+
+  // Mobile sidebar toggle
+  var toggle = document.getElementById('sidebar-toggle');
+  var sidebar = document.getElementById('lesson-sidebar');
+  if (toggle && sidebar) {
+    toggle.addEventListener('click', function () {
+      sidebar.classList.toggle('lesson-sidebar--open');
+      toggle.setAttribute('aria-expanded', sidebar.classList.contains('lesson-sidebar--open'));
+    });
+    sidebar.querySelectorAll('.sidebar-lesson').forEach(function (link) {
+      link.addEventListener('click', function () { sidebar.classList.remove('lesson-sidebar--open'); });
+    });
+  }
+})();
+</script>

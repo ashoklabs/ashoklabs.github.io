@@ -1,0 +1,39 @@
+name            = "course-worker"
+main            = "worker.js"
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+
+# ---------------------------------------------------------------------------
+# KV Namespace
+# Run: wrangler kv namespace create "COURSE_ACCESS"
+# then paste the returned id below
+# ---------------------------------------------------------------------------
+[[kv_namespaces]]
+binding = "COURSE_ACCESS"
+id      = "aa8535adb4de4bc483e3f573546bec22"
+
+# ---------------------------------------------------------------------------
+# Non-secret env vars
+# Secrets must be set via: wrangler secret put RAZORPAY_KEY_SECRET
+#                          wrangler secret put RAZORPAY_WEBHOOK_SECRET
+# ---------------------------------------------------------------------------
+[vars]
+RAZORPAY_KEY_ID = "rzp_live_SRsDIC4AQA7MAB"
+
+# ---------------------------------------------------------------------------
+# Routes — maps the worker to your domain
+# ---------------------------------------------------------------------------
+[[routes]]
+pattern = "ashoklabs.com/api/*"
+zone_name = "ashoklabs.com"
+
+# ---------------------------------------------------------------------------
+# Preview / staging  (optional)
+# ---------------------------------------------------------------------------
+[env.staging]
+name = "course-worker-staging"
+vars = { RAZORPAY_KEY_ID = "rzp_test_REPLACE_ME" }
+
+[[env.staging.kv_namespaces]]
+binding = "COURSE_ACCESS"
+id      = "REPLACE_WITH_YOUR_STAGING_KV_NAMESPACE_ID"
