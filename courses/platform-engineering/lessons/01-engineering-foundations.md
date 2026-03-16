@@ -1,5 +1,6 @@
 ---
 layout: lesson
+permalink: /courses/platform-engineering/lessons/01-engineering-foundations/
 title: Engineering Foundations
 description: Build the mental model every platform engineer needs — Linux internals, networking fundamentals, DNS resolution, HTTP, and production-grade Git workflows.
 lesson_number: 1

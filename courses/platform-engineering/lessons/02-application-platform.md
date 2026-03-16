@@ -1,5 +1,6 @@
 ---
 layout: lesson
+permalink: /courses/platform-engineering/lessons/02-application-platform/
 title: Application Platform
 description: Understand the building blocks of production application platforms — microservices, API services, async workers, databases, and how platforms host them all reliably.
 lesson_number: 2

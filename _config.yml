@@ -21,9 +21,5 @@ defaults:
       path: "index.md"
     values:
       layout: default
-  - scope:
-      path: "courses"
-    values:
-      permalink: /:path/
 
 permalink: /:categories/:title.html
