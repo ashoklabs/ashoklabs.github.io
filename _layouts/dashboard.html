@@ -1,0 +1,274 @@
+---
+layout: default
+---
+{% assign course_slug = page.course_id | default: "platform-engineering" %}
+{% assign course_path = "/courses/" | append: course_slug | append: "/lessons/" %}
+
+{% assign course_lessons = site.pages
+  | where_exp: "p", "p.url contains course_path"
+  | where_exp: "p", "p.layout == 'lesson'"
+  | sort: "lesson_number" %}
+
+{% assign total_lessons = course_lessons | size %}
+
+<div class="dashboard-page">
+
+  <!-- ── Hero / Welcome ──────────────────────────────────────── -->
+  <div class="dash-hero">
+    <div class="dash-hero-inner">
+      <div class="dash-hero-left">
+        <div class="dash-enrolled-badge">
+          <svg width="11" height="11" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+          Enrolled · Lifetime Access
+        </div>
+        <h1 class="dash-course-title">{{ page.course_title | default: "AI-Augmented Platform Engineering Bootcamp" }}</h1>
+        <p class="dash-welcome-msg" id="dash-welcome">Your learning journey is underway — keep the momentum going.</p>
+        <div class="dash-hero-actions">
+          <a class="dash-btn-primary" id="dash-continue-btn" href="#">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+            Continue Learning
+          </a>
+          <a class="dash-btn-secondary" href="{{ '/courses/' | append: course_slug | relative_url }}">
+            Course Overview
+          </a>
+        </div>
+      </div>
+      <div class="dash-hero-right">
+        <div class="dash-progress-ring-wrap">
+          <svg viewBox="0 0 88 88" class="dash-ring-svg" aria-hidden="true">
+            <circle cx="44" cy="44" r="38" class="dash-ring-bg"/>
+            <circle cx="44" cy="44" r="38" class="dash-ring-fill" id="dash-ring-fill"/>
+          </svg>
+          <div class="dash-ring-label">
+            <span class="dash-ring-pct" id="dash-ring-pct">0%</span>
+            <span class="dash-ring-sub">complete</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Linear progress bar -->
+    <div class="dash-bar-section">
+      <div class="dash-bar-meta">
+        <span class="dash-bar-label">Overall Progress</span>
+        <span class="dash-bar-count" id="dash-bar-count">0 of {{ total_lessons }} modules complete</span>
+      </div>
+      <div class="dash-bar-track">
+        <div class="dash-bar-fill" id="dash-bar-fill" style="width: 0%"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Stats Row ────────────────────────────────────────────── -->
+  <div class="dash-stats">
+    <div class="dash-stat-card">
+      <div class="dash-stat-icon dash-stat-icon--green">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>
+      </div>
+      <div class="dash-stat-body">
+        <div class="dash-stat-value" id="stat-completed">0</div>
+        <div class="dash-stat-label">Completed</div>
+      </div>
+    </div>
+    <div class="dash-stat-card">
+      <div class="dash-stat-icon dash-stat-icon--blue">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/></svg>
+      </div>
+      <div class="dash-stat-body">
+        <div class="dash-stat-value">{{ total_lessons }}</div>
+        <div class="dash-stat-label">Total Modules</div>
+      </div>
+    </div>
+    <div class="dash-stat-card">
+      <div class="dash-stat-icon dash-stat-icon--amber">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+      </div>
+      <div class="dash-stat-body">
+        <div class="dash-stat-value" id="stat-remaining">{{ total_lessons }}</div>
+        <div class="dash-stat-label">Remaining</div>
+      </div>
+    </div>
+    <div class="dash-stat-card">
+      <div class="dash-stat-icon dash-stat-icon--teal">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+      </div>
+      <div class="dash-stat-body">
+        <div class="dash-stat-value">Lifetime</div>
+        <div class="dash-stat-label">Access</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Continue Learning card ───────────────────────────────── -->
+  <div class="dash-section" id="continue-section">
+    <div class="dash-section-header">
+      <h2 class="dash-section-title">Continue Learning</h2>
+    </div>
+    <a class="dash-continue-card" id="dash-continue-card" href="#">
+      <div class="dash-continue-eyebrow" id="dash-continue-eyebrow">Start here</div>
+      <div class="dash-continue-body">
+        <div class="dash-continue-num" id="dash-continue-num">Lesson 01</div>
+        <div class="dash-continue-info">
+          <h3 class="dash-continue-title" id="dash-continue-title">Engineering Foundations</h3>
+          <p class="dash-continue-desc" id="dash-continue-desc">Linux, networking, DNS, HTTP, and Git workflows for platform engineers</p>
+        </div>
+      </div>
+      <div class="dash-continue-action">
+        <span class="dash-continue-btn-label" id="dash-continue-label">Start Lesson</span>
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      </div>
+    </a>
+  </div>
+
+  <!-- ── Course Curriculum ─────────────────────────────────────── -->
+  <div class="dash-section">
+    <div class="dash-section-header">
+      <h2 class="dash-section-title">Course Curriculum</h2>
+      <span class="dash-section-meta">{{ total_lessons }} modules &middot; Video + written content &middot; Discussion on every lesson</span>
+    </div>
+
+    <div class="dash-curriculum" id="dash-curriculum">
+      {% for lesson in course_lessons %}
+        {% unless lesson.url contains "index" %}
+        <a class="curr-row"
+           href="{{ lesson.url | relative_url }}"
+           data-lesson="{{ lesson.lesson_number }}">
+          <div class="curr-row-indicator">
+            <div class="curr-circle" data-lesson="{{ lesson.lesson_number }}">
+              <span class="curr-circle-num">{{ lesson.lesson_number | prepend: "00" | slice: -2, 2 }}</span>
+              <svg class="curr-circle-check" width="13" height="13" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+            </div>
+            {% unless forloop.last %}<div class="curr-connector"></div>{% endunless %}
+          </div>
+          <div class="curr-row-body">
+            <div class="curr-row-top">
+              <span class="curr-row-title">{{ lesson.title }}</span>
+              <div class="curr-row-right">
+                {% if lesson.duration %}<span class="curr-row-duration">{{ lesson.duration }}</span>{% endif %}
+                <span class="curr-row-status" data-lesson="{{ lesson.lesson_number }}">Start</span>
+              </div>
+            </div>
+            {% if lesson.description %}<p class="curr-row-desc">{{ lesson.description }}</p>{% endif %}
+            {% if lesson.tags %}
+            <div class="curr-row-tags">
+              {% for tag in lesson.tags %}<span class="curr-row-tag">{{ tag }}</span>{% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </a>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var COURSE_KEY = 'pe_progress_v1';
+  var TOTAL = {{ total_lessons }};
+  var CIRCUMFERENCE = 2 * Math.PI * 38;
+
+  var lessons = [
+    {% for lesson in course_lessons %}{% unless lesson.url contains "index" %}{ num: {{ lesson.lesson_number }}, title: {{ lesson.title | default: "" | jsonify }}, desc: {{ lesson.description | default: "" | jsonify }}, url: {{ lesson.url | relative_url | jsonify }} },
+    {% endunless %}{% endfor %}
+  ];
+
+  function getProgress() {
+    try { return JSON.parse(localStorage.getItem(COURSE_KEY)) || { completed: [] }; }
+    catch(e) { return { completed: [] }; }
+  }
+
+  function renderName(email) {
+    if (!email) return '';
+    return email.split('@')[0]
+      .replace(/[._-]+/g, ' ')
+      .replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+  }
+
+  function updateUI(progress) {
+    var completed = progress.completed || [];
+    var count = completed.length;
+    var pct = TOTAL > 0 ? Math.round((count / TOTAL) * 100) : 0;
+
+    // Progress bar
+    var fill = document.getElementById('dash-bar-fill');
+    var countEl = document.getElementById('dash-bar-count');
+    if (fill) { fill.style.width = pct + '%'; }
+    if (countEl) { countEl.textContent = count + ' of ' + TOTAL + ' modules complete'; }
+
+    // Ring
+    var ring = document.getElementById('dash-ring-fill');
+    var pctEl = document.getElementById('dash-ring-pct');
+    if (ring) {
+      ring.style.strokeDasharray = CIRCUMFERENCE;
+      ring.style.strokeDashoffset = CIRCUMFERENCE - (pct / 100) * CIRCUMFERENCE;
+    }
+    if (pctEl) { pctEl.textContent = pct + '%'; }
+
+    // Stats
+    var sc = document.getElementById('stat-completed');
+    var sr = document.getElementById('stat-remaining');
+    if (sc) { sc.textContent = count; }
+    if (sr) { sr.textContent = TOTAL - count; }
+
+    // Welcome message
+    var welcome = document.getElementById('dash-welcome');
+    var email = sessionStorage.getItem('course_email') || '';
+    var name = renderName(email);
+    if (welcome) {
+      if (count === 0) {
+        welcome.textContent = (name ? 'Welcome, ' + name + '. ' : '') + "Let's get you started on your platform engineering journey.";
+      } else if (count === TOTAL) {
+        welcome.textContent = (name ? name + ', you ' : 'You ') + 'completed every module. Outstanding achievement!';
+      } else {
+        welcome.textContent = (name ? 'Welcome back, ' + name + '. ' : 'Welcome back. ') + "You're on lesson " + (count + 1) + " — keep going!";
+      }
+    }
+
+    // Mark completed items
+    completed.forEach(function(num) {
+      var row = document.querySelector('.curr-row[data-lesson="' + num + '"]');
+      if (row) { row.classList.add('curr-row--done'); }
+      var circle = document.querySelector('.curr-circle[data-lesson="' + num + '"]');
+      if (circle) { circle.classList.add('curr-circle--done'); }
+      var status = document.querySelector('.curr-row-status[data-lesson="' + num + '"]');
+      if (status) { status.textContent = 'Done'; status.classList.add('curr-row-status--done'); }
+    });
+
+    // Continue Learning card
+    var nextLesson = null;
+    for (var i = 0; i < lessons.length; i++) {
+      if (completed.indexOf(lessons[i].num) === -1) { nextLesson = lessons[i]; break; }
+    }
+
+    var continueSection = document.getElementById('continue-section');
+    if (!nextLesson && continueSection) {
+      continueSection.innerHTML = '<div class="dash-all-done"><div class="dash-all-done-icon">🎉</div><h3>Course Complete!</h3><p>You\'ve finished all ' + TOTAL + ' modules. Excellent work!</p><a href="/courses/" class="dash-all-done-link">Browse more courses</a></div>';
+      return;
+    }
+
+    if (nextLesson) {
+      var card = document.getElementById('dash-continue-card');
+      var eyebrow = document.getElementById('dash-continue-eyebrow');
+      var numEl = document.getElementById('dash-continue-num');
+      var titleEl = document.getElementById('dash-continue-title');
+      var descEl = document.getElementById('dash-continue-desc');
+      var labelEl = document.getElementById('dash-continue-label');
+      var topBtn = document.getElementById('dash-continue-btn');
+
+      if (card) { card.href = nextLesson.url; }
+      if (topBtn) { topBtn.href = nextLesson.url; }
+      if (eyebrow) { eyebrow.textContent = count > 0 ? 'Continue where you left off' : 'Start here'; }
+      if (numEl) { numEl.textContent = 'Lesson ' + String(nextLesson.num).padStart(2, '0'); }
+      if (titleEl) { titleEl.textContent = nextLesson.title; }
+      if (descEl) { descEl.textContent = nextLesson.desc; }
+      if (labelEl) { labelEl.textContent = count > 0 ? 'Continue' : 'Start Lesson'; }
+    }
+  }
+
+  updateUI(getProgress());
+})();
+</script>
