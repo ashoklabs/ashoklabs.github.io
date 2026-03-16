@@ -22,6 +22,14 @@ layout: default
     <a href="mailto:{{ site.email | default: 'hello@ashoklabs.com' }}" class="btn-enroll">Apply Now</a>
     {% endif %}
   </div>
+  {% if page.price %}
+  <div class="course-stat course-stat--returning">
+    <a href="#buy-returning-section" class="btn-already-student" id="btn-already-student-top">
+      <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+      Already a student?
+    </a>
+  </div>
+  {% endif %}
 </div>
 
 <div class="course-body">
