@@ -2,9 +2,9 @@
 layout: default
 ---
 
-# Welcome to Ashoklabs
+# Latest Posts
 
-Notes on DevOps, system engineering, and building reliable infrastructure.
+Practical engineering insights — no fluff, just the stuff that works in production.
 
 <div class="post-list">
 {% for post in site.posts %}
