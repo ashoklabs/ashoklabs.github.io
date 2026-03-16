@@ -735,6 +735,173 @@
   text-align: center;
 }
 
+/* ── Returning student section ──────────────────────────────── */
+
+.buy-returning-section {
+  max-width: 480px;
+  margin: 0 auto 2.5rem;
+}
+
+.buy-returning-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  background: none;
+  border: 1.5px solid #d0e8e8;
+  border-radius: 10px;
+  padding: 0.75rem 1.1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #155757;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, box-shadow 0.15s;
+  text-align: left;
+}
+
+.buy-returning-toggle:hover {
+  background: #f0fafa;
+  border-color: #157878;
+  box-shadow: 0 0 0 3px rgba(21,120,120,0.07);
+}
+
+.buy-returning-toggle--open {
+  border-radius: 10px 10px 0 0;
+  border-bottom-color: transparent;
+  background: #f6fdfd;
+}
+
+.buy-returning-toggle-chevron {
+  margin-left: auto;
+  transition: transform 0.2s ease;
+  color: #157878;
+  flex-shrink: 0;
+}
+
+.buy-returning-toggle--open .buy-returning-toggle-chevron {
+  transform: rotate(180deg);
+}
+
+.buy-returning-panel {
+  border: 1.5px solid #d0e8e8;
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 1.25rem 1.25rem 1.5rem;
+  background: #f6fdfd;
+  animation: fadeUp 0.2s ease both;
+}
+
+.buy-returning-intro {
+  font-size: 0.82rem;
+  color: #777;
+  margin: 0 0 1rem 0;
+  line-height: 1.5;
+}
+
+.btn-access-course {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  background: #fff;
+  border: 1.5px solid #157878;
+  color: #155757;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.btn-access-course:hover:not(:disabled) {
+  background: #edf9f9;
+  box-shadow: 0 0 0 3px rgba(21,120,120,0.12);
+  transform: translateY(-1px);
+}
+
+.btn-access-course:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.buy-access-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+  padding: 0.65rem 0.85rem;
+  background: #fff5f5;
+  border: 1px solid #fcc;
+  border-radius: 7px;
+  font-size: 0.8rem;
+  color: #b91c1c;
+  line-height: 1.5;
+}
+
+.buy-access-error svg {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+}
+
+/* Returning success state */
+.buy-returning-success {
+  text-align: center;
+  padding: 0.5rem 0;
+  animation: fadeUp 0.3s ease both;
+}
+
+.buy-returning-success-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #155757, #157878);
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  box-shadow: 0 4px 16px rgba(21,120,120,0.25);
+}
+
+.buy-returning-success h3 {
+  font-size: 1.2rem;
+  color: #155757;
+  margin: 0 0 0.35rem 0;
+}
+
+.buy-returning-success p {
+  font-size: 0.875rem;
+  color: #555;
+  margin: 0 0 1.25rem 0;
+}
+
+.buy-returning-success-hint {
+  font-size: 0.77rem;
+  color: #999;
+  margin-top: 0.75rem !important;
+}
+
+/* Spinner for loading state */
+.buy-spinner {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* Post-payment success */
 .buy-success {
   text-align: center;
@@ -1949,6 +2116,14 @@
   .buy-card {
     padding: 1.5rem 1.1rem;
     margin: 1.5rem 0;
+  }
+
+  .buy-returning-section {
+    margin: 0 0 1.5rem;
+  }
+
+  .buy-returning-panel {
+    padding: 1rem 0.9rem 1.25rem;
   }
 
   .buy-price-amount {

@@ -381,6 +381,42 @@
   border-radius: 8px;
 }
 
+.course-stat--returning {
+  flex: 0 0 auto;
+  min-width: auto;
+}
+
+.btn-already-student {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #155757;
+  text-decoration: none;
+  border: 1.5px solid #a8d8d8;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, #e8f7f7 0%, #d4f0f0 100%);
+  white-space: nowrap;
+  transition: background 0.18s, border-color 0.18s, box-shadow 0.18s, transform 0.12s;
+  box-shadow: 0 1px 3px rgba(21,120,120,0.10);
+}
+
+.btn-already-student svg {
+  color: #157878;
+  flex-shrink: 0;
+}
+
+.btn-already-student:hover {
+  background: linear-gradient(135deg, #d4f0f0 0%, #bde8e8 100%);
+  border-color: #157878;
+  box-shadow: 0 2px 8px rgba(21,120,120,0.18);
+  transform: translateY(-1px);
+  text-decoration: none;
+  color: #0f4f4f;
+}
+
 .course-section {
   margin-bottom: 3rem;
 }

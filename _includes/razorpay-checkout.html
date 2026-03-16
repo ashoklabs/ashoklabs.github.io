@@ -54,13 +54,9 @@
       <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
       Secure payment via Razorpay &middot; 256-bit SSL
     </p>
-    <p class="buy-already-purchased">
-      Already purchased?
-      <button type="button" id="btn-check-access" style="background:none;border:none;color:inherit;text-decoration:underline;cursor:pointer;padding:0;font-size:inherit;">Check access with your email</button>
-    </p>
   </div>
 
-  <!-- Post-payment message -->
+  <!-- Post-payment success -->
   <div class="buy-success" id="buy-success" style="display:none">
     <div class="buy-success-icon">✓</div>
     <h3>Payment successful!</h3>
@@ -71,6 +67,53 @@
     <p class="buy-success-hint">You'll be asked to log in with Google or GitHub — use the email <strong id="success-email-display"></strong>.</p>
   </div>
 
+</div>
+
+<!-- ── Returning student section ─────────────────────────────── -->
+<div class="buy-returning-section" id="buy-returning-section">
+
+  <button class="buy-returning-toggle" id="buy-returning-toggle" type="button" aria-expanded="false">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+    Already a student? Access your course
+    <svg class="buy-returning-toggle-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+  </button>
+
+  <div class="buy-returning-panel" id="buy-returning-panel" style="display:none">
+
+    <!-- Default: email input form -->
+    <div id="returning-form">
+      <p class="buy-returning-intro">Enter the email address you used when you purchased the course.</p>
+      <div class="buy-field">
+        <label for="access-email" class="buy-label">Purchase email</label>
+        <input
+          type="email"
+          id="access-email"
+          class="buy-email-input"
+          placeholder="you@example.com"
+          autocomplete="email">
+      </div>
+      <button class="btn-access-course" id="btn-check-access" type="button">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z" clip-rule="evenodd"/></svg>
+        Access My Course
+      </button>
+      <div class="buy-access-error" id="access-error" style="display:none">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        <span id="access-error-text">No purchase found for this email.</span>
+      </div>
+    </div>
+
+    <!-- Success: welcome back -->
+    <div class="buy-returning-success" id="returning-success" style="display:none">
+      <div class="buy-returning-success-icon">✓</div>
+      <h3>Welcome back!</h3>
+      <p>Access confirmed for <strong id="returning-email-display"></strong></p>
+      <a href="{{ lessons_url }}" class="btn-enroll btn-enroll-lg">
+        Continue Learning →
+      </a>
+      <p class="buy-returning-success-hint">Log in with the Google or GitHub account tied to this email.</p>
+    </div>
+
+  </div>
 </div>
 
 <!-- Razorpay SDK -->
@@ -86,6 +129,57 @@
 
   if (!btn) return;
 
+  // ── Returning student toggle ────────────────────────────────────────────
+  const returningToggle  = document.getElementById('buy-returning-toggle');
+  const returningPanel   = document.getElementById('buy-returning-panel');
+  const returningSection = document.getElementById('buy-returning-section');
+
+  function openReturningPanel(focusInput) {
+    if (!returningPanel || returningPanel.style.display !== 'none') return;
+    returningPanel.style.display = 'block';
+    returningToggle && returningToggle.setAttribute('aria-expanded', 'true');
+    returningToggle && returningToggle.classList.add('buy-returning-toggle--open');
+    if (focusInput) {
+      const accessEmailInput = document.getElementById('access-email');
+      if (accessEmailInput) setTimeout(function () { accessEmailInput.focus(); }, 80);
+    }
+  }
+
+  returningToggle && returningToggle.addEventListener('click', function () {
+    const isOpen = returningPanel.style.display !== 'none';
+    if (isOpen) {
+      returningPanel.style.display = 'none';
+      returningToggle.setAttribute('aria-expanded', 'false');
+      returningToggle.classList.remove('buy-returning-toggle--open');
+    } else {
+      openReturningPanel(true);
+    }
+  });
+
+  // Top "Already a student?" pill — scroll + auto-open
+  const topStudentBtn = document.getElementById('btn-already-student-top');
+  topStudentBtn && topStudentBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+    openReturningPanel(true);
+    returningSection && returningSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+
+  // ── Show returning-student welcome state ────────────────────────────────
+  function showReturningSuccess(email) {
+    // Expand the panel
+    if (returningPanel) returningPanel.style.display = 'block';
+    if (returningToggle) {
+      returningToggle.setAttribute('aria-expanded', 'true');
+      returningToggle.classList.add('buy-returning-toggle--open');
+    }
+    const returningForm    = document.getElementById('returning-form');
+    const returningSuccess = document.getElementById('returning-success');
+    const emailDisplay     = document.getElementById('returning-email-display');
+    if (returningForm)    returningForm.style.display    = 'none';
+    if (returningSuccess) returningSuccess.style.display = 'block';
+    if (emailDisplay)     emailDisplay.textContent       = email;
+  }
+
   // ── On load: check if user already has access ──────────────────────────
   (async function checkExistingAccess() {
     const courseId  = btn.dataset.courseId;
@@ -97,10 +191,8 @@
       );
       const { hasAccess } = await v.json();
       if (hasAccess) {
-        form.style.display       = 'none';
-        successBox.style.display = 'block';
-        const display = document.getElementById('success-email-display');
-        if (display) display.textContent = email;
+        // Returning visit after previous purchase/check — show welcome back
+        showReturningSuccess(email);
       }
     } catch {}
   })();
@@ -202,23 +294,38 @@
     }
   });
 
-  // Clear error state on input
+  // Clear error state on buy email input
   emailInput && emailInput.addEventListener('input', function () {
     emailInput.classList.remove('buy-email-input--error');
     emailInput.removeAttribute('aria-invalid');
   });
 
-  // "Already purchased?" — check access by email
-  const checkAccessBtn = document.getElementById('btn-check-access');
+  // ── "Access My Course" — returning student check ───────────────────────
+  const checkAccessBtn  = document.getElementById('btn-check-access');
+  const accessEmailInput = document.getElementById('access-email');
+  const accessError      = document.getElementById('access-error');
+  const accessErrorText  = document.getElementById('access-error-text');
+
+  accessEmailInput && accessEmailInput.addEventListener('input', function () {
+    accessEmailInput.classList.remove('buy-email-input--error');
+    if (accessError) accessError.style.display = 'none';
+  });
+
   checkAccessBtn && checkAccessBtn.addEventListener('click', async function () {
-    const email = (emailInput.value || '').trim().toLowerCase();
+    const email = (accessEmailInput ? accessEmailInput.value : '').trim().toLowerCase();
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      emailInput.classList.add('buy-email-input--error');
-      emailInput.focus();
+      if (accessEmailInput) {
+        accessEmailInput.classList.add('buy-email-input--error');
+        accessEmailInput.focus();
+      }
       return;
     }
-    checkAccessBtn.textContent = 'Checking…';
+
+    const originalHTML = checkAccessBtn.innerHTML;
+    checkAccessBtn.innerHTML = '<span class="buy-spinner"></span> Checking…';
     checkAccessBtn.disabled = true;
+    if (accessError) accessError.style.display = 'none';
+
     try {
       const courseId = btn.dataset.courseId;
       const v = await fetch(
@@ -228,17 +335,18 @@
       if (hasAccess) {
         sessionStorage.setItem('course_email', email);
         sessionStorage.setItem('course_id', courseId);
-        form.style.display = 'none';
-        successBox.style.display = 'block';
-        const display = document.getElementById('success-email-display');
-        if (display) display.textContent = email;
+        showReturningSuccess(email);
       } else {
-        alert('No access found for ' + email + '. Please purchase the course.');
-        checkAccessBtn.textContent = 'Check access with your email';
+        if (accessErrorText) accessErrorText.textContent = 'No purchase found for ' + email + '. Did you use a different email?';
+        if (accessError) accessError.style.display = 'flex';
+        checkAccessBtn.innerHTML = originalHTML;
         checkAccessBtn.disabled = false;
+        if (accessEmailInput) accessEmailInput.classList.add('buy-email-input--error');
       }
     } catch {
-      checkAccessBtn.textContent = 'Check access with your email';
+      if (accessErrorText) accessErrorText.textContent = 'Something went wrong. Please try again.';
+      if (accessError) accessError.style.display = 'flex';
+      checkAccessBtn.innerHTML = originalHTML;
       checkAccessBtn.disabled = false;
     }
   });
