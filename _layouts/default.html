@@ -20,6 +20,9 @@
     <link rel="icon" href="data:,">
     <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
     <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
+    {% if page.layout == 'lesson' or page.course_platform %}
+    <link rel="stylesheet" href="{{ '/assets/css/course-platform.css' | relative_url }}">
+    {% endif %}
     {% include head-custom.html %}
   </head>
   <body>

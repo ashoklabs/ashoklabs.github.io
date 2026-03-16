@@ -4,12 +4,15 @@ title: AI-Augmented Platform Engineering Bootcamp
 description: Design, build, and operate production-grade platforms using cloud-native technologies and AI-assisted workflows.
 duration: 16 Weeks
 level: Intermediate – Advanced
-format: Online · Cohort-based
+format: Online · Self-paced
+course_id: platform-engineering
+price: 9999
+course_platform: true
 ---
 
 <section class="course-section">
 <h2>Overview</h2>
-<p>This program teaches how modern engineering teams design, build, and operate production-grade platforms using cloud-native technologies. You will work on real infrastructure problems — not toy examples — and graduate with a complete internal developer platform you built yourself.</p>
+<p>This programme teaches how modern engineering teams design, build, and operate production-grade platforms using cloud-native technologies. You will work on real infrastructure problems — not toy examples — and graduate with a complete internal developer platform you built yourself.</p>
 
 <div class="course-pillars">
   <div class="pillar">
@@ -24,7 +27,7 @@ format: Online · Cohort-based
   </div>
   <div class="pillar">
     <div class="pillar-icon">📊</div>
-    <h4>Observability & Reliability</h4>
+    <h4>Observability &amp; Reliability</h4>
     <p>Metrics, logs, traces, SLOs, and production incident response.</p>
   </div>
   <div class="pillar">
@@ -185,6 +188,7 @@ format: Online · Cohort-based
 
 <section class="course-section course-cta-section">
 <h2>Ready to build production platforms?</h2>
-<p>Applications are open for the next cohort. Spots are limited to keep the programme hands-on.</p>
-<a href="mailto:hello@ashoklabs.com" class="btn-enroll btn-enroll-lg">Apply for the Next Cohort</a>
+<p>One payment — lifetime access. Start immediately after purchase. All 16 weeks of content available right away.</p>
+<a href="#buy-card" class="btn-enroll btn-enroll-lg">Enrol Now — ₹999</a>
+<p style="margin-top:0.75rem;font-size:0.82rem;color:#888;">Secure payment via Razorpay &middot; UPI, Cards, Net Banking accepted</p>
 </section>

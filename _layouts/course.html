@@ -16,10 +16,18 @@ layout: default
     <span class="stat-label">Format</span>
   </div>
   <div class="course-stat">
+    {% if page.price %}
+    <a href="#buy-card" class="btn-enroll">Buy — ₹{{ page.price }}</a>
+    {% else %}
     <a href="mailto:{{ site.email | default: 'hello@ashoklabs.com' }}" class="btn-enroll">Apply Now</a>
+    {% endif %}
   </div>
 </div>
 
 <div class="course-body">
   {{ content }}
 </div>
+
+{% if page.price %}
+{% include razorpay-checkout.html %}
+{% endif %}

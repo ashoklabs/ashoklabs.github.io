@@ -1,0 +1,172 @@
+---
+layout: default
+---
+
+{% assign course_slug = page.course_id | default: "platform-engineering" %}
+{% assign course_path = "/courses/" | append: course_slug | append: "/lessons/" %}
+
+{% assign course_lessons = site.pages
+  | where_exp: "p", "p.url contains course_path"
+  | where_exp: "p", "p.layout == 'lesson'"
+  | sort: "lesson_number" %}
+
+<div class="lesson-wrapper">
+
+  <!-- ── Sidebar ──────────────────────────────────────────── -->
+  <aside class="lesson-sidebar" id="lesson-sidebar">
+    <div class="sidebar-header">
+      <a href="{{ '/courses/' | append: course_slug | append: '/' | relative_url }}" class="sidebar-back-link">
+        <svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+        {{ page.course_title | default: "Back to Course" }}
+      </a>
+    </div>
+
+    <div class="sidebar-section-label">Course Lessons</div>
+
+    <nav class="sidebar-nav" aria-label="Course lessons">
+      {% for lesson in course_lessons %}
+        {% unless lesson.url contains "index" %}
+        <a href="{{ lesson.url | relative_url }}"
+           class="sidebar-lesson {% if lesson.url == page.url %}sidebar-lesson--active{% endif %}">
+          <span class="sidebar-lesson-num">{{ lesson.lesson_number | prepend: "00" | slice: -2, 2 }}</span>
+          <span class="sidebar-lesson-title">{{ lesson.title }}</span>
+          {% if lesson.url == page.url %}
+          <span class="sidebar-active-dot" aria-hidden="true"></span>
+          {% endif %}
+        </a>
+        {% endunless %}
+      {% endfor %}
+    </nav>
+
+    <div class="sidebar-footer">
+      <a href="{{ '/courses/' | append: course_slug | append: '/' | relative_url }}" class="sidebar-course-link">
+        Course overview
+      </a>
+    </div>
+  </aside>
+
+  <!-- ── Mobile sidebar toggle ─────────────────────────────── -->
+  <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle lesson menu">
+    <svg width="18" height="18" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"/></svg>
+    Lessons
+  </button>
+
+  <!-- ── Main content ───────────────────────────────────────── -->
+  <main class="lesson-main" id="lesson-content">
+
+    <!-- Lesson header -->
+    <header class="lesson-header">
+      <div class="lesson-meta-row">
+        <span class="lesson-badge">Lesson {{ page.lesson_number }}</span>
+        {% if page.duration %}
+        <span class="lesson-duration">
+          <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+          {{ page.duration }}
+        </span>
+        {% endif %}
+        {% if page.tags %}
+          {% for tag in page.tags %}
+          <span class="lesson-tag">{{ tag }}</span>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <h1 class="lesson-title-main">{{ page.title }}</h1>
+      {% if page.description %}
+      <p class="lesson-description">{{ page.description }}</p>
+      {% endif %}
+    </header>
+
+    <!-- Video player -->
+    {% if page.video_id %}
+    <div class="lesson-video-section">
+      <div class="lesson-video-wrapper">
+        <iframe
+          src="https://www.youtube.com/embed/{{ page.video_id }}?rel=0&modestbranding=1&color=white&iv_load_policy=3"
+          title="{{ page.title }} — video lesson"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      </div>
+      <p class="lesson-video-notice">
+        <svg width="13" height="13" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+        This video is unlisted and accessible only to enrolled students. Please do not share the link.
+      </p>
+    </div>
+    {% endif %}
+
+    <!-- Written content -->
+    <div class="lesson-content">
+      {{ content }}
+    </div>
+
+    <!-- Prev / Next navigation -->
+    <nav class="lesson-pager" aria-label="Lesson navigation">
+      {% if page.prev_lesson %}
+      <a href="{{ page.prev_lesson | relative_url }}" class="lesson-pager-btn lesson-pager-btn--prev">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"/></svg>
+        <span>
+          <small>Previous</small>
+          {{ page.prev_lesson_title | default: "Previous Lesson" }}
+        </span>
+      </a>
+      {% else %}
+      <span></span>
+      {% endif %}
+
+      {% if page.next_lesson %}
+      <a href="{{ page.next_lesson | relative_url }}" class="lesson-pager-btn lesson-pager-btn--next">
+        <span>
+          <small>Next</small>
+          {{ page.next_lesson_title | default: "Next Lesson" }}
+        </span>
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      </a>
+      {% endif %}
+    </nav>
+
+    <!-- Giscus discussion — same repo/config as blog posts -->
+    <section class="comment-section lesson-discussion" id="lesson-discussion">
+      <h3>Discussion &amp; Questions</h3>
+      <p class="lesson-discussion-note">Ask questions, share what you built, or leave feedback about this lesson. GitHub account required.</p>
+      <script src="https://giscus.app/client.js"
+              data-repo="ashoklabs/ashoklabs.github.io"
+              data-repo-id="R_kgDORmlWbg"
+              data-category="Announcements"
+              data-category-id="DIC_kwDORmlWbs4C4XDI"
+              data-mapping="pathname"
+              data-strict="0"
+              data-reactions-enabled="1"
+              data-emit-metadata="0"
+              data-input-position="top"
+              data-theme="light"
+              data-lang="en"
+              crossorigin="anonymous"
+              async>
+      </script>
+    </section>
+
+  </main>
+</div>
+
+<script>
+  // Mobile sidebar toggle
+  (function () {
+    const toggle  = document.getElementById('sidebar-toggle');
+    const sidebar = document.getElementById('lesson-sidebar');
+    if (!toggle || !sidebar) return;
+
+    toggle.addEventListener('click', function () {
+      sidebar.classList.toggle('lesson-sidebar--open');
+      toggle.setAttribute('aria-expanded', sidebar.classList.contains('lesson-sidebar--open'));
+    });
+
+    // Close sidebar on lesson link click (mobile)
+    sidebar.querySelectorAll('.sidebar-lesson').forEach(function (link) {
+      link.addEventListener('click', function () {
+        sidebar.classList.remove('lesson-sidebar--open');
+      });
+    });
+  })();
+</script>

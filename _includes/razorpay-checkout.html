@@ -1,0 +1,190 @@
+{% comment %}
+  Razorpay Checkout Include
+  Renders a full buy card with email input and payment modal.
+  Requires in the including page's front matter:
+    price:     999          # displayed price in ₹
+    course_id: platform-engineering
+    duration:  16 Weeks     # shown in the benefits list
+  Set WORKER_URL below to your deployed Cloudflare Worker URL.
+{% endcomment %}
+
+{% if page.price %}
+
+{% assign worker_url = "https://course-worker.ashoklabs2026.workers.dev" %}
+{% assign lessons_url = "/courses/" | append: page.course_id | append: "/lessons/" %}
+
+<!-- ── Buy card ──────────────────────────────────────────────── -->
+<div class="buy-card" id="buy-card">
+
+  <div class="buy-card-header">
+    <div class="buy-price-block">
+      <span class="buy-price-amount">₹{{ page.price }}</span>
+      <span class="buy-price-sub">one-time &middot; lifetime access</span>
+    </div>
+    <div class="buy-badge">Most Popular</div>
+  </div>
+
+  <ul class="buy-includes">
+    <li><span class="buy-check">✓</span> {{ page.duration }} of structured video + written content</li>
+    <li><span class="buy-check">✓</span> Lesson-by-lesson Giscus discussion board</li>
+    <li><span class="buy-check">✓</span> Access unlocked within minutes of payment</li>
+    <li><span class="buy-check">✓</span> UPI, Net Banking, Credit &amp; Debit Cards via Razorpay</li>
+    <li><span class="buy-check">✓</span> Lifetime access — no recurring fees</li>
+  </ul>
+
+  <div class="buy-form" id="buy-form">
+    <div class="buy-field">
+      <label for="checkout-email" class="buy-label">Your email address</label>
+      <input
+        type="email"
+        id="checkout-email"
+        class="buy-email-input"
+        placeholder="you@example.com"
+        autocomplete="email"
+        required>
+      <p class="buy-field-hint">Access is tied to this email — use the same one to log in later.</p>
+    </div>
+    <button class="btn-buy-course" id="btn-buy-course" type="button"
+            data-course-id="{{ page.course_id }}"
+            data-course-name="{{ page.title }}"
+            data-price="{{ page.price }}">
+      Buy Now — ₹{{ page.price }}
+    </button>
+    <p class="buy-secure-note">
+      <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+      Secure payment via Razorpay &middot; 256-bit SSL
+    </p>
+  </div>
+
+  <!-- Post-payment message -->
+  <div class="buy-success" id="buy-success" style="display:none">
+    <div class="buy-success-icon">✓</div>
+    <h3>Payment successful!</h3>
+    <p>Your access is being activated. This usually takes under 30 seconds.</p>
+    <a href="{{ lessons_url }}" class="btn-enroll btn-enroll-lg" id="btn-go-to-lessons">
+      Go to Lessons
+    </a>
+    <p class="buy-success-hint">You'll be asked to log in with Google or GitHub — use the email <strong id="success-email-display"></strong>.</p>
+  </div>
+
+</div>
+
+<!-- Razorpay SDK -->
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script>
+(function () {
+  const WORKER_URL  = '{{ worker_url }}';
+  const LESSONS_URL = '{{ lessons_url }}';
+  const btn         = document.getElementById('btn-buy-course');
+  const emailInput  = document.getElementById('checkout-email');
+  const form        = document.getElementById('buy-form');
+  const successBox  = document.getElementById('buy-success');
+
+  if (!btn) return;
+
+  btn.addEventListener('click', async function () {
+    const courseId   = btn.dataset.courseId;
+    const courseName = btn.dataset.courseName;
+    const email      = (emailInput.value || '').trim().toLowerCase();
+
+    // Basic email validation
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailInput.classList.add('buy-email-input--error');
+      emailInput.focus();
+      emailInput.setAttribute('aria-invalid', 'true');
+      return;
+    }
+    emailInput.classList.remove('buy-email-input--error');
+
+    btn.disabled    = true;
+    btn.textContent = 'Creating order…';
+
+    try {
+      // 1. Create order via Worker
+      const res = await fetch(`${WORKER_URL}/create-order`, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify({ courseId, email }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Failed to create order');
+      }
+
+      const order = await res.json();
+
+      // 2. Open Razorpay checkout
+      const options = {
+        key:         order.keyId,
+        amount:      order.amount,
+        currency:    order.currency,
+        name:        'Ashoklabs',
+        description: courseName,
+        order_id:    order.orderId,
+        prefill:     { email },
+        theme:       { color: '#157878' },
+        notes:       { courseId, email },
+
+        handler: function (response) {
+          // Payment succeeded client-side — show success UI
+          // The webhook has already (or will) write the KV record
+          sessionStorage.setItem('course_email',  email);
+          sessionStorage.setItem('course_id',     courseId);
+
+          const display = document.getElementById('success-email-display');
+          if (display) display.textContent = email;
+
+          form.style.display       = 'none';
+          successBox.style.display = 'block';
+
+          // Poll /verify-access until KV is written, then enable the button
+          let attempts = 0;
+          const poll = setInterval(async function () {
+            attempts++;
+            try {
+              const v = await fetch(
+                `${WORKER_URL}/verify-access?email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`
+              );
+              const { hasAccess } = await v.json();
+              if (hasAccess || attempts >= 10) {
+                clearInterval(poll);
+              }
+            } catch {}
+          }, 3000);
+        },
+
+        modal: {
+          ondismiss: function () {
+            btn.disabled    = false;
+            btn.textContent = 'Buy Now — ₹{{ page.price }}';
+          },
+        },
+      };
+
+      const rzp = new Razorpay(options);
+      rzp.on('payment.failed', function (resp) {
+        console.error('Payment failed:', resp.error);
+        alert('Payment failed: ' + (resp.error.description || 'Please try again.'));
+        btn.disabled    = false;
+        btn.textContent = 'Buy Now — ₹{{ page.price }}';
+      });
+      rzp.open();
+
+    } catch (err) {
+      console.error('Checkout error:', err);
+      alert('Something went wrong. Please try again.\n\n' + err.message);
+      btn.disabled    = false;
+      btn.textContent = 'Buy Now — ₹{{ page.price }}';
+    }
+  });
+
+  // Clear error state on input
+  emailInput && emailInput.addEventListener('input', function () {
+    emailInput.classList.remove('buy-email-input--error');
+    emailInput.removeAttribute('aria-invalid');
+  });
+})();
+</script>
+
+{% endif %}
