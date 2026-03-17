@@ -32,28 +32,34 @@ layout: default
     <div class="sidebar-section-label">Course Lessons</div>
 
     <nav class="sidebar-nav" aria-label="Course lessons">
+      {% assign sidebar_sections = course_lessons | group_by: "section_number" %}
+      {% assign current_section_name = "" %}
       {% for lesson in course_lessons %}
         {% unless lesson.url contains "index" %}
-        <a href="{{ lesson.url | relative_url }}"
-           class="sidebar-lesson {% if lesson.url == page.url %}sidebar-lesson--active{% endif %}"
-           data-lesson-num="{{ lesson.lesson_number }}">
-          <span class="sidebar-lesson-indicator" data-lesson="{{ lesson.lesson_number }}">
-            <span class="sidebar-lesson-num-txt">{{ lesson.lesson_number | prepend: "00" | slice: -2, 2 }}</span>
-            <svg class="sidebar-lesson-done-icon" width="11" height="11" viewBox="0 0 20 20" fill="currentColor">
-              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-            </svg>
-          </span>
-          <span class="sidebar-lesson-title">{{ lesson.title }}</span>
-          {% if lesson.url == page.url %}
-          <span class="sidebar-active-dot" aria-hidden="true"></span>
+          {% if lesson.section_title and lesson.section_title != current_section_name %}
+            {% assign current_section_name = lesson.section_title %}
+            <div class="sidebar-section-hdr">{{ lesson.section_title }}</div>
           {% endif %}
-        </a>
+          <a href="{{ lesson.url | relative_url }}"
+             class="sidebar-lesson {% if lesson.url == page.url %}sidebar-lesson--active{% endif %}"
+             data-lesson-num="{{ lesson.lesson_number }}">
+            <span class="sidebar-lesson-indicator" data-lesson="{{ lesson.lesson_number }}">
+              <span class="sidebar-lesson-num-txt">{{ lesson.lesson_number | prepend: "00" | slice: -2, 2 }}</span>
+              <svg class="sidebar-lesson-done-icon" width="11" height="11" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+            </span>
+            <span class="sidebar-lesson-title">{{ lesson.title }}</span>
+            {% if lesson.url == page.url %}
+            <span class="sidebar-active-dot" aria-hidden="true"></span>
+            {% endif %}
+          </a>
         {% endunless %}
       {% endfor %}
     </nav>
 
     <div class="sidebar-footer">
-      <a href="{{ '/courses/' | append: course_slug | append: '/' | relative_url }}" class="sidebar-course-link">
+      <a href="{{ '/courses' | relative_url }}" class="sidebar-course-link">
         Course overview
       </a>
     </div>
@@ -188,17 +194,56 @@ layout: default
 <script>
 (function () {
   var COURSE_KEY = 'pe_progress_v1';
+  var COURSE_ID  = 'platform-engineering';
+  var GH_KEY     = 'gh_user';
+  var WORKER_URL = 'https://course-worker.ashoklabs2026.workers.dev';
   var LESSON_NUM = {{ page.lesson_number }};
-  var TOTAL = {{ total_lessons }};
+  var TOTAL      = {{ total_lessons }};
 
-  function getProgress() {
+  function getGhUser() {
+    try { return JSON.parse(localStorage.getItem(GH_KEY)); } catch(e) { return null; }
+  }
+
+  function getLocalProgress() {
     try { return JSON.parse(localStorage.getItem(COURSE_KEY)) || { completed: [] }; }
     catch(e) { return { completed: [] }; }
   }
 
-  function saveProgress(progress) {
-    try { localStorage.setItem(COURSE_KEY, JSON.stringify(progress)); } catch(e) {}
+  async function loadProgress() {
+    var ghUser = getGhUser();
+    if (ghUser && ghUser.login) {
+      try {
+        var res = await fetch(
+          WORKER_URL + '/progress?courseId=' + encodeURIComponent(COURSE_ID) +
+          '&login=' + encodeURIComponent(ghUser.login)
+        );
+        if (res.ok) {
+          var data = await res.json();
+          if (Array.isArray(data.completed)) {
+            try { localStorage.setItem(COURSE_KEY, JSON.stringify({ completed: data.completed })); } catch(e) {}
+            return data;
+          }
+        }
+      } catch(e) {}
+    }
+    return getLocalProgress();
   }
+
+  async function saveProgress(completed) {
+    try { localStorage.setItem(COURSE_KEY, JSON.stringify({ completed: completed })); } catch(e) {}
+    var ghUser = getGhUser();
+    if (ghUser && ghUser.login) {
+      try {
+        await fetch(WORKER_URL + '/progress', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ courseId: COURSE_ID, login: ghUser.login, completed: completed }),
+        });
+      } catch(e) {}
+    }
+  }
+
+  function getProgress() { return getLocalProgress(); }
 
   function isCompleted(progress) {
     return (progress.completed || []).indexOf(LESSON_NUM) !== -1;
@@ -207,18 +252,17 @@ layout: default
   function markComplete(progress) {
     if (!isCompleted(progress)) {
       progress.completed = (progress.completed || []).concat([LESSON_NUM]);
-      saveProgress(progress);
     }
     return progress;
   }
 
   function updateSidebarProgress(completed) {
     var count = completed.length;
-    var pct = TOTAL > 0 ? Math.round((count / TOTAL) * 100) : 0;
+    var pct   = TOTAL > 0 ? Math.round((count / TOTAL) * 100) : 0;
 
-    var fill = document.getElementById('sidebar-mini-fill');
+    var fill    = document.getElementById('sidebar-mini-fill');
     var countEl = document.getElementById('sidebar-mini-count');
-    if (fill) { fill.style.width = pct + '%'; }
+    if (fill)    { fill.style.width = pct + '%'; }
     if (countEl) { countEl.textContent = count + ' / ' + TOTAL; }
 
     completed.forEach(function(num) {
@@ -228,29 +272,32 @@ layout: default
   }
 
   function showCompleteState() {
-    var btn = document.getElementById('btn-mark-complete');
+    var btn  = document.getElementById('btn-mark-complete');
     var done = document.getElementById('lesson-complete-done');
-    if (btn) { btn.style.display = 'none'; }
+    if (btn)  { btn.style.display  = 'none'; }
     if (done) { done.style.display = 'flex'; }
   }
 
-  // Init
+  // Init — load progress from worker (async) then update sidebar
   var progress = getProgress();
   updateSidebarProgress(progress.completed || []);
+  if (isCompleted(progress)) { showCompleteState(); }
 
-  if (isCompleted(progress)) {
-    showCompleteState();
-  }
+  loadProgress().then(function(serverProgress) {
+    progress = serverProgress;
+    updateSidebarProgress(serverProgress.completed || []);
+    if (isCompleted(serverProgress)) { showCompleteState(); }
+  });
 
   // Mark Complete button
   var markBtn = document.getElementById('btn-mark-complete');
   if (markBtn) {
-    markBtn.addEventListener('click', function () {
+    markBtn.addEventListener('click', async function () {
       progress = markComplete(progress);
+      await saveProgress(progress.completed);
       updateSidebarProgress(progress.completed);
       showCompleteState();
 
-      // Pulse the next-lesson button as encouragement
       var nextBtn = document.getElementById('btn-next-lesson');
       if (nextBtn) {
         nextBtn.classList.add('lesson-pager-btn--pulse');
@@ -260,7 +307,7 @@ layout: default
   }
 
   // Mobile sidebar toggle
-  var toggle = document.getElementById('sidebar-toggle');
+  var toggle  = document.getElementById('sidebar-toggle');
   var sidebar = document.getElementById('lesson-sidebar');
   if (toggle && sidebar) {
     toggle.addEventListener('click', function () {

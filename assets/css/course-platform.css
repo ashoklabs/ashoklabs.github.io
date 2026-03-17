@@ -798,6 +798,112 @@
   line-height: 1.5;
 }
 
+.btn-github-signin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.65rem 1rem;
+  border: 1.5px solid #d0d7de;
+  border-radius: 8px;
+  background: #24292f;
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.btn-github-signin:hover {
+  background: #32383f;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+}
+
+.buy-returning-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1rem 0;
+  color: #aaa;
+  font-size: 0.78rem;
+}
+
+.buy-returning-divider::before,
+.buy-returning-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e0e0e0;
+}
+
+/* ── Section-based curriculum ─────────────────── */
+
+.curr-section {
+  margin-bottom: 1.25rem;
+}
+
+.curr-section-hdr {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  width: 100%;
+  padding: 0.55rem 0.25rem 0.55rem 0;
+  background: none;
+  border: none;
+  border-bottom: 2px solid #d0e8e8;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.15s;
+}
+
+.curr-section-hdr:hover { border-color: #157878; }
+
+.curr-section-chevron {
+  flex-shrink: 0;
+  color: #157878;
+  transition: transform 0.2s ease;
+}
+
+.curr-section-hdr[aria-expanded="false"] .curr-section-chevron {
+  transform: rotate(-90deg);
+}
+
+.curr-section-title {
+  flex: 1;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.curr-section-meta {
+  font-size: 0.75rem;
+  color: #aaa;
+  white-space: nowrap;
+  font-weight: 500;
+}
+
+.curr-section-body {
+  overflow: hidden;
+}
+
+.curr-section-body--collapsed {
+  display: none;
+}
+
+.sidebar-section-hdr {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  padding: 0.85rem 1rem 0.35rem;
+}
+
 .btn-access-course {
   display: flex;
   align-items: center;
