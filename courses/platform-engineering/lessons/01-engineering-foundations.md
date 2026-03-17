@@ -5,6 +5,8 @@ title: Engineering Foundations
 description: Build the mental model every platform engineer needs — Linux internals, networking fundamentals, DNS resolution, HTTP, and production-grade Git workflows.
 lesson_number: 1
 duration: 45 min
+section_number: 1
+section_title: "Foundations"
 course_id: platform-engineering
 course_title: Platform Engineering Bootcamp
 tags: [Linux, Networking, Git]

@@ -837,6 +837,73 @@
   background: #e0e0e0;
 }
 
+/* ── Section-based curriculum ─────────────────── */
+
+.curr-section {
+  border: 1.5px solid #d0e8e8;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+.curr-section-hdr {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  background: #f0f9f9;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  transition: background 0.15s;
+}
+
+.curr-section-hdr:hover { background: #e4f4f4; }
+
+.curr-section-chevron {
+  flex-shrink: 0;
+  color: #157878;
+  transition: transform 0.2s ease;
+}
+
+.curr-section-hdr[aria-expanded="false"] .curr-section-chevron {
+  transform: rotate(-90deg);
+}
+
+.curr-section-title {
+  flex: 1;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #155757;
+}
+
+.curr-section-meta {
+  font-size: 0.78rem;
+  color: #888;
+  white-space: nowrap;
+}
+
+.curr-section-body {
+  border-top: 1px solid #d0e8e8;
+  overflow: hidden;
+  transition: max-height 0.25s ease, opacity 0.2s ease;
+}
+
+.curr-section-body--collapsed {
+  display: none;
+}
+
+.sidebar-section-hdr {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #aaa;
+  padding: 0.85rem 1rem 0.35rem;
+}
+
 .btn-access-course {
   display: flex;
   align-items: center;

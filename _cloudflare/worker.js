@@ -8,6 +8,8 @@
  *   GET  /verify-access         — Lets the success page confirm access was granted
  *   GET  /auth/github           — Starts GitHub OAuth flow
  *   GET  /auth/github/callback  — GitHub OAuth callback
+ *   GET  /progress              — Fetch lesson progress for a GitHub user
+ *   POST /progress              — Save lesson progress for a GitHub user
  *
  * Environment Variables (set via Cloudflare Dashboard → Workers → Settings → Variables):
  *   RAZORPAY_KEY_ID          — e.g. rzp_live_xxxxxxxxxxxxxx
@@ -28,6 +30,7 @@ const GITHUB_AUTH_URL     = 'https://github.com/login/oauth/authorize';
 const GITHUB_TOKEN_URL    = 'https://github.com/login/oauth/access_token';
 const GITHUB_EMAILS_URL   = 'https://api.github.com/user/emails';
 const GITHUB_USER_URL     = 'https://api.github.com/user';
+const PROGRESS_KV_PREFIX = 'progress';
 
 // ---------------------------------------------------------------------------
 // Course catalogue — add new courses here
@@ -68,6 +71,12 @@ export default {
       }
       if (request.method === 'GET' && url.pathname === '/auth/github/callback') {
         return await handleGitHubCallback(request, env);
+      }
+      if (request.method === 'GET' && url.pathname === '/progress') {
+        return await handleGetProgress(request, env);
+      }
+      if (request.method === 'POST' && url.pathname === '/progress') {
+        return await handleSaveProgress(request, env);
       }
 
       return new Response('Not Found', { status: 404 });
@@ -372,6 +381,49 @@ async function handleGitHubCallback(request, env) {
   dest.searchParams.set('gh_login', login);
   dest.searchParams.set('gh_email', email);
   return Response.redirect(dest.toString(), 302);
+}
+
+// ---------------------------------------------------------------------------
+// GET /progress?courseId=xxx&login=xxx
+// Returns { completed: [1, 2, ...], updatedAt: "..." } for the user.
+// ---------------------------------------------------------------------------
+async function handleGetProgress(request, env) {
+  const url      = new URL(request.url);
+  const courseId = url.searchParams.get('courseId') ?? '';
+  const login    = (url.searchParams.get('login') ?? '').toLowerCase();
+
+  if (!courseId || !login) {
+    return cors(json({ completed: [] }, 400));
+  }
+
+  const key    = `${PROGRESS_KV_PREFIX}:${courseId}:${login}`;
+  const record = await env.COURSE_ACCESS.get(key);
+
+  if (!record) return cors(json({ completed: [] }, 200));
+  try   { return cors(json(JSON.parse(record), 200)); }
+  catch { return cors(json({ completed: [] }, 200)); }
+}
+
+// ---------------------------------------------------------------------------
+// POST /progress
+// Body: { courseId: string, login: string, completed: number[] }
+// Saves lesson progress for the user.
+// ---------------------------------------------------------------------------
+async function handleSaveProgress(request, env) {
+  let body;
+  try { body = await request.json(); } catch { return cors(json({ error: 'Invalid JSON' }, 400)); }
+
+  const { courseId, login: rawLogin, completed } = body ?? {};
+  const login = (rawLogin ?? '').toLowerCase();
+
+  if (!courseId || !login || !Array.isArray(completed)) {
+    return cors(json({ error: 'Missing fields' }, 400));
+  }
+
+  const key = `${PROGRESS_KV_PREFIX}:${courseId}:${login}`;
+  await env.COURSE_ACCESS.put(key, JSON.stringify({ completed, updatedAt: new Date().toISOString() }));
+
+  return cors(json({ ok: true }, 200));
 }
 
 // ---------------------------------------------------------------------------
