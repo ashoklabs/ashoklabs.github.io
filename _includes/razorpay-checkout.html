@@ -190,17 +190,31 @@
 
   // ── On load: check if user already has access ──────────────────────────
   (async function checkExistingAccess() {
-    const courseId  = btn.dataset.courseId;
-    const email     = sessionStorage.getItem('course_email');
-    if (!email) return;
+    const courseId = btn.dataset.courseId;
+
+    // GitHub signed-in user — check their email and redirect directly if enrolled
+    let ghEmail = '';
+    try {
+      const ghUser = JSON.parse(localStorage.getItem('gh_user'));
+      if (ghUser && ghUser.email) ghEmail = ghUser.email.toLowerCase();
+    } catch {}
+
+    const checkEmail = ghEmail || sessionStorage.getItem('course_email');
+    if (!checkEmail) return;
+
     try {
       const v = await fetch(
-        `${WORKER_URL}/verify-access?email=${encodeURIComponent(email)}&courseId=${encodeURIComponent(courseId)}`
+        `${WORKER_URL}/verify-access?email=${encodeURIComponent(checkEmail)}&courseId=${encodeURIComponent(courseId)}`
       );
       const { hasAccess } = await v.json();
       if (hasAccess) {
-        // Returning visit after previous purchase/check — show welcome back
-        showReturningSuccess(email);
+        if (ghEmail) {
+          // GitHub user with purchase → skip the page entirely
+          window.location.replace(LESSONS_URL);
+        } else {
+          // Email-verified returning student → show welcome state
+          showReturningSuccess(checkEmail);
+        }
       }
     } catch {}
   })();
