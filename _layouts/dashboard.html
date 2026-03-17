@@ -137,7 +137,7 @@ layout: default
             <button class="curr-section-hdr" type="button" aria-expanded="true"
                     onclick="this.setAttribute('aria-expanded', this.getAttribute('aria-expanded')==='true'?'false':'true'); this.nextElementSibling.classList.toggle('curr-section-body--collapsed');">
               <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
-              <span class="curr-section-title">Section {{ section_idx }}: {{ first_lesson.section_title | default: "Course Content" }}</span>
+              <span class="curr-section-title">Section {{ section_idx }} &middot; {{ first_lesson.section_title | default: "Course Content" }}</span>
               <span class="curr-section-meta">{{ section.size }} lesson{% if section.size != 1 %}s{% endif %}</span>
             </button>
             <div class="curr-section-body">
