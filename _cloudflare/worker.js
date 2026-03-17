@@ -2,15 +2,16 @@
  * Ashoklabs Course Platform — Cloudflare Worker
  *
  * Routes:
- *   POST /create-order    — Creates a Razorpay order (called from the buy button)
- *   POST /webhook         — Receives Razorpay payment.captured webhook
- *   POST /check-access    — External Evaluation endpoint for Cloudflare Zero Trust Access
- *   GET  /verify-access   — Lets the success page confirm access was granted
+ *   POST /create-order          — Creates a Razorpay order (called from the buy button)
+ *   POST /webhook               — Receives Razorpay payment.captured webhook
+ *   POST /check-access          — External Evaluation endpoint for Cloudflare Zero Trust Access
+ *   GET  /verify-access         — Lets the success page confirm access was granted
+ *   GET  /auth/github           — Starts GitHub OAuth flow
+ *   GET  /auth/github/callback  — GitHub OAuth callback
  *
  * Environment Variables (set via Cloudflare Dashboard → Workers → Settings → Variables):
  *   RAZORPAY_KEY_ID          — e.g. rzp_live_xxxxxxxxxxxxxx
- *   RAZORPAY_KEY_SECRET      — Razorpay API Key Secret
- *   RAZORPAY_WEBHOOK_SECRET  — From Razorpay Dashboard → Webhooks → Secret
+ *   GITHUB_CLIENT_ID         — GitHub OAuth App Client ID
  *
  * KV Namespace Binding (Workers → Settings → Variables → KV Namespace Bindings):
  *   COURSE_ACCESS            — Stores granted access records
@@ -18,10 +19,15 @@
  * Secrets (set via: wrangler secret put <NAME>):
  *   RAZORPAY_KEY_SECRET
  *   RAZORPAY_WEBHOOK_SECRET
+ *   GITHUB_CLIENT_SECRET
  */
 
-const RAZORPAY_API   = 'https://api.razorpay.com/v1';
-const SITE_ORIGIN    = 'https://ashoklabs.com';
+const RAZORPAY_API        = 'https://api.razorpay.com/v1';
+const SITE_ORIGIN         = 'https://ashoklabs.com';
+const GITHUB_AUTH_URL     = 'https://github.com/login/oauth/authorize';
+const GITHUB_TOKEN_URL    = 'https://github.com/login/oauth/access_token';
+const GITHUB_EMAILS_URL   = 'https://api.github.com/user/emails';
+const GITHUB_USER_URL     = 'https://api.github.com/user';
 
 // ---------------------------------------------------------------------------
 // Course catalogue — add new courses here
@@ -56,6 +62,12 @@ export default {
       }
       if (request.method === 'GET' && url.pathname === '/verify-access') {
         return await handleVerifyAccess(request, env);
+      }
+      if (request.method === 'GET' && url.pathname === '/auth/github') {
+        return handleGitHubAuthStart(request, env);
+      }
+      if (request.method === 'GET' && url.pathname === '/auth/github/callback') {
+        return await handleGitHubCallback(request, env);
       }
 
       return new Response('Not Found', { status: 404 });
@@ -242,6 +254,124 @@ async function handleVerifyAccess(request, env) {
   const record = await env.COURSE_ACCESS.get(key);
 
   return cors(json({ hasAccess: !!record }, 200));
+}
+
+// ---------------------------------------------------------------------------
+// GET /auth/github?courseId=xxx&returnUrl=https://...
+// Redirects the browser to GitHub's OAuth consent screen.
+// ---------------------------------------------------------------------------
+function handleGitHubAuthStart(request, env) {
+  const url       = new URL(request.url);
+  const courseId  = url.searchParams.get('courseId') ?? '';
+  const returnUrl = url.searchParams.get('returnUrl') ?? SITE_ORIGIN;
+
+  const state       = btoa(JSON.stringify({ courseId, returnUrl }));
+  const redirectUri = `${new URL(request.url).origin}/auth/github/callback`;
+
+  const authUrl = new URL(GITHUB_AUTH_URL);
+  authUrl.searchParams.set('client_id',    env.GITHUB_CLIENT_ID);
+  authUrl.searchParams.set('redirect_uri', redirectUri);
+  authUrl.searchParams.set('scope',        'user:email');
+  authUrl.searchParams.set('state',        state);
+
+  return Response.redirect(authUrl.toString(), 302);
+}
+
+// ---------------------------------------------------------------------------
+// GET /auth/github/callback?code=xxx&state=xxx
+// Exchanges auth code for a token, reads the user's primary email,
+// checks KV course access, then redirects back to the site.
+//
+// On success with courseId + access:  → /courses/{id}/lessons/
+// On success without courseId:        → returnUrl?gh_login=xxx&gh_email=xxx
+// On no-access:                       → returnUrl?github_auth_error=no_access&gh_login=xxx
+// ---------------------------------------------------------------------------
+async function handleGitHubCallback(request, env) {
+  const url      = new URL(request.url);
+  const code     = url.searchParams.get('code');
+  const stateStr = url.searchParams.get('state') ?? '';
+
+  let courseId  = '';
+  let returnUrl = SITE_ORIGIN;
+  try {
+    const state = JSON.parse(atob(stateStr));
+    courseId  = state.courseId  ?? '';
+    returnUrl = state.returnUrl ?? SITE_ORIGIN;
+  } catch {}
+
+  if (!code) {
+    return Response.redirect(`${returnUrl}?github_auth_error=cancelled`, 302);
+  }
+
+  const redirectUri = `${new URL(request.url).origin}/auth/github/callback`;
+
+  // Exchange code for access token
+  const tokenRes = await fetch(GITHUB_TOKEN_URL, {
+    method:  'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Accept':        'application/json',
+    },
+    body: new URLSearchParams({
+      client_id:     env.GITHUB_CLIENT_ID,
+      client_secret: env.GITHUB_CLIENT_SECRET,
+      code,
+      redirect_uri:  redirectUri,
+    }),
+  });
+
+  if (!tokenRes.ok) {
+    console.error('GitHub token exchange failed:', await tokenRes.text());
+    return Response.redirect(`${returnUrl}?github_auth_error=token_failed`, 302);
+  }
+
+  const { access_token } = await tokenRes.json();
+  if (!access_token) {
+    return Response.redirect(`${returnUrl}?github_auth_error=token_failed`, 302);
+  }
+
+  // Fetch GitHub username
+  const userRes = await fetch(GITHUB_USER_URL, {
+    headers: { Authorization: `Bearer ${access_token}`, 'User-Agent': 'ashoklabs-worker' },
+  });
+  const ghUser = userRes.ok ? await userRes.json() : {};
+  const login  = ghUser.login ?? '';
+
+  // Fetch user emails and find the primary verified one
+  const emailsRes = await fetch(GITHUB_EMAILS_URL, {
+    headers: { Authorization: `Bearer ${access_token}`, 'User-Agent': 'ashoklabs-worker' },
+  });
+  if (!emailsRes.ok) {
+    return Response.redirect(`${returnUrl}?github_auth_error=email_failed`, 302);
+  }
+
+  const emails = await emailsRes.json();
+  const primary = emails.find(e => e.primary && e.verified) ?? emails.find(e => e.verified);
+  const email   = (primary?.email ?? '').toLowerCase();
+
+  if (!email) {
+    return Response.redirect(`${returnUrl}?github_auth_error=no_email`, 302);
+  }
+
+  // If a course was specified, check KV access
+  if (courseId) {
+    const key    = `access:${email}:${courseId}`;
+    const record = await env.COURSE_ACCESS.get(key);
+    if (record) {
+      return Response.redirect(`${SITE_ORIGIN}/courses/${courseId}/lessons/`, 302);
+    }
+    const dest = new URL(returnUrl);
+    dest.searchParams.set('github_auth_error', 'no_access');
+    dest.searchParams.set('gh_login', login);
+    dest.searchParams.set('gh_email', email);
+    return Response.redirect(dest.toString(), 302);
+  }
+
+  // Site-wide login — pass identity back to the page
+  const dest = new URL(returnUrl);
+  dest.searchParams.set('gh_login', login);
+  dest.searchParams.set('gh_email', email);
+  return Response.redirect(dest.toString(), 302);
 }
 
 // ---------------------------------------------------------------------------

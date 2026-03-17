@@ -16,9 +16,12 @@ id      = "aa8535adb4de4bc483e3f573546bec22"
 # Non-secret env vars
 # Secrets must be set via: wrangler secret put RAZORPAY_KEY_SECRET
 #                          wrangler secret put RAZORPAY_WEBHOOK_SECRET
+#                          wrangler secret put GITHUB_CLIENT_SECRET
 # ---------------------------------------------------------------------------
 [vars]
-RAZORPAY_KEY_ID = "rzp_live_SRsDIC4AQA7MAB"
+RAZORPAY_KEY_ID  = "rzp_live_SRsDIC4AQA7MAB"
+# Set your GitHub OAuth App Client ID here
+GITHUB_CLIENT_ID = "REPLACE_WITH_YOUR_GITHUB_CLIENT_ID"
 
 # ---------------------------------------------------------------------------
 # Routes — maps the worker to your domain
