@@ -97,9 +97,7 @@
 
       signoutBtn && signoutBtn.addEventListener('click', function () {
         try { localStorage.removeItem(GH_KEY); } catch(e) {}
-        // /cdn-cgi/access/logout clears the Cloudflare Access session cookie
-        // then redirects to the home page — fully signed out at both layers
-        window.location.href = '/cdn-cgi/access/logout?redirect_to=/';
+        window.location.href = '/';
       });
     })();
     </script>
