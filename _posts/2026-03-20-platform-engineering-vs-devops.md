@@ -129,4 +129,4 @@ Both roles are high-value, high-demand, and only getting more important as compa
 
 ---
 
-*If you found this useful and want more content like this on DevOps, Platform Engineering, and building a career in infrastructure — [subscribe to the newsletter](#newsletter). New posts every week.*
+*If you found this useful and want more content like this on DevOps, Platform Engineering, and building a career in infrastructure — [subscribe to the newsletter](https://ashoklabs.com/newsletter). New posts every week.*
