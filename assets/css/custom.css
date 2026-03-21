@@ -410,11 +410,13 @@
   color: #fff !important;
   font-weight: 700;
   font-size: 0.88rem;
-  padding: 0.55rem 1.2rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 6px;
   text-decoration: none !important;
   transition: background 0.15s;
   white-space: nowrap;
+  line-height: 1.4;
+  text-align: center;
 }
 
 .btn-enroll:hover {
