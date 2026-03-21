@@ -6,7 +6,8 @@ duration: 16 Weeks
 level: Intermediate – Advanced
 format: Online · Self-paced
 course_id: platform-engineering
-price: 1
+price: 5000
+original_price: 10000
 course_platform: true
 ---
 
@@ -189,6 +190,6 @@ course_platform: true
 <section class="course-section course-cta-section">
 <h2>Ready to build production platforms?</h2>
 <p>One payment — lifetime access. Start immediately after purchase. All 16 weeks of content available right away.</p>
-<a href="#buy-card" class="btn-enroll btn-enroll-lg">Enrol Now — ₹1</a>
+<a href="#buy-card" class="btn-enroll btn-enroll-lg">Enrol Now — ₹5,000 <s style="opacity:0.6;font-size:0.85em;">₹10,000</s></a>
 <p style="margin-top:0.75rem;font-size:0.82rem;color:#888;">Secure payment via Razorpay &middot; UPI, Cards, Net Banking accepted</p>
 </section>
