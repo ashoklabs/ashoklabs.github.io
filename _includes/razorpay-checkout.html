@@ -18,7 +18,7 @@
 
   <div class="buy-card-header">
     <div class="buy-price-block">
-      <span class="buy-price-amount">₹{{ page.price }}</span>
+      <span class="buy-price-amount">₹{{ page.price }}{% if page.original_price %} <s style="opacity:0.55;font-size:0.7em;font-weight:normal;">₹{{ page.original_price }}</s>{% endif %}</span>
       <span class="buy-price-sub">one-time &middot; lifetime access</span>
     </div>
     <div class="buy-badge">Most Popular</div>

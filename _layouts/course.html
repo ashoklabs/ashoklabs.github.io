@@ -17,7 +17,7 @@ layout: default
   </div>
   <div class="course-stat">
     {% if page.price %}
-    <a href="#buy-card" class="btn-enroll">Buy — ₹{{ page.price }}</a>
+    <a href="#buy-card" class="btn-enroll">Buy — ₹{{ page.price }}{% if page.original_price %} <s style="opacity:0.6;font-size:0.85em;">₹{{ page.original_price }}</s>{% endif %}</a>
     {% else %}
     <a href="mailto:{{ site.email | default: 'hello@ashoklabs.com' }}" class="btn-enroll">Apply Now</a>
     {% endif %}
