@@ -2,7 +2,7 @@
 title: "The DevOps Roadmap: A Practical Guide for 2026"
 categories: [devops]
 date: 2026-03-20
-image: https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600&q=80
+image: https://i.imghippo.com/files/Ro5120nY.webp
 description: Stop jumping straight into Kubernetes. Here's the structured, battle-tested roadmap to become a DevOps or Platform Engineer in 2026 — built on real fundamentals.
 ---
 
