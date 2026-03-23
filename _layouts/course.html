@@ -15,9 +15,12 @@ layout: default
     <span class="stat-value">{{ page.format }}</span>
     <span class="stat-label">Format</span>
   </div>
-  <div class="course-stat">
+  <div class="course-stat course-stat--cta">
     {% if page.price %}
-    <a href="#buy-card" class="btn-enroll">Buy — ₹{{ page.price }}{% if page.original_price %}<br><s style="color:rgba(255,255,255,0.8);font-size:0.8em;font-weight:400;">was ₹{{ page.original_price }}</s>{% endif %}</a>
+    <a href="#buy-card" class="btn-enroll">
+      <span class="btn-enroll-price">Buy &mdash; ₹{{ page.price }}</span>
+      {% if page.original_price %}<s class="btn-enroll-original">was ₹{{ page.original_price }}</s>{% endif %}
+    </a>
     {% else %}
     <a href="mailto:{{ site.email | default: 'hello@ashoklabs.com' }}" class="btn-enroll">Apply Now</a>
     {% endif %}

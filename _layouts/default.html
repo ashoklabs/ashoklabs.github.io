@@ -116,16 +116,16 @@
       function openMenu() {
         hamburger.classList.add('is-open');
         navLinks.classList.add('is-open');
+        overlay.classList.add('is-open');
         hamburger.setAttribute('aria-expanded', 'true');
-        overlay.removeAttribute('aria-hidden');
         document.body.classList.add('nav-mobile-open');
       }
 
       function closeMenu() {
         hamburger.classList.remove('is-open');
         navLinks.classList.remove('is-open');
+        overlay.classList.remove('is-open');
         hamburger.setAttribute('aria-expanded', 'false');
-        overlay.setAttribute('aria-hidden', 'true');
         document.body.classList.remove('nav-mobile-open');
       }
 
