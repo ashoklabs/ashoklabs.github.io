@@ -53,7 +53,6 @@
           </li>
         </ul>
       </div>
-      <div class="nav-mobile-overlay" id="nav-mobile-overlay" aria-hidden="true"></div>
     </nav>
 
     <script>
@@ -111,29 +110,29 @@
     (function () {
       var hamburger = document.getElementById('nav-hamburger');
       var navLinks  = document.getElementById('nav-links-list');
-      var overlay   = document.getElementById('nav-mobile-overlay');
+      var nav       = document.querySelector('.site-nav');
 
       function openMenu() {
         hamburger.classList.add('is-open');
         navLinks.classList.add('is-open');
-        overlay.classList.add('is-open');
         hamburger.setAttribute('aria-expanded', 'true');
-        document.body.classList.add('nav-mobile-open');
       }
 
       function closeMenu() {
         hamburger.classList.remove('is-open');
         navLinks.classList.remove('is-open');
-        overlay.classList.remove('is-open');
         hamburger.setAttribute('aria-expanded', 'false');
-        document.body.classList.remove('nav-mobile-open');
       }
 
-      hamburger && hamburger.addEventListener('click', function () {
+      hamburger && hamburger.addEventListener('click', function (e) {
+        e.stopPropagation();
         hamburger.classList.contains('is-open') ? closeMenu() : openMenu();
       });
 
-      overlay && overlay.addEventListener('click', closeMenu);
+      // Close when clicking outside the nav
+      document.addEventListener('click', function (e) {
+        if (nav && !nav.contains(e.target)) closeMenu();
+      });
 
       // Close menu when a nav link is clicked
       navLinks && navLinks.querySelectorAll('a').forEach(function (link) {
@@ -142,7 +141,7 @@
 
       // Close on Escape key
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && hamburger.classList.contains('is-open')) closeMenu();
+        if (e.key === 'Escape') closeMenu();
       });
     })();
     </script>

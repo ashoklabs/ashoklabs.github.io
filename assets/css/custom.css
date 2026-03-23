@@ -1406,25 +1406,7 @@ button,
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* Mobile overlay backdrop — hidden by default, shown only via .is-open class */
-.nav-mobile-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.4);
-  z-index: 98;
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-}
-
-.nav-mobile-overlay.is-open {
-  display: block;
-}
-
-/* Lock body scroll when menu is open */
-body.nav-mobile-open {
-  overflow: hidden;
-}
+/* (overlay removed — dropdown approach needs no overlay) */
 
 /* ═══════════════════════════════════════════════════════════════
    RESPONSIVE BREAKPOINTS
@@ -1433,12 +1415,15 @@ body.nav-mobile-open {
 /* ── Tablet: ≤ 768px ──────────────────────────────────────────── */
 @media (max-width: 768px) {
 
-  /* Nav: switch to hamburger */
+  /* ── Nav: hamburger + dropdown ──────────────── */
   .nav-hamburger {
     display: flex;
   }
 
-  /* Nav bar: better mobile sizing */
+  .site-nav {
+    position: sticky; /* keep sticky so dropdown is contained */
+  }
+
   .site-nav-inner {
     padding: 0 1rem;
     height: 56px;
@@ -1449,57 +1434,81 @@ body.nav-mobile-open {
     letter-spacing: 0.02em;
   }
 
+  /* Dropdown: absolutely positioned below the nav bar */
   .nav-links {
-    position: fixed;
-    top: 56px; /* matches mobile nav height */
+    position: absolute;
+    top: 100%;   /* flush below the nav bar */
+    left: 0;
     right: 0;
-    bottom: 0;
-    width: min(280px, 80vw);
-    background: linear-gradient(160deg, #155757, #0f4040);
     flex-direction: column;
     align-items: stretch;
     gap: 0;
-    padding: 1rem 0;
-    transform: translateX(100%);
-    transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 99;
-    overflow-y: auto;
-    box-shadow: -4px 0 24px rgba(0,0,0,0.25);
+    padding: 0.5rem 0;
+    background: #0f4848;
+    /* Hidden state */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    z-index: 10; /* only needs to beat page content, not escape stacking context */
   }
 
   .nav-links.is-open {
-    transform: translateX(0);
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
   }
 
   .nav-links li {
-    border-bottom: 1px solid rgba(255,255,255,0.07);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
 
-  .nav-links a {
-    display: flex;
+  .nav-links li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links a,
+  .nav-github-signin,
+  .nav-github-user {
+    display: flex !important;
     align-items: center;
-    padding: 0.9rem 1.5rem;
+    padding: 1rem 1.5rem;
     font-size: 1rem;
+    color: #fff !important;
     border-radius: 0;
-    min-height: 52px;
+    min-height: 54px;
     width: 100%;
     justify-content: flex-start;
+    background: transparent;
+  }
+
+  .nav-links a:hover {
+    background: rgba(255,255,255,0.1) !important;
+    color: #fff !important;
   }
 
   .nav-links a::after {
     display: none;
   }
 
+  /* Courses CTA: highlight within dropdown */
   .nav-cta {
-    margin: 0.75rem 1rem;
+    background: rgba(255,255,255,0.12) !important;
+    margin: 0.5rem 1rem;
     border-radius: 8px !important;
+    min-height: 48px;
     justify-content: center;
+    width: calc(100% - 2rem) !important;
   }
 
-  .nav-github-signin,
+  .nav-cta:hover {
+    background: rgba(255,255,255,0.22) !important;
+  }
+
   .nav-github-user {
-    padding: 0.9rem 1.5rem;
-    width: 100%;
+    gap: 0.6rem;
   }
 
   /* Page header: reduce padding */
