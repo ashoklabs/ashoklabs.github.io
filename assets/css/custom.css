@@ -411,13 +411,15 @@
   color: #fff !important;
   font-weight: 700;
   font-size: 0.88rem;
-  padding: 0.6rem 1.2rem;
+  padding: 0.65rem 1.2rem;
   border-radius: 6px;
   text-decoration: none !important;
   transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
   line-height: 1.4;
   text-align: center;
   box-shadow: 0 2px 8px rgba(21,120,120,0.3);
+  white-space: normal;
+  word-break: keep-all;
 }
 
 .btn-enroll:hover {
@@ -431,12 +433,10 @@
 }
 
 .btn-enroll-price {
-  display: block;
   font-weight: 700;
 }
 
 .btn-enroll-original {
-  display: block;
   font-size: 0.78em;
   font-weight: 400;
   color: rgba(255,255,255,0.75);
@@ -1438,9 +1438,20 @@ body.nav-mobile-open {
     display: flex;
   }
 
+  /* Nav bar: better mobile sizing */
+  .site-nav-inner {
+    padding: 0 1rem;
+    height: 56px;
+  }
+
+  .nav-brand {
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+
   .nav-links {
     position: fixed;
-    top: 52px; /* height of nav bar */
+    top: 56px; /* matches mobile nav height */
     right: 0;
     bottom: 0;
     width: min(280px, 80vw);
@@ -1519,9 +1530,10 @@ body.nav-mobile-open {
     font-size: 1.6rem;
   }
 
-  /* Course stats bar: wrap to grid on tablets */
+  /* Course stats bar: tighter gap on tablets */
   .course-stats-bar {
     gap: 0.75rem;
+    padding: 1rem 1.25rem;
   }
 
   /* Footer: tighten gaps */
@@ -1619,30 +1631,37 @@ body.nav-mobile-open {
     font-size: 1.4rem;
   }
 
-  /* Course stats bar: redesigned for mobile */
+  /* Course stats bar: flex-based 2-up layout */
   .course-stats-bar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
     padding: 1rem;
   }
 
+  /* Info stats: 2 per row */
+  .course-stat {
+    flex: 1 1 calc(50% - 0.35rem);
+    min-width: 0;
+  }
+
+  /* Buy button + Already student: always full width */
+  .course-stat--cta,
   .course-stat--returning {
-    grid-column: 1 / -1;
+    flex: 1 1 100%;
+    min-width: 0;
   }
 
-  /* The CTA stat (buy button) spans the full width */
-  .course-stat--cta {
-    grid-column: 1 / -1;
-  }
-
-  /* Buy button: full width, larger */
+  /* Buy button: full width, prominent */
   .course-stat--cta .btn-enroll {
+    display: flex;
     width: 100%;
-    padding: 0.85rem 1rem;
+    padding: 0.9rem 1.25rem;
     font-size: 1rem;
     border-radius: 8px;
     justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   /* Footer: single column */
