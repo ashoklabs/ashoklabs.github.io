@@ -14,7 +14,7 @@
 {% seo %}
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="preload" href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" as="style" type="text/css" crossorigin>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#157878">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="icon" href="data:,">
@@ -31,7 +31,12 @@
     <nav class="site-nav" role="navigation" aria-label="Main navigation">
       <div class="site-nav-inner">
         <a href="{{ '/' | relative_url }}" class="nav-brand">Ashoklabs</a>
-        <ul class="nav-links">
+        <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav-links-list" type="button">
+          <span class="nav-hamburger-bar"></span>
+          <span class="nav-hamburger-bar"></span>
+          <span class="nav-hamburger-bar"></span>
+        </button>
+        <ul class="nav-links" id="nav-links-list" role="list">
           <li><a href="{{ '/about' | relative_url }}">About</a></li>
           <li><a href="{{ '/newsletter' | relative_url }}">Newsletter</a></li>
           <li><a href="{{ '/courses' | relative_url }}" class="nav-cta">Courses</a></li>
@@ -48,6 +53,7 @@
           </li>
         </ul>
       </div>
+      <div class="nav-mobile-overlay" id="nav-mobile-overlay" aria-hidden="true"></div>
     </nav>
 
     <script>
@@ -98,6 +104,45 @@
       signoutBtn && signoutBtn.addEventListener('click', function () {
         try { localStorage.removeItem(GH_KEY); } catch(e) {}
         window.location.href = '/';
+      });
+    })();
+
+    // Mobile hamburger menu
+    (function () {
+      var hamburger = document.getElementById('nav-hamburger');
+      var navLinks  = document.getElementById('nav-links-list');
+      var overlay   = document.getElementById('nav-mobile-overlay');
+
+      function openMenu() {
+        hamburger.classList.add('is-open');
+        navLinks.classList.add('is-open');
+        hamburger.setAttribute('aria-expanded', 'true');
+        overlay.removeAttribute('aria-hidden');
+        document.body.classList.add('nav-mobile-open');
+      }
+
+      function closeMenu() {
+        hamburger.classList.remove('is-open');
+        navLinks.classList.remove('is-open');
+        hamburger.setAttribute('aria-expanded', 'false');
+        overlay.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('nav-mobile-open');
+      }
+
+      hamburger && hamburger.addEventListener('click', function () {
+        hamburger.classList.contains('is-open') ? closeMenu() : openMenu();
+      });
+
+      overlay && overlay.addEventListener('click', closeMenu);
+
+      // Close menu when a nav link is clicked
+      navLinks && navLinks.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Close on Escape key
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && hamburger.classList.contains('is-open')) closeMenu();
       });
     })();
     </script>
