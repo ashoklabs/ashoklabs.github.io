@@ -42,7 +42,6 @@
   color: #fff;
   text-decoration: none;
   letter-spacing: 0.04em;
-  opacity: 0.95;
   transition: opacity 0.15s;
 }
 
@@ -405,18 +404,22 @@
 }
 
 .btn-enroll {
-  display: inline-block;
-  background: #157878;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: linear-gradient(135deg, #155757, #157878);
   color: #fff !important;
   font-weight: 700;
   font-size: 0.88rem;
-  padding: 0.6rem 1.2rem;
+  padding: 0.65rem 1.2rem;
   border-radius: 6px;
   text-decoration: none !important;
-  transition: background 0.15s;
-  white-space: nowrap;
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
   line-height: 1.4;
   text-align: center;
+  box-shadow: 0 2px 8px rgba(21,120,120,0.3);
+  white-space: normal;
+  word-break: keep-all;
 }
 
 .btn-enroll:hover {
@@ -427,6 +430,18 @@
   font-size: 1rem;
   padding: 0.75rem 2rem;
   border-radius: 8px;
+}
+
+.btn-enroll-price {
+  font-weight: 700;
+}
+
+.btn-enroll-original {
+  font-size: 0.78em;
+  font-weight: 400;
+  color: rgba(255,255,255,0.75);
+  margin-top: 0.1rem;
+  text-decoration: line-through;
 }
 
 .course-stat--returning {
@@ -1264,4 +1279,528 @@
 
 .issue-link:hover {
   text-decoration: underline;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   GLOBAL UX IMPROVEMENTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Smooth scroll for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global box sizing (belt-and-suspenders in case theme doesn't set it) */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Prevent horizontal overflow on all viewports */
+body {
+  overflow-x: hidden;
+}
+
+/* Responsive images – never overflow their container */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Better focus rings for keyboard navigation */
+:focus-visible {
+  outline: 3px solid #22c55e;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Skip-to-content link (already in HTML, style it properly) */
+#skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  background: #155757;
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 8px 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  z-index: 9999;
+  transition: top 0.2s;
+}
+#skip-to-content:focus {
+  top: 0;
+}
+
+/* Ensure minimum tap target size for interactive elements */
+button,
+[role="button"],
+.interaction-btn,
+.btn-enroll,
+.nav-links a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Override min-height for specific layout-breaking elements */
+.nav-links li {
+  min-height: unset;
+}
+.nav-links a {
+  display: inline-flex;
+  min-height: 36px;
+}
+
+/* Reading-width constraint for long prose (improves readability) */
+.post-content p,
+.post-content li {
+  max-width: 70ch;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE HAMBURGER MENU
+   ═══════════════════════════════════════════════════════════════ */
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  border-radius: 6px;
+  transition: background 0.2s;
+  min-height: unset;
+}
+
+.nav-hamburger:hover {
+  background: rgba(255,255,255,0.12);
+}
+
+.nav-hamburger-bar {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+  transform-origin: center;
+}
+
+/* Hamburger → X animation */
+.nav-hamburger.is-open .nav-hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-hamburger.is-open .nav-hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.nav-hamburger.is-open .nav-hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* (overlay removed — dropdown approach needs no overlay) */
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet: ≤ 768px ──────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* ── Nav: hamburger + dropdown ──────────────── */
+  .nav-hamburger {
+    display: flex;
+  }
+
+  .site-nav {
+    position: sticky; /* keep sticky so dropdown is contained */
+  }
+
+  .site-nav-inner {
+    padding: 0 1rem;
+    height: 56px;
+  }
+
+  .nav-brand {
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* Dropdown: absolutely positioned below the nav bar */
+  .nav-links {
+    position: absolute;
+    top: 100%;   /* flush below the nav bar */
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0.5rem 0;
+    background: #0f4848;
+    /* Hidden state */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0.2s;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+    z-index: 10; /* only needs to beat page content, not escape stacking context */
+  }
+
+  .nav-links.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0s linear 0s;
+  }
+
+  .nav-links li {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .nav-links li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links a,
+  .nav-github-signin,
+  .nav-github-user {
+    display: flex !important;
+    align-items: center;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    color: #fff !important;
+    border-radius: 0;
+    min-height: 54px;
+    width: 100%;
+    justify-content: flex-start;
+    background: transparent;
+  }
+
+  .nav-links a:hover {
+    background: rgba(255,255,255,0.1) !important;
+    color: #fff !important;
+  }
+
+  .nav-links a::after {
+    display: none;
+  }
+
+  /* Courses CTA: highlight within dropdown */
+  .nav-cta {
+    background: rgba(255,255,255,0.12) !important;
+    margin: 0.5rem 1rem;
+    border-radius: 8px !important;
+    min-height: 48px;
+    justify-content: center;
+    width: calc(100% - 2rem) !important;
+  }
+
+  .nav-cta:hover {
+    background: rgba(255,255,255,0.22) !important;
+  }
+
+  .nav-github-user {
+    gap: 0.6rem;
+  }
+
+  /* Page header: reduce padding */
+  .page-header {
+    padding: 1.75rem 1.5rem;
+  }
+
+  .page-header .project-name {
+    font-size: 1.6rem;
+  }
+
+  .page-header .project-tagline {
+    font-size: 0.9rem;
+  }
+
+  /* Main content padding */
+  .main-content {
+    padding: 2rem 1.25rem;
+  }
+
+  /* About page: stack two columns */
+  .about-cols {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .about-name {
+    font-size: 1.6rem;
+  }
+
+  /* Course stats bar: tighter gap on tablets */
+  .course-stats-bar {
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+  }
+
+  /* Footer: tighten gaps */
+  .site-footer-inner {
+    gap: 2rem;
+    padding: 2.5rem 1.5rem 1.5rem;
+  }
+
+  .footer-nav {
+    gap: 2rem;
+  }
+
+  /* Newsletter: full width */
+  .newsletter-page {
+    padding: 0 0.5rem;
+  }
+
+  .newsletter-heading {
+    font-size: 1.6rem;
+  }
+}
+
+/* ── Mobile: ≤ 540px ──────────────────────────────────────────── */
+@media (max-width: 540px) {
+
+  /* Page header */
+  .page-header {
+    padding: 1.5rem 1rem;
+  }
+
+  .page-header .project-name {
+    font-size: 1.35rem;
+  }
+
+  .page-header .project-tagline {
+    font-size: 0.82rem;
+  }
+
+  /* Main content */
+  .main-content {
+    padding: 1.5rem 1rem;
+  }
+
+  /* Post title */
+  .post-title {
+    font-size: 1.5rem;
+  }
+
+  /* Post cards: stack image above text on small phones */
+  .post-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .post-card-image {
+    width: 100%;
+    height: 160px;
+  }
+
+  /* About */
+  .about-name {
+    font-size: 1.4rem;
+  }
+
+  .about-summary {
+    font-size: 0.9rem;
+  }
+
+  /* Timeline: collapse meta section */
+  .timeline-item {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+
+  .timeline-meta {
+    width: auto;
+  }
+
+  /* Newsletter: stack input row vertically */
+  .newsletter-input-row {
+    flex-direction: column;
+  }
+
+  .newsletter-submit {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
+  }
+
+  .newsletter-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .newsletter-heading {
+    font-size: 1.4rem;
+  }
+
+  /* Course stats bar: flex-based 2-up layout */
+  .course-stats-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    padding: 1rem;
+  }
+
+  /* Info stats: 2 per row */
+  .course-stat {
+    flex: 1 1 calc(50% - 0.35rem);
+    min-width: 0;
+  }
+
+  /* Buy button + Already student: always full width */
+  .course-stat--cta,
+  .course-stat--returning {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  /* Buy button: full width, prominent */
+  .course-stat--cta .btn-enroll {
+    display: flex;
+    width: 100%;
+    padding: 0.9rem 1.25rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Footer: single column */
+  .site-footer-inner {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 2rem 1rem 1.25rem;
+  }
+
+  .footer-brand {
+    min-width: unset;
+  }
+
+  .footer-nav {
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .footer-bottom {
+    padding: 1rem;
+  }
+
+  /* Post interactions: stack buttons */
+  .post-interactions {
+    gap: 0.65rem;
+  }
+
+  .interaction-btn {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.85rem;
+  }
+
+  /* Issues list: stack date and link */
+  .issues-list li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .issue-date {
+    min-width: unset;
+  }
+
+  /* Curriculum grid: single column */
+  .curriculum-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Course pillars: single column */
+  .course-pillars {
+    grid-template-columns: 1fr;
+  }
+
+  /* Course CTA section */
+  .course-cta-section {
+    padding: 1.75rem 1.25rem;
+  }
+
+  /* Capstone grid: single column */
+  .capstone-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* ── Small phones: ≤ 380px ────────────────────────────────────── */
+@media (max-width: 380px) {
+  .page-header .project-name {
+    font-size: 1.2rem;
+  }
+
+  .about-name {
+    font-size: 1.25rem;
+  }
+
+  .newsletter-heading {
+    font-size: 1.2rem;
+  }
+
+  .capstone-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links {
+    width: 100vw;
+  }
+}
+
+/* ─── Hover effects only on devices that support hover ─────────── */
+/* Avoids sticky :hover states on touch devices */
+@media (hover: none) {
+  .post-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .issues-list li:hover {
+    transform: none;
+  }
+
+  .btn-already-student:hover {
+    transform: none;
+  }
+
+  .interaction-btn:hover {
+    transform: none;
+  }
+}
+
+/* ── Print styles ─────────────────────────────────────────────── */
+@media print {
+  .site-nav,
+  .site-footer,
+  .post-interactions,
+  .comment-section,
+  .recent-posts,
+  .nav-hamburger {
+    display: none !important;
+  }
+
+  .main-content {
+    padding: 0;
+  }
+
+  body {
+    font-size: 12pt;
+    color: #000;
+  }
+
+  a {
+    color: #000;
+    text-decoration: underline;
+  }
 }
