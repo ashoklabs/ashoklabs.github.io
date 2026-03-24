@@ -2,7 +2,7 @@
 title: "Terraform enterprise strategy for multi-tenant customers"
 categories: [terraform, devops]
 date: 2026-03-24
-image: https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600&q=80
+image: https://www.imghippo.com/i/SnL5040kIU.webp
 description: How I think about module structure, state isolation, layered provisioning, and feature flags when running Terraform across multiple customers.
 ---
 
