@@ -2338,3 +2338,14 @@
     gap: 0.1rem;
   }
 }
+
+.coming-soon-banner {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-left: 4px solid #ffc107;
+  color: #856404;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  margin-bottom: 2rem;
+  font-size: 0.95rem;
+}
