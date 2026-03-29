@@ -2788,3 +2788,260 @@ button,
 }
 
 .error-404__links a:hover { text-decoration: underline; }
+
+/* ── Dark mode toggle button ──────────────────── */
+
+.nav-theme-toggle {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.35);
+  color: rgba(255,255,255,0.85);
+  border-radius: 6px;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  padding: 0;
+}
+
+.nav-theme-toggle:hover {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  border-color: rgba(255,255,255,0.6);
+}
+
+.theme-icon-sun line {
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* ── Dark theme ───────────────────────────────── */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+[data-theme="dark"] body {
+  background-color: #0d1117;
+  color: #e6edf3;
+}
+
+/* Main content text */
+[data-theme="dark"] .main-content {
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .main-content h1,
+[data-theme="dark"] .main-content h2,
+[data-theme="dark"] .main-content h3,
+[data-theme="dark"] .main-content h4,
+[data-theme="dark"] .main-content h5,
+[data-theme="dark"] .main-content h6 {
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .main-content p,
+[data-theme="dark"] .main-content li {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .main-content a {
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .main-content a:hover {
+  color: #80cbc4;
+}
+
+/* Post page */
+[data-theme="dark"] .post-title {
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .post-meta {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .post-content h1,
+[data-theme="dark"] .post-content h2,
+[data-theme="dark"] .post-content h3 {
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .post-content p,
+[data-theme="dark"] .post-content ul,
+[data-theme="dark"] .post-content ol {
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .post-content code {
+  background: #1c2128;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .post-content blockquote {
+  background: #0f2830;
+  border-left-color: #4db6ac;
+  color: #8b949e;
+}
+
+[data-theme="dark"] .post-back {
+  border-top-color: #30363d;
+}
+
+[data-theme="dark"] .post-back a {
+  color: #4db6ac;
+}
+
+/* Post cards */
+[data-theme="dark"] .post-card {
+  border-color: #30363d;
+  background: #161b22;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .post-card:hover {
+  border-color: #4db6ac;
+  box-shadow: 0 6px 24px rgba(77,182,172,0.15);
+}
+
+[data-theme="dark"] .post-card-title {
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .post-card-desc {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .post-card-date {
+  color: #6e7681;
+}
+
+/* Recent posts */
+[data-theme="dark"] .recent-posts {
+  border-top-color: #21262d;
+}
+
+[data-theme="dark"] .recent-posts-title {
+  color: #6e7681;
+}
+
+/* Course stats bar */
+[data-theme="dark"] .course-stats-bar {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .stat-value {
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .stat-label {
+  color: #6e7681;
+}
+
+/* Instructor card */
+[data-theme="dark"] .instructor-card {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .instructor-card__name {
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .instructor-card__title {
+  color: #6e7681;
+}
+
+[data-theme="dark"] .instructor-card__bio {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .instructor-cert {
+  background: #0f2830;
+  color: #4db6ac;
+  border-color: #1a3d3d;
+}
+
+/* Already student button */
+[data-theme="dark"] .btn-already-student {
+  background: linear-gradient(135deg, #0f2830 0%, #1a3d3d 100%);
+  border-color: #2a5555;
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .btn-already-student:hover {
+  background: linear-gradient(135deg, #1a3d3d 0%, #204f4f 100%);
+  border-color: #4db6ac;
+  color: #7dd3d0;
+}
+
+/* Forms / inputs */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: #1c2128;
+  border-color: #30363d;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .course-waitlist__input {
+  background: #1c2128;
+  border-color: #30363d;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .course-waitlist__input:focus {
+  background: #161b22;
+  border-color: #4db6ac;
+}
+
+/* 404 page */
+[data-theme="dark"] .error-404__code {
+  color: #1a3d3d;
+}
+
+[data-theme="dark"] .error-404__heading {
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .error-404__sub {
+  color: #8b949e;
+}
+
+[data-theme="dark"] .error-404__btn-secondary {
+  color: #4db6ac;
+  border-color: #2a5555;
+}
+
+[data-theme="dark"] .error-404__btn-secondary:hover {
+  background: #0f2830;
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .error-404__links a {
+  color: #4db6ac;
+}
+
+/* Jekyll base theme overrides */
+[data-theme="dark"] .main-content table th,
+[data-theme="dark"] .main-content table td {
+  border-color: #30363d;
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .main-content table tr:nth-child(odd) {
+  background: #161b22;
+}
+
+[data-theme="dark"] .main-content table tr:nth-child(even) {
+  background: #0d1117;
+}
+
+[data-theme="dark"] hr {
+  border-color: #30363d;
+}
