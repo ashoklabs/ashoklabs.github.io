@@ -11,8 +11,34 @@ original_price: 10000
 course_platform: true
 ---
 
-<div class="coming-soon-banner">
-  <strong>Coming Soon</strong> — This course is currently under development. <a href="https://forms.gle/rvAVQYTLwVyG8kyy9" target="_blank" rel="noopener">Join the waitlist</a> to be notified when it launches.
+<div class="course-waitlist">
+  <p class="course-waitlist__badge">Coming Soon — Early Access</p>
+  <h2 class="course-waitlist__heading">Join the waitlist &amp; save 50%</h2>
+  <p class="course-waitlist__sub">Get notified the moment the course launches and lock in the early-access price of <strong>₹5,000</strong> (regular ₹10,000). <span class="course-waitlist__count">150+ engineers already on the list.</span></p>
+  <form class="course-waitlist__form" id="waitlist-form" action="https://newsletter.ashoklabs.com/create" method="POST" accept-charset="utf-8">
+    <input type="hidden" name="is_js_enabled" value="true">
+    <input type="hidden" name="sent_from_orchid" value="true">
+    <input type="hidden" name="double_opt" value="false">
+    <input type="hidden" name="fallback_path" value="/">
+    <input type="hidden" name="ref" value="course-waitlist">
+    <div class="course-waitlist__row">
+      <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address" class="course-waitlist__input">
+      <button type="submit" class="course-waitlist__btn">Join Waitlist</button>
+    </div>
+    <p class="course-waitlist__note">No spam. Unsubscribe anytime.</p>
+  </form>
+  <p class="course-waitlist__thanks" id="waitlist-thanks" style="display:none">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+    You're on the list! We'll email you when the course launches.
+  </p>
+  <script>
+  document.getElementById('waitlist-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    fetch(this.action, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).catch(function(){});
+    this.style.display = 'none';
+    document.getElementById('waitlist-thanks').style.display = 'block';
+  });
+  </script>
 </div>
 
 <section class="course-section">
@@ -188,6 +214,27 @@ course_platform: true
   <div class="capstone-item">Platform Governance</div>
   <div class="capstone-item">Cost Monitoring</div>
   <div class="capstone-item">Incident Response Workflows</div>
+</div>
+</section>
+
+<section class="course-section">
+<h2>About the Instructor</h2>
+<div class="instructor-card">
+  <img class="instructor-card__avatar" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="80" height="80" loading="lazy">
+  <div class="instructor-card__body">
+    <p class="instructor-card__name">{{ site.author.name }}</p>
+    <p class="instructor-card__title">{{ site.author.title }}</p>
+    <p class="instructor-card__bio">10 years designing and operating production-grade infrastructure at Backbase, Cognizant, HCL Technologies, and Cloud4C. Specialises in Kubernetes platform engineering, Terraform, CI/CD automation, and observability on Azure and AWS.</p>
+    <div class="instructor-card__certs">
+      <span class="instructor-cert">Azure Certified DevOps Expert</span>
+      <span class="instructor-cert">Azure Certified Solution Architect</span>
+      <span class="instructor-cert">Azure Certified Administrator</span>
+    </div>
+    <a href="{{ site.author.url }}" target="_blank" rel="noopener" class="author-card__link" style="margin-top:0.75rem;display:inline-flex">
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-1px;margin-right:4px"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+      linkedin.com/in/ashokvalakatla
+    </a>
+  </div>
 </div>
 </section>
 

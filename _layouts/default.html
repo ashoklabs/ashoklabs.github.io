@@ -40,8 +40,8 @@
           <li><a href="{{ '/blog' | relative_url }}" data-path="blog">Blog</a></li>
           <li><a href="{{ '/about' | relative_url }}" data-path="about">About</a></li>
           <li><a href="{{ '/newsletter' | relative_url }}" data-path="newsletter">Newsletter</a></li>
-          <li><a href="{{ '/search' | relative_url }}" data-path="search" aria-label="Search">
-            <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg>
+          <li><a href="{{ '/search' | relative_url }}" data-path="search">
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align:-2px;margin-right:3px"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"/></svg><span class="nav-search-label">Search</span>
           </a></li>
           <li><a href="{{ '/courses' | relative_url }}" data-path="courses" class="nav-cta">Courses</a></li>
           <li id="nav-auth-li">
@@ -167,10 +167,9 @@
     })();
     </script>
 
-    {% unless page.layout == 'post' or page.layout == 'course' or page.layout == 'lesson' %}
+    {% unless page.layout == 'post' or page.layout == 'course' or page.layout == 'lesson' or page.url == '/' %}
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
-      {% if page.url == '/' %}<h2 class="project-tagline">Where infrastructure meets engineering excellence.</h2>{% endif %}
     </header>
     {% endunless %}
 
