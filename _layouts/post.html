@@ -23,17 +23,37 @@ layout: default
   </div>
 
   <div class="post-interactions">
-
     <button class="interaction-btn" id="btn-share" title="Share this post">
       <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
       Share
     </button>
   </div>
 
+  <div class="post-course-cta">
+    <div class="post-course-cta__icon">🎓</div>
+    <div class="post-course-cta__body">
+      <p class="post-course-cta__label">16-Week Bootcamp</p>
+      <p class="post-course-cta__title">AI-Augmented Platform Engineering Bootcamp</p>
+      <p class="post-course-cta__desc">Go deeper — hands-on Terraform, Kubernetes, GitOps, and AI-assisted operations. Build a complete internal developer platform from scratch.</p>
+    </div>
+    <a href="{{ '/courses/platform-engineering' | relative_url }}" class="post-course-cta__link">View Course &rarr;</a>
+  </div>
+
+  <div class="author-card">
+    <img class="author-card__avatar" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" loading="lazy" width="72" height="72">
+    <div class="author-card__body">
+      <p class="author-card__label">Written by</p>
+      <p class="author-card__name">{{ site.author.name }}</p>
+      <p class="author-card__bio">{{ site.author.bio }}</p>
+      <a href="{{ site.author.url }}" target="_blank" rel="noopener" class="author-card__link">
+        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="vertical-align:-1px;margin-right:4px"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+        Follow on LinkedIn
+      </a>
+    </div>
+  </div>
+
   <div class="comment-section" id="comment-section">
     <h3>Leave a Comment</h3>
-    
-    <!-- Giscus Comments -->
     <script src="https://giscus.app/client.js"
             data-repo="ashoklabs/ashoklabs.github.io"
             data-repo-id="R_kgDORmlWbg"
@@ -49,25 +69,16 @@ layout: default
             crossorigin="anonymous"
             async>
     </script>
-    <!-- Note: Make sure Giscus is installed on your GitHub repo (ashoklabs/ashoklabs.github.io) and Discussions is enabled -->
-    
   </div>
 
   <script>
-
     // Native Share API
     const btnShare = document.getElementById('btn-share');
     btnShare.addEventListener('click', async () => {
       if (navigator.share) {
         try {
-          await navigator.share({
-            title: document.title,
-            text: 'Check out this post: ' + document.title,
-            url: window.location.href
-          });
-        } catch (err) {
-          console.error("Error sharing:", err);
-        }
+          await navigator.share({ title: document.title, text: 'Check out this post: ' + document.title, url: window.location.href });
+        } catch (err) { console.error("Error sharing:", err); }
       } else {
         const tempInput = document.createElement('input');
         document.body.appendChild(tempInput);
@@ -75,35 +86,71 @@ layout: default
         tempInput.select();
         document.execCommand('copy');
         document.body.removeChild(tempInput);
-        
         const originalText = btnShare.innerHTML;
-        btnShare.innerHTML = '<span class="interaction-icon">✅</span> Copied!';
+        btnShare.innerHTML = '<svg width="15" height="15" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg> Copied!';
         setTimeout(() => { btnShare.innerHTML = originalText; }, 2000);
       }
     });
+
+    // Mid-post newsletter inject after 2nd h2
+    (function () {
+      var headings = document.querySelectorAll('.post-content h2');
+      if (headings.length < 2) return;
+      var cta = document.createElement('div');
+      cta.className = 'inline-subscribe';
+      cta.id = 'inline-subscribe-block';
+      cta.innerHTML =
+        '<p class="inline-subscribe__text">Enjoying this? Get practical DevOps guides like this — weekly, free.</p>' +
+        '<form class="inline-subscribe__form" id="inline-sub-form" action="https://newsletter.ashoklabs.com/create" method="POST">' +
+          '<input type="hidden" name="is_js_enabled" value="true">' +
+          '<input type="hidden" name="sent_from_orchid" value="true">' +
+          '<input type="hidden" name="double_opt" value="false">' +
+          '<input type="hidden" name="fallback_path" value="/">' +
+          '<input type="hidden" name="ref" value="mid-post">' +
+          '<input type="email" name="email" placeholder="your@email.com" required aria-label="Email address">' +
+          '<button type="submit">Subscribe Free</button>' +
+        '</form>';
+      headings[1].insertAdjacentElement('afterend', cta);
+      document.getElementById('inline-sub-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+        fetch(this.action, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).catch(function () {});
+        document.getElementById('inline-subscribe-block').innerHTML = '<p class="inline-subscribe__done"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>You\'re in! Check your inbox.</p>';
+      });
+    })();
   </script>
 
   <div class="post-back">
-    <a href="{{ '/' | relative_url }}">&larr; Back to all posts</a>
+    <a href="{{ '/blog' | relative_url }}">&larr; Back to all posts</a>
   </div>
 </article>
 
-{% assign other_posts = site.posts | where_exp: "p", "p.url != page.url" | limit: 3 %}
-{% if other_posts.size > 0 %}
+{% assign first_cat = page.categories | first %}
+{% if first_cat %}
+  {% assign related_posts = site.posts | where_exp: "p", "p.url != page.url" | where_exp: "p", "p.categories contains first_cat" | limit: 3 %}
+{% endif %}
+{% if related_posts.size == 0 %}
+  {% assign related_posts = site.posts | where_exp: "p", "p.url != page.url" | limit: 3 %}
+{% endif %}
+
+{% if related_posts.size > 0 %}
 <section class="recent-posts">
   <h2 class="recent-posts-title">More Posts</h2>
   <div class="post-list">
-    {% for post in other_posts %}
+    {% for post in related_posts %}
     <a class="post-card" href="{{ post.url | relative_url }}">
       {% if post.image %}
-      <img class="post-card-image" src="{{ post.image }}" alt="{{ post.title }}">
+      <img class="post-card-image" src="{{ post.image }}" alt="{{ post.title }}" loading="lazy">
       {% else %}
       <div class="post-card-image post-card-placeholder"></div>
       {% endif %}
       <div class="post-card-body">
         <p class="post-card-title">{{ post.title }}</p>
         {% if post.description %}<p class="post-card-desc">{{ post.description }}</p>{% endif %}
-        <p class="post-card-date">{{ post.date | date: "%B %d, %Y" }}</p>
+        <div class="post-card-foot">
+          {% if post.categories.size > 0 %}<span class="post-card-cat">{{ post.categories[0] | capitalize }}</span>{% endif %}
+          <span class="post-card-date">{{ post.date | date: "%b %d, %Y" }}</span>
+          <span class="post-card-read">{{ post.content | number_of_words | divided_by: 200 | plus: 1 }} min read</span>
+        </div>
       </div>
     </a>
     {% endfor %}

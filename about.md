@@ -7,6 +7,7 @@ description: Senior DevOps Engineer · 10 years building and operating cloud-nat
 <div class="about-page">
 
   <div class="about-hero">
+    <img class="about-hero-photo" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="100" height="100" loading="eager">
     <div class="about-hero-text">
       <h1 class="about-name">Ashok Valakatla</h1>
       <p class="about-title">Senior DevOps Engineer</p>
