@@ -2055,6 +2055,7 @@ button,
   height: 72px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: top center;
   flex-shrink: 0;
   border: 2px solid #d0e8e8;
 }
@@ -2247,7 +2248,7 @@ button,
 
 /* ── Homepage hero ───────────────────────── */
 
-.home-hero {
+.main-content .home-hero {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -2350,17 +2351,18 @@ button,
 }
 
 .home-hero__photo {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: top center;
   border: 3px solid #d0e8e8;
   box-shadow: 0 4px 20px rgba(21,120,120,0.15);
   display: block;
 }
 
 @media (max-width: 600px) {
-  .home-hero { flex-direction: column-reverse; align-items: flex-start; padding-top: 1.5rem; }
+  .main-content .home-hero { flex-direction: column-reverse; align-items: flex-start; padding-top: 1.5rem; }
   .home-hero__photo { width: 80px; height: 80px; }
   .home-hero__name { font-size: 1.25rem; }
 }
