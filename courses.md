@@ -11,6 +11,10 @@ original_price: 10000
 course_platform: true
 ---
 
+<div class="coming-soon-banner">
+  <strong>Coming Soon</strong> — This course is currently under development. <a href="https://forms.gle/rvAVQYTLwVyG8kyy9" target="_blank" rel="noopener">Join the waitlist</a> to be notified when it launches.
+</div>
+
 <section class="course-section">
 <h2>Overview</h2>
 <p>This programme teaches how modern engineering teams design, build, and operate production-grade platforms using cloud-native technologies. You will work on real infrastructure problems — not toy examples — and graduate with a complete internal developer platform you built yourself.</p>
