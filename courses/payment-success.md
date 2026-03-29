@@ -88,7 +88,7 @@ course_platform: true
       <div class="enroll-step-num">3</div>
       <div class="enroll-step-body">
         <strong>Log in with the same email</strong>
-        <span>When you visit the lessons you'll be prompted to sign in via Google or GitHub. Use the <strong>same email</strong> you used at checkout.</span>
+        <span>When you visit the lessons you'll be prompted to sign in with GitHub. Use the <strong>same email</strong> you used at checkout.</span>
       </div>
     </div>
   </div>

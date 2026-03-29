@@ -10,7 +10,7 @@ We want you to be confident in your purchase. Here's how refunds work at Ashokla
 
 ## Eligibility
 
-Refunds are considered on a **case-by-case basis** and are not automatically granted for all requests. To be eligible, your request must meet one or more of the following conditions:
+We handle refunds case by case. Here's what we look at:
 
 - You requested a refund **within 7 days** of purchase and have not completed more than 20% of the course content.
 - The course content is materially different from what was described at the time of purchase.

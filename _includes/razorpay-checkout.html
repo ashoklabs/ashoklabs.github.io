@@ -48,21 +48,21 @@
             data-course-id="{{ page.course_id }}"
             data-course-name="{{ page.title }}"
             data-price="{{ page.price }}">
-      Buy Now — ₹{{ page.price }}
+      Enrol Now — ₹{{ page.price }}
     </button>
     <p class="buy-secure-note">
       <svg width="12" height="12" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
-      Secure payment via Razorpay &middot; 256-bit SSL
+      Secure checkout via Razorpay &middot; UPI, Cards, Net Banking
     </p>
   </div>
 
   <!-- Post-payment success -->
   <div class="buy-success" id="buy-success" style="display:none">
     <div class="buy-success-icon">✓</div>
-    <h3>Payment successful!</h3>
-    <p>Your access is being activated. This usually takes under 30 seconds.</p>
+    <h3>You're in.</h3>
+    <p>Your access is live — you can start learning right now.</p>
     <a href="{{ lessons_url }}" class="btn-enroll btn-enroll-lg" id="btn-go-to-lessons">
-      Go to Lessons
+      Go to My Dashboard
     </a>
     <p class="buy-success-hint">You'll be asked to log in with GitHub — use the email <strong id="success-email-display"></strong>.</p>
   </div>
@@ -294,7 +294,7 @@
         modal: {
           ondismiss: function () {
             btn.disabled    = false;
-            btn.textContent = 'Buy Now — ₹{{ page.price }}';
+            btn.textContent = 'Enrol Now — ₹{{ page.price }}';
           },
         },
       };
@@ -304,7 +304,7 @@
         console.error('Payment failed:', resp.error);
         alert('Payment failed: ' + (resp.error.description || 'Please try again.'));
         btn.disabled    = false;
-        btn.textContent = 'Buy Now — ₹{{ page.price }}';
+        btn.textContent = 'Enrol Now — ₹{{ page.price }}';
       });
       rzp.open();
 
@@ -312,7 +312,7 @@
       console.error('Checkout error:', err);
       alert('Something went wrong. Please try again.\n\n' + err.message);
       btn.disabled    = false;
-      btn.textContent = 'Buy Now — ₹{{ page.price }}';
+      btn.textContent = 'Enrol Now — ₹{{ page.price }}';
     }
   });
 
@@ -357,12 +357,12 @@
     let msg;
     if (error === 'no_access') {
       msg = email
-        ? `No purchase found for ${email}. Did you use a different email when buying?`
-        : 'No purchase found for this GitHub account. Did you use a different email when buying?';
+        ? `We couldn't find a purchase for ${email}. Try the email you used at checkout, or email hello@ashoklabs.com with your Razorpay receipt.`
+        : 'We couldn\'t find a purchase for this GitHub account. Try entering your purchase email below, or email hello@ashoklabs.com with your Razorpay receipt.';
     } else if (error === 'cancelled') {
-      msg = 'GitHub sign-in was cancelled. Please try again.';
+      msg = 'GitHub sign-in was cancelled. Try again, or enter your purchase email below.';
     } else {
-      msg = 'GitHub sign-in failed. Please try again or enter your email below.';
+      msg = 'GitHub sign-in didn\'t work. Try again, or enter the email you used to buy the course below.';
     }
     if (accessErrorText) accessErrorText.textContent = msg;
     if (accessError)     accessError.style.display   = 'flex';
@@ -405,7 +405,7 @@
         sessionStorage.setItem('course_id', courseId);
         showReturningSuccess(email);
       } else {
-        if (accessErrorText) accessErrorText.textContent = 'No purchase found for ' + email + '. Did you use a different email?';
+        if (accessErrorText) accessErrorText.textContent = 'We couldn\'t find a purchase for ' + email + '. Try the email you used at checkout, or email hello@ashoklabs.com with your Razorpay receipt.';
         if (accessError) accessError.style.display = 'flex';
         checkAccessBtn.innerHTML = originalHTML;
         checkAccessBtn.disabled = false;
