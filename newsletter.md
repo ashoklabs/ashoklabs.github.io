@@ -31,7 +31,7 @@ description: Weekly insights on DevOps, platform engineering, and building relia
       <div class="perk">
         <span class="perk-icon">📬</span>
         <div>
-          <strong>Weekly. Free. No spam.</strong>
+          <strong>Weekly. Free.</strong>
           <p>One focused issue per week. Unsubscribe any time.</p>
         </div>
       </div>
