@@ -6,7 +6,7 @@ title: Ashoklabs
 <div class="home-hero">
   <div class="home-hero__text">
     <p class="home-hero__greeting">Hi, I'm Ashok</p>
-    <h1 class="home-hero__name">Senior DevOps Engineer &amp;<br>Platform Engineer</h1>
+    <h1 class="home-hero__name">Senior DevOps &amp;<br>Platform Engineer</h1>
     <p class="home-hero__bio">10 years designing and operating production infrastructure on Azure and AWS. I write practical guides on Terraform, Kubernetes, platform engineering, and AI-assisted DevOps — the kind I wished existed when I was learning.</p>
     <div class="home-hero__creds">
       <span class="home-hero__cred">Azure DevOps Expert</span>
