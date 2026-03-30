@@ -2,6 +2,7 @@
 layout: default
 title: Newsletter
 description: Weekly insights on DevOps, platform engineering, and building reliable infrastructure — straight to your inbox.
+hide_hero: true
 ---
 
 <div class="newsletter-page">

@@ -382,6 +382,72 @@
   margin: 0;
 }
 
+/* ── Course hero banner ──────────────────────── */
+
+.course-hero {
+  background: linear-gradient(135deg, #0d3d3d 0%, #145f5f 50%, #1a7a6e 100%);
+  padding: 3rem 2rem;
+  text-align: center;
+  animation: fadeUp 0.4s ease both;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle radial glow for depth */
+.course-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 80% at 50% 120%, rgba(255,255,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.course-hero-inner {
+  max-width: 52rem;
+  margin: 0 auto;
+  position: relative;
+}
+
+.course-hero-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 100px;
+  padding: 0.2rem 0.85rem;
+  margin: 0 0 1rem;
+}
+
+.course-hero .course-hero-title {
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #fff !important;
+  margin: 0 0 0.85rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.course-hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,0.75);
+  margin: 0 auto;
+  max-width: 44rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 768px) {
+  .course-hero { padding: 2rem 1.25rem; }
+  .course-hero .course-hero-title { font-size: 1.6rem; }
+}
+
+@media (max-width: 540px) {
+  .course-hero .course-hero-title { font-size: 1.35rem; }
+}
+
 /* ── Course page ─────────────────────────────── */
 
 .course-stats-bar {
@@ -2793,7 +2859,7 @@ button,
 
 .nav-theme-toggle {
   background: none;
-  border: 1px solid rgba(255,255,255,0.35);
+  border: none;
   color: rgba(255,255,255,0.85);
   border-radius: 6px;
   width: 32px;
@@ -2802,14 +2868,13 @@ button,
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  transition: background 0.2s, color 0.2s;
   padding: 0;
 }
 
 .nav-theme-toggle:hover {
-  background: rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.12);
   color: #fff;
-  border-color: rgba(255,255,255,0.6);
 }
 
 .theme-icon-sun line {
@@ -2927,6 +2992,11 @@ button,
 
 [data-theme="dark"] .recent-posts-title {
   color: #6e7681;
+}
+
+/* Course hero: keep white text in dark mode */
+[data-theme="dark"] .course-hero .course-hero-title {
+  color: #fff !important;
 }
 
 /* Course stats bar */

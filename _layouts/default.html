@@ -211,7 +211,7 @@
     })();
     </script>
 
-    {% unless page.layout == 'post' or page.layout == 'course' or page.layout == 'lesson' or page.url == '/' %}
+    {% unless page.layout == 'post' or page.layout == 'course' or page.layout == 'lesson' or page.url == '/' or page.hide_hero %}
     <header class="page-header" role="banner">
       <h1 class="project-name">{{ page.title | default: site.title | default: site.github.repository_name }}</h1>
     </header>

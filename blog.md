@@ -2,6 +2,7 @@
 layout: default
 title: Blog
 description: Practical guides on DevOps, Terraform, platform engineering, and Kubernetes.
+hide_hero: true
 ---
 
 <div class="home-intro">
