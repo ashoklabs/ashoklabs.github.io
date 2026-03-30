@@ -35,6 +35,8 @@ description: Senior DevOps Engineer · 10 years building and operating cloud-nat
       <span class="skill-tag">Prometheus</span>
       <span class="skill-tag">Grafana</span>
       <span class="skill-tag">Istio</span>
+      <span class="skill-tag">Knative</span>
+      <span class="skill-tag">Azure service Operator</span>
       <span class="skill-tag">GitOps / Argo CD</span>
       <span class="skill-tag">Python</span>
       <span class="skill-tag">Linux</span>
