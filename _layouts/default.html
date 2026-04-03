@@ -190,6 +190,14 @@
         var isDark = html.getAttribute('data-theme') === 'dark';
         applyTheme(!isDark);
         try { localStorage.setItem(THEME_KEY, isDark ? 'light' : 'dark'); } catch(e) {}
+        // Sync Giscus iframe theme
+        var giscusFrame = document.querySelector('iframe.giscus-frame');
+        if (giscusFrame) {
+          giscusFrame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: isDark ? 'light' : 'dark' } } },
+            'https://giscus.app'
+          );
+        }
       });
     })();
 

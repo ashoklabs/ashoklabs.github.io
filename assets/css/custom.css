@@ -3115,3 +3115,466 @@ button,
 [data-theme="dark"] hr {
   border-color: #30363d;
 }
+
+/* ── Post interactions ────────────────────────────────────────── */
+
+[data-theme="dark"] .post-interactions {
+  border-top-color: #30363d;
+}
+
+[data-theme="dark"] .interaction-btn {
+  background: #1c2128;
+  border-color: #30363d;
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .interaction-btn:hover {
+  background: #0f2830;
+  border-color: #4db6ac;
+}
+
+/* ── 16-Week Bootcamp CTA ────────────────────────────────────── */
+
+[data-theme="dark"] .post-course-cta {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .post-course-cta__label { color: #6e7681; }
+[data-theme="dark"] .post-course-cta__title { color: #7dd3d0; }
+[data-theme="dark"] .post-course-cta__desc  { color: #8b949e; }
+
+/* ── Author card (Written by) ─────────────────────────────────── */
+
+[data-theme="dark"] .author-card {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .author-card__label { color: #6e7681; }
+[data-theme="dark"] .author-card__name  { color: #7dd3d0; }
+[data-theme="dark"] .author-card__bio   { color: #8b949e; }
+[data-theme="dark"] .author-card__link  { color: #4db6ac; }
+
+/* ── Comment / discussion section ────────────────────────────── */
+
+[data-theme="dark"] .comment-section {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .comment-section h3 { color: #7dd3d0; }
+
+/* ── Mid-post inline subscribe ────────────────────────────────── */
+
+[data-theme="dark"] .inline-subscribe {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .inline-subscribe__text { color: #cdd9e5; }
+
+[data-theme="dark"] .inline-subscribe__form input[type="email"] {
+  background: #1c2128;
+  border-color: #30363d;
+  color: #e6edf3;
+}
+
+/* ── Newsletter page ──────────────────────────────────────────── */
+
+[data-theme="dark"] .newsletter-heading { color: #7dd3d0; }
+[data-theme="dark"] .newsletter-sub     { color: #8b949e; }
+
+[data-theme="dark"] .newsletter-card {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .newsletter-perks {
+  border-bottom-color: #30363d;
+}
+
+[data-theme="dark"] .perk strong { color: #e6edf3; }
+[data-theme="dark"] .perk p      { color: #8b949e; }
+
+[data-theme="dark"] .newsletter-email-input {
+  background: #1c2128;
+  border-color: #30363d;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .newsletter-email-input:focus {
+  background: #161b22;
+  border-color: #4db6ac;
+}
+
+[data-theme="dark"] .newsletter-issues {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .newsletter-issues h2 {
+  color: #7dd3d0;
+  border-bottom-color: #30363d;
+}
+
+[data-theme="dark"] .issues-list li {
+  background: #0d1117;
+  border-color: #21262d;
+}
+
+[data-theme="dark"] .issues-list li:hover {
+  background: #161b22;
+  border-color: #4db6ac;
+}
+
+[data-theme="dark"] .issue-date { color: #6e7681; }
+[data-theme="dark"] .issue-link { color: #4db6ac; }
+
+/* ── Course page sections ─────────────────────────────────────── */
+
+[data-theme="dark"] .course-section h2 {
+  color: #7dd3d0;
+  border-bottom-color: #30363d;
+}
+
+[data-theme="dark"] .pillar {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .pillar h4 { color: #7dd3d0; }
+[data-theme="dark"] .pillar p  { color: #8b949e; }
+
+[data-theme="dark"] .curriculum-item {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .curriculum-item--highlight {
+  background: #0f2830;
+  border-color: #2a5555;
+}
+
+[data-theme="dark"] .curriculum-item:hover {
+  border-color: #4db6ac;
+}
+
+[data-theme="dark"] .week-badge {
+  background: #0f2830;
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .week-badge--ai {
+  background: #4db6ac;
+  color: #0d1117;
+}
+
+[data-theme="dark"] .curriculum-info strong { color: #e6edf3; }
+[data-theme="dark"] .curriculum-info span   { color: #6e7681; }
+
+[data-theme="dark"] .capstone-item {
+  background: #0f2830;
+  border-color: #2a5555;
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .course-cta-section {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .course-cta-section p { color: #8b949e; }
+
+[data-theme="dark"] .course-waitlist {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .course-waitlist__heading { color: #7dd3d0; }
+[data-theme="dark"] .course-waitlist__sub     { color: #8b949e; }
+
+[data-theme="dark"] .course-body table th {
+  background: #0f2830;
+  color: #7dd3d0;
+  border-bottom-color: #2a5555;
+}
+
+[data-theme="dark"] .course-body table td {
+  border-bottom-color: #21262d;
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .course-body table tr:hover td {
+  background: #161b22;
+}
+
+/* ── Buy card (price / checkout block) ───────────────────────── */
+
+[data-theme="dark"] .buy-card {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .buy-price-amount { color: #7dd3d0; }
+[data-theme="dark"] .buy-price-sub    { color: #6e7681; }
+[data-theme="dark"] .buy-includes li  { color: #cdd9e5; }
+[data-theme="dark"] .buy-label        { color: #cdd9e5; }
+[data-theme="dark"] .buy-field-hint   { color: #6e7681; }
+[data-theme="dark"] .buy-secure-note  { color: #6e7681; }
+
+[data-theme="dark"] .buy-email-input {
+  background: #1c2128;
+  border-color: #30363d;
+  color: #e6edf3;
+}
+
+[data-theme="dark"] .buy-email-input:focus {
+  background: #161b22;
+  border-color: #4db6ac;
+}
+
+/* ── Already a student / returning section ───────────────────── */
+
+[data-theme="dark"] .buy-returning-toggle {
+  border-color: #30363d;
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .buy-returning-toggle:hover,
+[data-theme="dark"] .buy-returning-toggle--open {
+  background: #0f2830;
+  border-color: #4db6ac;
+}
+
+[data-theme="dark"] .buy-returning-panel {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .buy-returning-intro { color: #8b949e; }
+
+[data-theme="dark"] .buy-returning-divider { color: #6e7681; }
+
+[data-theme="dark"] .buy-returning-divider::before,
+[data-theme="dark"] .buy-returning-divider::after {
+  background: #30363d;
+}
+
+[data-theme="dark"] .buy-access-error {
+  background: #1f0a0a;
+  border-color: #5a1a1a;
+  color: #f87171;
+}
+
+[data-theme="dark"] .buy-returning-success h3 { color: #7dd3d0; }
+[data-theme="dark"] .buy-returning-success p  { color: #8b949e; }
+
+[data-theme="dark"] .btn-access-course {
+  background: #161b22;
+  border-color: #4db6ac;
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .btn-access-course:hover:not(:disabled) {
+  background: #0f2830;
+}
+
+/* ── Lesson sidebar ───────────────────────────────────────────── */
+
+[data-theme="dark"] .lesson-sidebar {
+  background: #0d1117;
+  border-right-color: #21262d;
+}
+
+[data-theme="dark"] .sidebar-header {
+  border-bottom-color: #21262d;
+}
+
+[data-theme="dark"] .sidebar-back-link       { color: #4db6ac; }
+[data-theme="dark"] .sidebar-back-link:hover { color: #7dd3d0; text-decoration: none; }
+[data-theme="dark"] .sidebar-section-label   { color: #6e7681; }
+[data-theme="dark"] .sidebar-section-hdr     { color: #6e7681; }
+
+[data-theme="dark"] .sidebar-lesson { color: #cdd9e5; }
+
+[data-theme="dark"] .sidebar-lesson:hover {
+  background: #0f2830;
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .sidebar-footer {
+  border-top-color: #21262d;
+}
+
+[data-theme="dark"] .sidebar-course-link       { color: #6e7681; }
+[data-theme="dark"] .sidebar-course-link:hover { color: #4db6ac; }
+
+[data-theme="dark"] .sidebar-toggle {
+  background: #161b22;
+  border-color: #30363d;
+  color: #4db6ac;
+}
+
+/* ── Lesson header ────────────────────────────────────────────── */
+
+[data-theme="dark"] .lesson-header {
+  border-bottom-color: #30363d;
+}
+
+[data-theme="dark"] .lesson-badge {
+  background: #0f2830;
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .lesson-tag {
+  background: #1c2128;
+  color: #8b949e;
+}
+
+[data-theme="dark"] .lesson-title-main  { color: #7dd3d0; }
+[data-theme="dark"] .lesson-description { color: #8b949e; }
+[data-theme="dark"] .lesson-duration    { color: #6e7681; }
+
+/* ── Lesson written content ───────────────────────────────────── */
+
+[data-theme="dark"] .lesson-content h2 {
+  color: #7dd3d0;
+  border-bottom-color: #30363d;
+}
+
+[data-theme="dark"] .lesson-content h3 { color: #cdd9e5; }
+
+[data-theme="dark"] .lesson-content p,
+[data-theme="dark"] .lesson-content ul,
+[data-theme="dark"] .lesson-content ol { color: #cdd9e5; }
+
+[data-theme="dark"] .lesson-content code {
+  background: #1c2128;
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .lesson-content blockquote {
+  background: #0f2830;
+  border-left-color: #4db6ac;
+  color: #8b949e;
+}
+
+[data-theme="dark"] .lesson-content table th {
+  background: #0f2830;
+  color: #7dd3d0;
+  border-bottom-color: #2a5555;
+}
+
+[data-theme="dark"] .lesson-content table td {
+  border-bottom-color: #21262d;
+  color: #cdd9e5;
+}
+
+[data-theme="dark"] .lesson-content table tr:hover td {
+  background: #161b22;
+}
+
+/* ── Callout / tip boxes ──────────────────────────────────────── */
+
+[data-theme="dark"] .callout--tip {
+  background: #0a1f0a;
+  border-color: #2d5a2d;
+}
+
+[data-theme="dark"] .callout--info {
+  background: #0a1520;
+  border-color: #1a3a5c;
+}
+
+[data-theme="dark"] .callout--warn {
+  background: #1a1500;
+  border-color: #5a4a00;
+}
+
+[data-theme="dark"] .callout-body        { color: #cdd9e5; }
+[data-theme="dark"] .callout-body strong { color: #e6edf3; }
+
+/* ── Lesson pager (prev / next) ───────────────────────────────── */
+
+[data-theme="dark"] .lesson-pager {
+  border-top-color: #30363d;
+}
+
+[data-theme="dark"] .lesson-pager-btn {
+  background: #161b22;
+  border-color: #30363d;
+  color: #7dd3d0;
+}
+
+[data-theme="dark"] .lesson-pager-btn:hover {
+  background: #0f2830;
+  border-color: #4db6ac;
+}
+
+[data-theme="dark"] .lesson-pager-btn small { color: #6e7681; }
+
+/* ── Lesson discussion ────────────────────────────────────────── */
+
+[data-theme="dark"] .lesson-discussion h3   { color: #7dd3d0; }
+[data-theme="dark"] .lesson-discussion-note { color: #6e7681; }
+
+/* ── Lesson cards (course index page) ────────────────────────── */
+
+[data-theme="dark"] .lesson-card {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .lesson-card:hover {
+  border-color: #4db6ac;
+}
+
+[data-theme="dark"] .lesson-card-num {
+  background: #0f2830;
+  color: #4db6ac;
+}
+
+[data-theme="dark"] .lesson-card-title { color: #e6edf3; }
+[data-theme="dark"] .lesson-card-desc  { color: #8b949e; }
+
+/* ── Dashboard ────────────────────────────────────────────────── */
+
+[data-theme="dark"] .dash-stat-card {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .dash-stat-value    { color: #e6edf3; }
+[data-theme="dark"] .dash-stat-icon--teal { background: #0f2830; color: #4db6ac; }
+
+[data-theme="dark"] .dash-section {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .dash-section-title { color: #7dd3d0; }
+[data-theme="dark"] .dash-section-meta  { color: #6e7681; }
+
+[data-theme="dark"] .dash-continue-card {
+  background: linear-gradient(135deg, #0f2830 0%, #1a3d3d 100%);
+  border-color: #2a5555;
+}
+
+[data-theme="dark"] .dash-continue-card:hover { border-color: #4db6ac; }
+[data-theme="dark"] .dash-continue-title      { color: #7dd3d0; }
+[data-theme="dark"] .dash-continue-desc       { color: #8b949e; }
+
+[data-theme="dark"] .next-steps {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+[data-theme="dark"] .next-step-text { color: #cdd9e5; }
+
+/* ── Payment success page ─────────────────────────────────────── */
+
+[data-theme="dark"] .payment-success-page h1    { color: #7dd3d0; }
+[data-theme="dark"] .payment-success-page .lead { color: #8b949e; }
+[data-theme="dark"] .buy-success h3             { color: #7dd3d0; }
+[data-theme="dark"] .buy-success p              { color: #8b949e; }
