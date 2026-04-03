@@ -2,7 +2,7 @@
 title: "Docker best practices often missed in production"
 categories: [docker, devops, security]
 date: 2026-03-29
-image: https://i.imghippo.com/files/rZtq8756lrs.webp
+image: https://i.imghippo.com/files/ZJfw9444igg.webp
 description: Avoid costly Docker mistakes in production. Learn image optimization, multi-stage builds, security hardening, and CI enforcement in one practical guide.
 ---
 
