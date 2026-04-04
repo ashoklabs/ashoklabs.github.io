@@ -1,0 +1,35 @@
+---
+layout: null
+permalink: /llms.txt
+sitemap: false
+---
+# Ashoklabs
+
+> {{ site.description }}
+
+Written by {{ site.author.name }} — {{ site.author.title }}. {{ site.author.bio }}
+
+This site contains a technical engineering blog and a paid online course on platform engineering. All blog content is free. Course lessons are gated behind a purchase.
+
+## Blog Posts
+{% for post in site.posts %}
+- [{{ post.title }}]({{ site.url }}{{ post.url }}): {{ post.description }}
+{% endfor %}
+
+## Courses
+
+- [Platform Engineering Bootcamp]({{ site.url }}/courses/platform-engineering/): Hands-on bootcamp covering Linux internals, networking, Docker, Kubernetes, Terraform, CI/CD, and observability. Aimed at DevOps engineers moving into platform roles.
+
+### Platform Engineering Bootcamp — Lessons
+- [Engineering Foundations]({{ site.url }}/courses/platform-engineering/lessons/01-engineering-foundations/): Linux internals, DNS resolution, HTTP lifecycle, and production Git workflows. 45 min.
+- [Application Platform]({{ site.url }}/courses/platform-engineering/lessons/02-application-platform/): Microservices, API services, async workers, databases, and how platforms host them reliably. 50 min.
+
+## Newsletter
+
+- [Newsletter]({{ site.url }}/newsletter): Weekly posts on DevOps, platform engineering, and building reliable infrastructure. Hosted on Beehiiv.
+
+## About
+
+- Author: {{ site.author.name }}, {{ site.author.title }}
+- LinkedIn: {{ site.author.url }}
+- Site: {{ site.url }}
