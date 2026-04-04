@@ -179,6 +179,224 @@ After publishing, anyone who installs your package should be able to verify it c
 
 This doesn't prevent a bad artifact from being published — but it creates an auditable chain of custody and makes tampering detectable.
 
+### Control 6: SBOM generation and verification
+
+A Software Bill of Materials (SBOM) is a machine-readable inventory of every component in your artifact — your direct dependencies, their transitive dependencies, the versions pinned, and the licenses attached. Without one, you don't know what you shipped. With one, you can query it.
+
+Generate an SBOM at build time and attach it to every release:
+
+```yaml
+- name: Generate SBOM
+  uses: anchore/sbom-action@v0
+  with:
+    artifact-name: sbom.spdx.json
+    format: spdx-json
+    output-file: sbom.spdx.json
+
+- name: Scan SBOM for vulnerabilities
+  uses: anchore/scan-action@v3
+  with:
+    sbom: sbom.spdx.json
+    fail-build: true
+    severity-cutoff: high
+```
+
+The SBOM gives you three things: a vulnerability baseline you can query when a new CVE drops (did we ship the affected version?), a license compliance record (are we accidentally distributing GPL code in a proprietary product?), and an audit trail for incident response (what exactly was in the build that leaked?).
+
+For npm packages specifically, `cyclonedx-npm` generates CycloneDX-format SBOMs directly from your lockfile:
+
+```bash
+npx @cyclonedx/cyclonedx-npm --output-file sbom.cdx.json
+```
+
+Store the SBOM alongside the release artifact. When a vulnerability is disclosed six months from now, you'll be able to answer "were we affected?" in seconds instead of hours.
+
+### Control 7: Policy as Code for artifact gates
+
+Manual checklists rot. Policies written as code don't. Open Policy Agent (OPA) lets you express artifact release rules as Rego policies that are evaluated automatically in the pipeline — the same way linting rules are evaluated, but for security and compliance requirements.
+
+A policy that would have directly blocked the Anthropic leak:
+
+```rego
+# policy/artifact.rego
+package artifact
+
+deny[msg] {
+  file := input.files[_]
+  endswith(file.path, ".map")
+  msg := sprintf("Source map file detected in artifact: %s", [file.path])
+}
+
+deny[msg] {
+  file := input.files[_]
+  endswith(file.path, ".env")
+  msg := sprintf("Environment file detected in artifact: %s", [file.path])
+}
+
+deny[msg] {
+  file := input.files[_]
+  file.size > 52428800  # 50 MB
+  msg := sprintf("File exceeds 50 MB size limit: %s (%d bytes)", [file.path, file.size])
+}
+
+deny[msg] {
+  input.total_size > 104857600  # 100 MB total package
+  msg := sprintf("Total artifact size exceeds limit: %d bytes", [input.total_size])
+}
+```
+
+The size rule matters more than it might seem. A production npm package that's suddenly 80 MB is almost certainly including something it shouldn't — a source bundle, a `node_modules` directory, a build cache. A file-size gate on individual files and total package size catches accidental inclusions that file-pattern rules might miss.
+
+Wire this into CI using the OPA CLI:
+
+```yaml
+- name: Build artifact manifest
+  run: |
+    # Generate JSON manifest of packed files with sizes
+    npm pack --dry-run --json 2>/dev/null | jq '{
+      files: [.[] | .files[] | {path: .path, size: .size}],
+      total_size: ([.[] | .files[] | .size] | add)
+    }' > artifact-manifest.json
+
+- name: Evaluate artifact policy
+  run: |
+    docker run --rm \
+      -v "$PWD:/workspace" \
+      openpolicyagent/opa:latest \
+      eval \
+        --data /workspace/policy/artifact.rego \
+        --input /workspace/artifact-manifest.json \
+        --fail \
+        "data.artifact.deny"
+```
+
+If any `deny` rule fires, OPA exits non-zero, the step fails, and the release is blocked. The policy lives in your repository, changes go through pull requests, and the audit trail is your git history.
+
+Policy as code also handles edge cases that are hard to enumerate upfront. You can write rules like:
+
+```rego
+# Block files with no extension (often compiled binaries accidentally included)
+deny[msg] {
+  file := input.files[_]
+  not contains(file.path, ".")
+  not startswith(file.path, "bin/")
+  msg := sprintf("Unexpected extensionless file: %s", [file.path])
+}
+
+# Block files modified within the last hour (catching uncommitted local changes)
+deny[msg] {
+  file := input.files[_]
+  file.age_seconds < 3600
+  not startswith(file.path, "dist/")
+  msg := sprintf("Recently modified non-dist file in artifact: %s", [file.path])
+}
+```
+
+The point isn't to enumerate every bad thing — it's to define what good looks like and reject anything that doesn't match.
+
+### Control 8: Pre-release validation checklist (automated)
+
+A pre-release validation stage is a dedicated pipeline job that runs immediately before the publish step and acts as the final gate. Unlike individual scan steps scattered across the pipeline, this stage aggregates all release-readiness checks into one place with a clear pass/fail signal.
+
+```yaml
+# .github/workflows/release.yml (excerpt)
+jobs:
+  pre-release-validation:
+    name: Pre-Release Validation
+    runs-on: ubuntu-latest
+    needs: [build, test]
+    steps:
+
+      - name: Verify clean git state
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "FAIL: Uncommitted changes present. Release from a clean tree only."
+            exit 1
+          fi
+
+      - name: Verify version bump is intentional
+        run: |
+          CURRENT=$(node -p "require('./package.json').version")
+          PUBLISHED=$(npm view $(node -p "require('./package.json').name") version 2>/dev/null || echo "0.0.0")
+          if [ "$CURRENT" = "$PUBLISHED" ]; then
+            echo "FAIL: Version $CURRENT is already published. Bump the version before releasing."
+            exit 1
+          fi
+
+      - name: Inspect artifact contents
+        run: |
+          npm pack --dry-run --json 2>/dev/null | jq -r '.[].files[].path' > artifact-files.txt
+          echo "=== Artifact contents ==="
+          cat artifact-files.txt
+          echo "=== End artifact contents ==="
+
+          # Blocked extensions
+          BLOCKED_EXTS="\.map$ \.env$ \.key$ \.pem$ \.p12$ \.pfx$"
+          for ext in $BLOCKED_EXTS; do
+            if grep -qE "$ext" artifact-files.txt; then
+              echo "FAIL: Blocked file type detected ($ext)"
+              grep -E "$ext" artifact-files.txt
+              exit 1
+            fi
+          done
+
+      - name: Check artifact size
+        run: |
+          TOTAL_SIZE=$(npm pack --dry-run --json 2>/dev/null | jq '[.[].files[].size] | add')
+          echo "Total artifact size: $TOTAL_SIZE bytes"
+          if [ "$TOTAL_SIZE" -gt 52428800 ]; then
+            echo "FAIL: Artifact exceeds 50 MB ($TOTAL_SIZE bytes). Investigate unexpected inclusions."
+            exit 1
+          fi
+
+      - name: Evaluate OPA artifact policy
+        run: |
+          # (OPA evaluation step from Control 7)
+
+      - name: Scan for secrets
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: .
+          base: HEAD~1
+          head: HEAD
+
+      - name: Verify SBOM exists and is current
+        run: |
+          if [ ! -f sbom.spdx.json ]; then
+            echo "FAIL: SBOM not found. Run SBOM generation before release."
+            exit 1
+          fi
+          SBOM_AGE=$(( $(date +%s) - $(stat -c %Y sbom.spdx.json) ))
+          if [ "$SBOM_AGE" -gt 3600 ]; then
+            echo "FAIL: SBOM is more than 1 hour old. Regenerate before release."
+            exit 1
+          fi
+
+      - name: Confirm all checks passed
+        run: echo "All pre-release validation checks passed. Safe to publish."
+
+  publish:
+    name: Publish
+    needs: pre-release-validation   # blocked until validation passes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Publish to npm
+        run: npm publish --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+```
+
+The `needs: pre-release-validation` dependency means the publish job never runs if validation fails. This is structural enforcement — it's not possible to accidentally skip the gate because the pipeline topology prevents it.
+
+Key validations in this stage:
+- **Clean git state** — no uncommitted changes can end up in the artifact
+- **Version check** — prevents accidentally republishing an existing version
+- **Artifact content inspection** — file extension blocklist, unexpected file detection
+- **Artifact size gate** — catches surprise inclusions (anything over 50 MB is suspicious for a CLI tool)
+- **OPA policy evaluation** — codified rules, not ad-hoc scripts
+- **Secret scanning** — last line of defense before publish
+- **SBOM freshness check** — ensures the SBOM was generated from this exact build, not a stale one
+
 ---
 
 ## Supply Chain Security: The Broader Lesson
@@ -210,6 +428,9 @@ The fixes aren't expensive. They're mostly configuration and pipeline steps that
 3. **Run a secret scanner** on your artifacts before publish. Most have free tiers or open-source versions.
 4. **Audit your storage permissions** as part of your release process, not as a periodic manual review.
 5. **Eliminate manual release steps** wherever you can. If a human has to remember to do something, eventually they won't.
+6. **Generate and scan an SBOM** at build time. Know exactly what you shipped, so you can answer vulnerability questions in seconds months later.
+7. **Write your artifact rules as OPA policies** — including file-size limits. A production npm package over 50 MB is almost certainly carrying something it shouldn't.
+8. **Add a dedicated pre-release validation job** that gates the publish step. Make it structurally impossible to skip.
 
 The lesson from Anthropic isn't that sophisticated teams make amateur mistakes. It's that the controls for preventing these mistakes are straightforward, well-documented, and available to every team — and the cost of skipping them is paid in incidents.
 
@@ -219,7 +440,7 @@ The lesson from Anthropic isn't that sophisticated teams make amateur mistakes. 
 
 The Anthropic CLI leak was caused by five compounding failures: debug artifacts included in production builds, no file exclusion configuration, a public cloud storage reference, no CI validation gate, and manual deployment steps with no verification. Any one of these controls in place would have prevented the leak.
 
-Modern DevOps isn't just about shipping fast — it's about shipping with confidence that what you're shipping is exactly what you intended. Artifact hygiene, pipeline security gates, secret scanning, and supply chain controls are the engineering practices that create that confidence. They're not bureaucratic overhead. They're how you avoid being the next case study.
+Modern DevOps isn't just about shipping fast — it's about shipping with confidence that what you're shipping is exactly what you intended. Artifact hygiene, pipeline security gates, SBOM generation, policy-as-code enforcement (including file-size gates), secret scanning, and a structured pre-release validation job are the engineering practices that create that confidence. They're not bureaucratic overhead. They're how you avoid being the next case study.
 
 ---
 
