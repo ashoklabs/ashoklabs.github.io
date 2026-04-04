@@ -220,7 +220,8 @@ course_platform: true
 <section class="course-section">
 <h2>About the Instructor</h2>
 <div class="instructor-card">
-  <img class="instructor-card__avatar" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="80" height="80" loading="lazy">
+  <img class="instructor-card__avatar" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="80" height="80" loading="lazy"
+       onerror="if(this.src!='{{ site.author.avatar_fallback }}'){this.src='{{ site.author.avatar_fallback }}'}else{this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'80\' height=\'80\'%3E%3Crect width=\'80\' height=\'80\' fill=\'%23157878\' rx=\'40\'/%3E%3Ctext x=\'40\' y=\'54\' text-anchor=\'middle\' fill=\'white\' font-size=\'30\' font-family=\'system-ui,sans-serif\' font-weight=\'700\'%3EAV%3C/text%3E%3C/svg%3E'}">
   <div class="instructor-card__body">
     <p class="instructor-card__name">{{ site.author.name }}</p>
     <p class="instructor-card__title">{{ site.author.title }}</p>

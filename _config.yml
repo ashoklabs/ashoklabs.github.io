@@ -7,7 +7,8 @@ author:
   name: Ashok Valakatla
   title: Senior DevOps & Platform Engineer
   url: https://www.linkedin.com/in/ashokvalakatla
-  avatar: https://i.imghippo.com/files/EXmK2695bqs.jpeg
+  avatar: /assets/images/profile.jpg
+  avatar_fallback: https://i.imghippo.com/files/EXmK2695bqs.jpeg
   bio: 10 years building production infrastructure on Azure and AWS. Azure Certified DevOps Expert, Solution Architect, and Administrator.
 
 plugins:
