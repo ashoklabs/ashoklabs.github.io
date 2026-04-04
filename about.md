@@ -8,7 +8,8 @@ hide_hero: true
 <div class="about-page">
 
   <div class="about-hero">
-    <img class="about-hero-photo" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="100" height="100" loading="eager">
+    <img class="about-hero-photo" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="100" height="100" loading="eager"
+         onerror="if(this.src!='{{ site.author.avatar_fallback }}'){this.src='{{ site.author.avatar_fallback }}'}else{this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'100\' height=\'100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%23157878\' rx=\'50\'/%3E%3Ctext x=\'50\' y=\'68\' text-anchor=\'middle\' fill=\'white\' font-size=\'38\' font-family=\'system-ui,sans-serif\' font-weight=\'700\'%3EAV%3C/text%3E%3C/svg%3E'}">
     <div class="about-hero-text">
       <h1 class="about-name">Ashok Valakatla</h1>
       <p class="about-title">Senior DevOps & Platform Engineer</p>

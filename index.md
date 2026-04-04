@@ -19,7 +19,8 @@ title: Ashoklabs
     </div>
   </div>
   <div class="home-hero__photo-wrap">
-    <img class="home-hero__photo" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="140" height="140" loading="eager">
+    <img class="home-hero__photo" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" width="140" height="140" loading="eager"
+         onerror="if(this.src!='{{ site.author.avatar_fallback }}'){this.src='{{ site.author.avatar_fallback }}'}else{this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'140\' height=\'140\'%3E%3Crect width=\'140\' height=\'140\' fill=\'%23157878\' rx=\'70\'/%3E%3Ctext x=\'70\' y=\'95\' text-anchor=\'middle\' fill=\'white\' font-size=\'52\' font-family=\'system-ui,sans-serif\' font-weight=\'700\'%3EAV%3C/text%3E%3C/svg%3E'}">
   </div>
 </div>
 
