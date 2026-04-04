@@ -15,7 +15,7 @@ description: The Anthropic CLI source code leak wasn't a cyberattack — it was 
 
 ## Introduction
 
-In early 2025, Anthropic accidentally leaked 500,000+ lines of Claude Code source code — not through a cyberattack, not through a breach, but through a misconfigured release pipeline. A source map file was included in a production npm package. That source map pointed to a publicly accessible cloud storage bucket. The full source was downloadable by anyone. By the time it was noticed, the internet had already mirrored it everywhere.
+In early 2026, Anthropic accidentally leaked 500,000+ lines of Claude Code source code — not through a cyberattack, not through a breach, but through a misconfigured release pipeline. A source map file was included in a production npm package. That source map pointed to a publicly accessible cloud storage bucket. The full source was downloadable by anyone. By the time it was noticed, the internet had already mirrored it everywhere.
 
 The irony is sharp: a company building one of the most capable AI systems in the world, shipping a product with sophisticated security features, got burned by a missing line in `.npmignore`.
 
