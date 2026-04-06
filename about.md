@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Ashok Valakatla
-description: Senior DevOps & Platform Engineer · 10 years building and operating cloud-native infrastructure
+title: "Ashok Valakatla | Senior DevOps & Platform Engineer"
+description: "Senior DevOps & Platform Engineer with 10 years on Azure & AWS. I write weekly about Kubernetes, Terraform, GitOps, and platform engineering."
 hide_hero: true
 ---
 
@@ -13,7 +13,7 @@ hide_hero: true
     <div class="about-hero-text">
       <h1 class="about-name">Ashok Valakatla</h1>
       <p class="about-title">Senior DevOps & Platform Engineer</p>
-      <p class="about-summary">10 years of experience designing and operating production-grade infrastructure across Azure and AWS. Focused on CI/CD automation, Kubernetes platform engineering, observability, and Infrastructure as Code.</p>
+      <p class="about-summary">10 years designing and operating production-grade cloud infrastructure on Azure and AWS. I specialize in Kubernetes platform engineering, Terraform IaC, GitOps with ArgoCD, CI/CD automation, and full-stack observability — building the internal platforms that let engineering teams ship faster without the ops overhead.</p>
       <a href="https://www.linkedin.com/in/ashokvalakatla" target="_blank" rel="noopener" class="about-linkedin">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:6px"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
         linkedin.com/in/ashokvalakatla
@@ -92,6 +92,18 @@ hide_hero: true
     </div>
   </div>
 
+  <div class="about-section">
+    <h2>What I Write About</h2>
+    <p>I publish weekly on the topics I work with every day in production environments:</p>
+    <div class="skill-tags">
+      <a class="skill-tag" href="/terraform/">Terraform</a>
+      <a class="skill-tag" href="/devops/">DevOps</a>
+      <a class="skill-tag" href="/gitops/">GitOps</a>
+      <a class="skill-tag" href="/docker/">Docker</a>
+      <a class="skill-tag" href="/platform-engineering/">Platform Engineering</a>
+    </div>
+  </div>
+
   <div class="about-section about-cols">
     <div>
       <h2>Education</h2>
@@ -111,3 +123,16 @@ hide_hero: true
   </div>
 
 </div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Ashok Valakatla",
+  "jobTitle": "Senior DevOps & Platform Engineer",
+  "url": "https://ashoklabs.com/about",
+  "sameAs": ["https://www.linkedin.com/in/ashokvalakatla"],
+  "knowsAbout": ["Kubernetes", "Terraform", "GitOps", "ArgoCD", "Docker", "Platform Engineering", "Azure", "AWS", "CI/CD", "Observability", "Infrastructure as Code"],
+  "description": "Senior DevOps & Platform Engineer with 10 years designing and operating production-grade cloud infrastructure on Azure and AWS."
+}
+</script>
