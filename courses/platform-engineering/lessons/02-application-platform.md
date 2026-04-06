@@ -17,7 +17,7 @@ video_id: dQw4w9WgXcQ
 prev_lesson: /courses/platform-engineering/lessons/01-engineering-foundations/
 prev_lesson_title: Engineering Foundations
 next_lesson: /courses/platform-engineering/lessons/03-containerisation/
-next_lesson_title: Containerisation
+next_lesson_title: "Containerisation"
 ---
 
 ## What You Will Learn
