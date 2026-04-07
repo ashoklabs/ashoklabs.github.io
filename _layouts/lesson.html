@@ -29,32 +29,47 @@ layout: default
       </div>
     </div>
 
-    <div class="sidebar-section-label">Course Lessons</div>
+    <div class="sidebar-section-label">Course Content</div>
 
     <nav class="sidebar-nav" aria-label="Course lessons">
-      {% assign sidebar_sections = course_lessons | group_by: "section_number" %}
-      {% assign current_section_name = "" %}
-      {% for lesson in course_lessons %}
-        {% unless lesson.url contains "index" %}
-          {% if lesson.section_title and lesson.section_title != current_section_name %}
-            {% assign current_section_name = lesson.section_title %}
-            <div class="sidebar-section-hdr">{{ lesson.section_title }}</div>
-          {% endif %}
-          <a href="{{ lesson.url | relative_url }}"
-             class="sidebar-lesson {% if lesson.url == page.url %}sidebar-lesson--active{% endif %}"
-             data-lesson-num="{{ lesson.lesson_number }}">
-            <span class="sidebar-lesson-indicator" data-lesson="{{ lesson.lesson_number }}">
-              <span class="sidebar-lesson-num-txt">{{ lesson.lesson_number | prepend: "00" | slice: -2, 2 }}</span>
-              <svg class="sidebar-lesson-done-icon" width="11" height="11" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
-            </span>
-            <span class="sidebar-lesson-title">{{ lesson.title }}</span>
-            {% if lesson.url == page.url %}
-            <span class="sidebar-active-dot" aria-hidden="true"></span>
-            {% endif %}
-          </a>
-        {% endunless %}
+      {% assign sidebar_section_groups = course_lessons | group_by: "section_number" | sort: "name" %}
+      {% for section_group in sidebar_section_groups %}
+        {% assign section_items = section_group.items | sort: "lesson_number" %}
+        {% assign section_has_active = false %}
+        {% for sli in section_items %}
+          {% if sli.url == page.url %}{% assign section_has_active = true %}{% endif %}
+        {% endfor %}
+        <div class="sidebar-section-group">
+          <button class="sidebar-section-toggle"
+                  aria-expanded="{{ section_has_active }}"
+                  type="button">
+            <svg class="sidebar-section-chevron" width="11" height="11" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+            </svg>
+            <span class="sidebar-section-name">{{ section_items.first.section_title | default: "Section" }}</span>
+            <span class="sidebar-section-count">{{ section_items | size }}</span>
+          </button>
+          <div class="sidebar-section-items{% unless section_has_active %} sidebar-section-items--collapsed{% endunless %}">
+            {% for lesson in section_items %}
+              {% unless lesson.url contains "index" %}
+              <a href="{{ lesson.url | relative_url }}"
+                 class="sidebar-lesson {% if lesson.url == page.url %}sidebar-lesson--active{% endif %}"
+                 data-lesson-num="{{ lesson.lesson_number }}">
+                <span class="sidebar-lesson-indicator" data-lesson="{{ lesson.lesson_number }}">
+                  <span class="sidebar-lesson-num-txt">{{ lesson.lesson_number | prepend: "00" | slice: -2, 2 }}</span>
+                  <svg class="sidebar-lesson-done-icon" width="11" height="11" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                  </svg>
+                </span>
+                <span class="sidebar-lesson-title">{{ lesson.title }}</span>
+                {% if lesson.url == page.url %}
+                <span class="sidebar-active-dot" aria-hidden="true"></span>
+                {% endif %}
+              </a>
+              {% endunless %}
+            {% endfor %}
+          </div>
+        </div>
       {% endfor %}
     </nav>
 
@@ -324,5 +339,15 @@ layout: default
       link.addEventListener('click', function () { sidebar.classList.remove('lesson-sidebar--open'); });
     });
   }
+
+  // Sidebar section collapse/expand
+  document.querySelectorAll('.sidebar-section-toggle').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var items = btn.nextElementSibling;
+      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      items.classList.toggle('sidebar-section-items--collapsed', isExpanded);
+    });
+  });
 })();
 </script>

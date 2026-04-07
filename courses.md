@@ -83,122 +83,256 @@ course_platform: true
 - Use AI tools to accelerate every part of the platform engineering workflow
 </section>
 
-<section class="course-section">
-<h2>Curriculum</h2>
-<div class="curriculum-grid">
-  <div class="curriculum-item">
-    <span class="week-badge">Week 1</span>
-    <div class="curriculum-info">
-      <strong>Engineering Foundations</strong>
-      <span>Linux, networking, DNS, HTTP, Git workflows</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 2</span>
-    <div class="curriculum-info">
-      <strong>Application Platform</strong>
-      <span>Microservices, API and worker services, databases</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 3</span>
-    <div class="curriculum-info">
-      <strong>Containerisation</strong>
-      <span>Docker, image optimisation, multi-stage builds</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 4</span>
-    <div class="curriculum-info">
-      <strong>CI/CD Engineering</strong>
-      <span>GitHub Actions, automated testing, artifact management</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 5</span>
-    <div class="curriculum-info">
-      <strong>Infrastructure as Code</strong>
-      <span>Terraform, modules, remote state, drift detection</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 6</span>
-    <div class="curriculum-info">
-      <strong>Kubernetes Fundamentals</strong>
-      <span>Pods, Deployments, Services, Ingress, autoscaling</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 7</span>
-    <div class="curriculum-info">
-      <strong>Kubernetes Advanced Platform</strong>
-      <span>Helm, KEDA, Knative, custom operators</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 8</span>
-    <div class="curriculum-info">
-      <strong>GitOps Platform</strong>
-      <span>Argo CD, deployment automation, reconciliation</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 9</span>
-    <div class="curriculum-info">
-      <strong>Platform Networking &amp; Service Mesh</strong>
-      <span>Istio, mTLS, traffic routing, service discovery</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 10</span>
-    <div class="curriculum-info">
-      <strong>Observability Platform</strong>
-      <span>Prometheus, Grafana, OpenTelemetry, SLO/SLI design</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 11</span>
-    <div class="curriculum-info">
-      <strong>Production Operations</strong>
-      <span>Incident response, RCA, postmortems, production debugging</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 12</span>
-    <div class="curriculum-info">
-      <strong>Internal Developer Platforms</strong>
-      <span>Backstage, golden paths, self-service infrastructure</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 13</span>
-    <div class="curriculum-info">
-      <strong>Security &amp; Compliance</strong>
-      <span>DevSecOps, secrets management, SOC2 basics</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 14</span>
-    <div class="curriculum-info">
-      <strong>FinOps &amp; Cost Optimisation</strong>
-      <span>Cloud cost management, resource optimisation</span>
-    </div>
-  </div>
-  <div class="curriculum-item">
-    <span class="week-badge">Week 15</span>
-    <div class="curriculum-info">
-      <strong>Chaos Engineering</strong>
-      <span>Fault injection, resilience testing, failure simulation</span>
-    </div>
-  </div>
-  <div class="curriculum-item curriculum-item--highlight">
-    <span class="week-badge week-badge--ai">Week 16</span>
-    <div class="curriculum-info">
-      <strong>AI-Powered Platform Engineering</strong>
-      <span>AI debugging, log analysis, infrastructure generation</span>
-    </div>
-  </div>
+<section class="course-section" id="curriculum">
+<h2>Course Content</h2>
+<div class="curr-summary-bar">
+  <span>16 lessons</span> &middot; <span>7 sections</span> &middot; <span>~16 weeks of content</span>
+  <button class="curr-expand-all-btn" type="button" data-state="collapsed">Expand all</button>
 </div>
+
+<div class="curr-accordion">
+
+  <div class="curr-section">
+    <button class="curr-section-hdr" aria-expanded="true" type="button">
+      <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      <span class="curr-section-title">Section 1 &mdash; Foundations</span>
+      <span class="curr-section-meta">2 lessons &middot; ~95 min</span>
+    </button>
+    <div class="curr-section-body">
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Engineering Foundations</span>
+          <span class="curr-lesson-desc-text">Linux internals, networking fundamentals, DNS resolution, HTTP, and production-grade Git workflows.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Linux</span><span class="curr-lesson-tag">Networking</span><span class="curr-lesson-tag">Git</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">45 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Application Platform</span>
+          <span class="curr-lesson-desc-text">Microservices, API and worker services, databases, and the platform–application contract.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Microservices</span><span class="curr-lesson-tag">Databases</span><span class="curr-lesson-tag">Architecture</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">50 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curr-section">
+    <button class="curr-section-hdr" aria-expanded="false" type="button">
+      <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      <span class="curr-section-title">Section 2 &mdash; Build &amp; Ship</span>
+      <span class="curr-section-meta">2 lessons &middot; ~90 min</span>
+    </button>
+    <div class="curr-section-body curr-section-body--collapsed">
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Containerisation</span>
+          <span class="curr-lesson-desc-text">Docker fundamentals, image optimisation, multi-stage builds, and container security best practices.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Docker</span><span class="curr-lesson-tag">Containers</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">50 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">CI/CD Engineering</span>
+          <span class="curr-lesson-desc-text">GitHub Actions pipelines, automated testing strategies, artifact management, and deployment gates.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">GitHub Actions</span><span class="curr-lesson-tag">CI/CD</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">55 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curr-section">
+    <button class="curr-section-hdr" aria-expanded="false" type="button">
+      <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      <span class="curr-section-title">Section 3 &mdash; Infrastructure &amp; Kubernetes</span>
+      <span class="curr-section-meta">2 lessons &middot; ~100 min</span>
+    </button>
+    <div class="curr-section-body curr-section-body--collapsed">
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Infrastructure as Code</span>
+          <span class="curr-lesson-desc-text">Terraform modules, remote state, workspaces, drift detection, and IaC testing patterns.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Terraform</span><span class="curr-lesson-tag">IaC</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">55 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Kubernetes Fundamentals</span>
+          <span class="curr-lesson-desc-text">Pods, Deployments, Services, Ingress controllers, HPA/VPA autoscaling, and namespace management.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Kubernetes</span><span class="curr-lesson-tag">K8s</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">60 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curr-section">
+    <button class="curr-section-hdr" aria-expanded="false" type="button">
+      <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      <span class="curr-section-title">Section 4 &mdash; Advanced Kubernetes &amp; GitOps</span>
+      <span class="curr-section-meta">3 lessons &middot; ~165 min</span>
+    </button>
+    <div class="curr-section-body curr-section-body--collapsed">
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Kubernetes Advanced Platform</span>
+          <span class="curr-lesson-desc-text">Helm chart authoring, KEDA event-driven autoscaling, Knative serverless, and custom operators.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Helm</span><span class="curr-lesson-tag">KEDA</span><span class="curr-lesson-tag">Operators</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">60 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">GitOps Platform</span>
+          <span class="curr-lesson-desc-text">Argo CD installation and configuration, app-of-apps pattern, deployment automation, and reconciliation loops.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">ArgoCD</span><span class="curr-lesson-tag">GitOps</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">55 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Platform Networking &amp; Service Mesh</span>
+          <span class="curr-lesson-desc-text">Istio architecture, mTLS between services, traffic routing, canary deployments, and service discovery.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Istio</span><span class="curr-lesson-tag">mTLS</span><span class="curr-lesson-tag">Service Mesh</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">60 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curr-section">
+    <button class="curr-section-hdr" aria-expanded="false" type="button">
+      <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      <span class="curr-section-title">Section 5 &mdash; Observability &amp; Reliability</span>
+      <span class="curr-section-meta">2 lessons &middot; ~110 min</span>
+    </button>
+    <div class="curr-section-body curr-section-body--collapsed">
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Observability Platform</span>
+          <span class="curr-lesson-desc-text">Prometheus + Grafana stack, OpenTelemetry instrumentation, distributed tracing, and SLO/SLI design.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Prometheus</span><span class="curr-lesson-tag">Grafana</span><span class="curr-lesson-tag">OpenTelemetry</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">60 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Production Operations</span>
+          <span class="curr-lesson-desc-text">Incident response playbooks, root cause analysis, blameless postmortems, and production debugging techniques.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Incidents</span><span class="curr-lesson-tag">On-Call</span><span class="curr-lesson-tag">RCA</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">55 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curr-section">
+    <button class="curr-section-hdr" aria-expanded="false" type="button">
+      <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      <span class="curr-section-title">Section 6 &mdash; Platform Capabilities &amp; Security</span>
+      <span class="curr-section-meta">3 lessons &middot; ~165 min</span>
+    </button>
+    <div class="curr-section-body curr-section-body--collapsed">
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Internal Developer Platforms</span>
+          <span class="curr-lesson-desc-text">Backstage portal setup, golden path templates, self-service infrastructure, and developer experience metrics.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Backstage</span><span class="curr-lesson-tag">IDP</span><span class="curr-lesson-tag">DX</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">60 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Security &amp; Compliance</span>
+          <span class="curr-lesson-desc-text">DevSecOps pipeline integration, secrets management with Vault, container scanning, and SOC2 control mapping.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">DevSecOps</span><span class="curr-lesson-tag">Vault</span><span class="curr-lesson-tag">SOC2</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">55 min</span>
+      </div>
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">FinOps &amp; Cost Optimisation</span>
+          <span class="curr-lesson-desc-text">Cloud cost visibility, rightsizing workloads, spot instance strategies, and building a FinOps culture.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">FinOps</span><span class="curr-lesson-tag">Cost</span><span class="curr-lesson-tag">Cloud</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">50 min</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="curr-section">
+    <button class="curr-section-hdr" aria-expanded="false" type="button">
+      <svg class="curr-section-chevron" width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+      <span class="curr-section-title">Section 7 &mdash; Advanced Topics &amp; AI</span>
+      <span class="curr-section-meta">2 lessons &middot; ~110 min</span>
+    </button>
+    <div class="curr-section-body curr-section-body--collapsed">
+      <div class="curr-lesson-row">
+        <span class="curr-lesson-icon"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">Chaos Engineering</span>
+          <span class="curr-lesson-desc-text">Fault injection with Chaos Monkey and LitmusChaos, game day exercises, and building resilience testing pipelines.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">Chaos</span><span class="curr-lesson-tag">Resilience</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">55 min</span>
+      </div>
+      <div class="curr-lesson-row curr-lesson-row--highlight">
+        <span class="curr-lesson-icon curr-lesson-icon--ai"><svg width="14" height="14" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/></svg></span>
+        <div class="curr-lesson-info">
+          <span class="curr-lesson-title-text">AI-Powered Platform Engineering</span>
+          <span class="curr-lesson-desc-text">Using AI to debug incidents, generate Terraform and Helm configs, analyse logs at scale, and automate runbooks.</span>
+          <div class="curr-lesson-tags"><span class="curr-lesson-tag">AI</span><span class="curr-lesson-tag">LLMs</span><span class="curr-lesson-tag">Automation</span></div>
+        </div>
+        <span class="curr-lesson-dur-text">60 min</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  document.querySelectorAll('.curr-section-hdr').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var body = btn.nextElementSibling;
+      var isExpanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isExpanded));
+      body.classList.toggle('curr-section-body--collapsed', isExpanded);
+    });
+  });
+  var expandBtn = document.querySelector('.curr-expand-all-btn');
+  if (expandBtn) {
+    expandBtn.addEventListener('click', function() {
+      var isCollapsed = this.dataset.state === 'collapsed';
+      document.querySelectorAll('.curr-section-hdr').forEach(function(btn) {
+        var body = btn.nextElementSibling;
+        btn.setAttribute('aria-expanded', String(isCollapsed));
+        body.classList.toggle('curr-section-body--collapsed', !isCollapsed);
+      });
+      this.dataset.state = isCollapsed ? 'expanded' : 'collapsed';
+      this.textContent = isCollapsed ? 'Collapse all' : 'Expand all';
+    });
+  }
+})();
+</script>
 </section>
 
 <section class="course-section">
