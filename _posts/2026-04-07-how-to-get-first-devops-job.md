@@ -2,7 +2,7 @@
 title: "How to Get Your First DevOps Job in 2026 (No Experience Required)"
 categories: [devops, career]
 date: 2026-04-07
-image: https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80
+image: https://i.imghippo.com/files/vkNQ3694QE.webp?w=600&q=80
 description: A no-nonsense roadmap for landing your first DevOps job — what to learn, what to build, and what hiring managers actually look for.
 ---
 
