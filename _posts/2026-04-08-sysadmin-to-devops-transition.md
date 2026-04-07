@@ -2,7 +2,7 @@
 title: "Sysadmin to DevOps Engineer: How to Make the Transition in 2026"
 categories: [devops, career]
 date: 2026-04-08
-image: https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=600&q=80
+image: https://i.imghippo.com/files/PAq3869Vfc.webp?w=600&q=80
 description: Already a sysadmin? You're closer to DevOps than you think. Here's what to add to your existing skills to make the transition.
 ---
 
