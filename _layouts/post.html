@@ -79,6 +79,29 @@ layout: default
   </div>
 
   <script>
+    // Hide SEO metadata lines that are written inline in post content
+    (function () {
+      var content = document.querySelector('.post-content');
+      if (!content) return;
+      var seoLabels = ['Primary keyword:', 'Secondary keywords:', 'Meta description:'];
+      var lastHidden = null;
+      content.querySelectorAll('p').forEach(function (p) {
+        var strong = p.querySelector('strong');
+        if (strong && seoLabels.indexOf(strong.textContent.trim()) !== -1) {
+          p.style.display = 'none';
+          lastHidden = p;
+        }
+      });
+      // Hide the duplicate H1 at the top of the content (title already shown in post header)
+      var firstH1 = content.querySelector('h1');
+      if (firstH1) firstH1.style.display = 'none';
+      // Hide the <hr> immediately following the last hidden keyword paragraph
+      if (lastHidden) {
+        var next = lastHidden.nextElementSibling;
+        if (next && next.tagName === 'HR') next.style.display = 'none';
+      }
+    })();
+
     // Native Share API
     const btnShare = document.getElementById('btn-share');
     btnShare.addEventListener('click', async () => {
