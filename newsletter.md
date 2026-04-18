@@ -5,6 +5,11 @@ description: Weekly insights on DevOps, platform engineering, and building relia
 hide_hero: true
 ---
 
+<script>
+  window.location.href = "https://newsletter.ashoklabs.com";
+</script>
+<meta http-equiv="refresh" content="0; url=https://newsletter.ashoklabs.com">
+
 <div class="newsletter-page">
 
   <div class="newsletter-hero">
