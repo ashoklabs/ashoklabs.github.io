@@ -38,7 +38,8 @@ hide_hero: true
       </div>
     </div>
 
-    <form class="newsletter-form" id="newsletter-form" action="https://newsletter.ashoklabs.com/create" method="POST" accept-charset="utf-8">
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+    <form class="newsletter-form" id="newsletter-form" action="https://newsletter.ashoklabs.com/create" method="POST" accept-charset="utf-8" target="hidden_iframe">
       <input type="hidden" name="subscribe_error_message" value="Oops, something went wrong.">
       <input type="hidden" name="subscribe_success_message" value="Subscribed!">
       <input type="hidden" name="ref" value="">
@@ -99,17 +100,9 @@ hide_hero: true
 
 <script>
 document.getElementById('newsletter-form').addEventListener('submit', function(e) {
-  e.preventDefault();
   var form = this;
-  var data = new FormData(form);
-  fetch(form.action, {
-    method: 'POST',
-    body: new URLSearchParams(data),
-    mode: 'no-cors',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-  }).catch(function() {});
   document.getElementById('nl-popup').classList.add('nl-popup--visible');
-  form.reset();
+  setTimeout(function() { form.reset(); }, 500);
 });
 document.getElementById('nl-popup-close').addEventListener('click', function() {
   document.getElementById('nl-popup').classList.remove('nl-popup--visible');

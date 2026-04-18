@@ -15,30 +15,11 @@ course_platform: true
   <p class="course-waitlist__badge">Coming Soon — Early Access</p>
   <h2 class="course-waitlist__heading">Join the waitlist &amp; save 50%</h2>
   <p class="course-waitlist__sub">Get notified the moment the course launches and lock in the early-access price of <strong>₹5,000</strong> (regular ₹10,000). <span class="course-waitlist__count">150+ engineers already on the list.</span></p>
-  <form class="course-waitlist__form" id="waitlist-form" action="https://newsletter.ashoklabs.com/create" method="POST" accept-charset="utf-8">
-    <input type="hidden" name="is_js_enabled" value="true">
-    <input type="hidden" name="sent_from_orchid" value="true">
-    <input type="hidden" name="double_opt" value="false">
-    <input type="hidden" name="fallback_path" value="/">
-    <input type="hidden" name="ref" value="course-waitlist">
+  <div class="course-waitlist__form">
     <div class="course-waitlist__row">
-      <input type="email" name="email" placeholder="your@email.com" required aria-label="Email address" class="course-waitlist__input">
-      <button type="submit" class="course-waitlist__btn">Join Waitlist</button>
+      <a href="https://forms.gle/uDvwsGf1WQGfh6rv7" target="_blank" rel="noopener" class="course-waitlist__btn" style="text-decoration: none; display: inline-block;">Join Waitlist</a>
     </div>
-    <p class="course-waitlist__note">No spam. Unsubscribe anytime.</p>
-  </form>
-  <p class="course-waitlist__thanks" id="waitlist-thanks" style="display:none">
-    <svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-    You're on the list! We'll email you when the course launches.
-  </p>
-  <script>
-  document.getElementById('waitlist-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    fetch(this.action, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).catch(function(){});
-    this.style.display = 'none';
-    document.getElementById('waitlist-thanks').style.display = 'block';
-  });
-  </script>
+  </div>
 </div>
 
 <section class="course-section">
