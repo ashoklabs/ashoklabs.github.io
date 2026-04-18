@@ -130,8 +130,9 @@ layout: default
       cta.className = 'inline-subscribe';
       cta.id = 'inline-subscribe-block';
       cta.innerHTML =
+        '<iframe name="hidden_inline_iframe" id="hidden_inline_iframe" style="display:none;"></iframe>' +
         '<p class="inline-subscribe__text">Enjoying this? Get practical DevOps guides like this — weekly, free.</p>' +
-        '<form class="inline-subscribe__form" id="inline-sub-form" action="https://newsletter.ashoklabs.com/create" method="POST">' +
+        '<form class="inline-subscribe__form" id="inline-sub-form" action="https://newsletter.ashoklabs.com/create" method="POST" target="hidden_inline_iframe">' +
           '<input type="hidden" name="is_js_enabled" value="true">' +
           '<input type="hidden" name="sent_from_orchid" value="true">' +
           '<input type="hidden" name="double_opt" value="false">' +
@@ -142,9 +143,9 @@ layout: default
         '</form>';
       headings[1].insertAdjacentElement('afterend', cta);
       document.getElementById('inline-sub-form').addEventListener('submit', function (e) {
-        e.preventDefault();
-        fetch(this.action, { method: 'POST', body: new URLSearchParams(new FormData(this)), mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }).catch(function () {});
-        document.getElementById('inline-subscribe-block').innerHTML = '<p class="inline-subscribe__done"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>You\'re in! Check your inbox.</p>';
+        setTimeout(function() {
+          document.getElementById('inline-subscribe-block').innerHTML = '<p class="inline-subscribe__done"><svg width="16" height="16" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true" style="vertical-align:-3px;margin-right:5px"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>You\'re in! Check your inbox.</p>';
+        }, 500);
       });
     })();
   </script>
