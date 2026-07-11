@@ -2,6 +2,7 @@
 layout: default
 ---
 
+{% if site.show_courses %}
 <header class="course-hero" role="banner">
   <div class="course-hero-inner">
     <p class="course-hero-eyebrow">Online Course</p>
@@ -49,4 +50,8 @@ layout: default
 
 {% if page.price %}
 {% include razorpay-checkout.html %}
+{% endif %}
+{% else %}
+<script>window.location.href = "/";</script>
+<noscript><meta http-equiv="refresh" content="0; url=/"></noscript>
 {% endif %}

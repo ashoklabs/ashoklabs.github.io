@@ -3,6 +3,7 @@ title: Ashoklabs
 description: Notes on DevOps, platform engineering, and building reliable infrastructure.
 url: "https://ashoklabs.com"
 baseurl: ""
+show_courses: false
 author:
   name: Ashok Valakatla
   title: Senior DevOps & Platform Engineer

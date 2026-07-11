@@ -11,6 +11,7 @@ layout: default
 
 {% assign total_lessons = course_lessons | size %}
 
+{% if site.show_courses %}
 <div class="dashboard-page">
 
   <!-- ── Hero / Welcome ──────────────────────────────────────── -->
@@ -311,3 +312,7 @@ layout: default
   loadProgress().then(updateUI);
 })();
 </script>
+{% else %}
+<script>window.location.href = "/";</script>
+<noscript><meta http-equiv="refresh" content="0; url=/"></noscript>
+{% endif %}

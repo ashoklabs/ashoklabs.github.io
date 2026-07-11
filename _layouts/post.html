@@ -29,6 +29,7 @@ layout: default
     </button>
   </div>
 
+  {% if site.show_courses %}
   <div class="post-course-cta">
     <div class="post-course-cta__icon">🎓</div>
     <div class="post-course-cta__body">
@@ -38,6 +39,7 @@ layout: default
     </div>
     <a href="{{ '/courses/platform-engineering' | relative_url }}" class="post-course-cta__link">View Course &rarr;</a>
   </div>
+  {% endif %}
 
   <div class="author-card">
     <img class="author-card__avatar" src="{{ site.author.avatar }}" alt="{{ site.author.name }}" loading="lazy" width="72" height="72"

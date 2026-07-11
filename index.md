@@ -15,7 +15,7 @@ title: Ashoklabs
     </div>
     <div class="home-hero__actions">
       <a href="{{ '/newsletter' | relative_url }}" class="home-hero__cta-primary">Get the Newsletter</a>
-      <a href="{{ '/courses' | relative_url }}" class="home-hero__cta-secondary">See the Bootcamp</a>
+      {% if site.show_courses %}<a href="{{ '/courses' | relative_url }}" class="home-hero__cta-secondary">See the Bootcamp</a>{% endif %}
     </div>
   </div>
   <div class="home-hero__photo-wrap">
@@ -52,9 +52,11 @@ title: Ashoklabs
   </div>
 </div>
 
+{% if site.show_courses %}
 <div class="home-course-card">
   <div class="home-course-card__badge">New Course</div>
   <h3 class="home-course-card__title">AI-Augmented Platform Engineering Bootcamp</h3>
   <p class="home-course-card__desc">16 weeks of hands-on Terraform, Kubernetes, GitOps, and AI-assisted operations. Build a complete internal developer platform. Early access — 50% off launch price.</p>
   <a href="{{ '/courses' | relative_url }}" class="home-course-card__link">See the Bootcamp &rarr;</a>
 </div>
+{% endif %}
