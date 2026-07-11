@@ -243,6 +243,62 @@
   font-size: 0.85em;
 }
 
+/* ── Syntax highlighting ────────────────────────────────────────
+   A calm, high-contrast palette keeps YAML manifests readable: keys are
+   blue, values are green, and comments recede without disappearing. */
+.post-content .highlight,
+.lesson-content .highlight {
+  background: #111827;
+  border: 1px solid #263449;
+  border-radius: 8px;
+  color: #e5edf6;
+  overflow-x: auto;
+}
+
+.post-content .highlight pre,
+.lesson-content .highlight pre {
+  background: transparent;
+  box-shadow: none;
+  margin: 0;
+}
+
+.post-content .highlight .na,
+.lesson-content .highlight .na { color: #7dd3fc; } /* YAML keys */
+
+.post-content .highlight .s,
+.post-content .highlight .s1,
+.post-content .highlight .s2,
+.post-content .highlight .sx,
+.lesson-content .highlight .s,
+.lesson-content .highlight .s1,
+.lesson-content .highlight .s2,
+.lesson-content .highlight .sx { color: #a7f3d0; } /* strings */
+
+.post-content .highlight .mi,
+.post-content .highlight .mf,
+.post-content .highlight .mb,
+.post-content .highlight .mh,
+.post-content .highlight .il,
+.post-content .highlight .kc,
+.post-content .highlight .kp,
+.lesson-content .highlight .mi,
+.lesson-content .highlight .mf,
+.lesson-content .highlight .mb,
+.lesson-content .highlight .mh,
+.lesson-content .highlight .il,
+.lesson-content .highlight .kc,
+.lesson-content .highlight .kp { color: #fbbf24; } /* numbers / booleans */
+
+.post-content .highlight .c,
+.post-content .highlight .c1,
+.post-content .highlight .cm,
+.lesson-content .highlight .c,
+.lesson-content .highlight .c1,
+.lesson-content .highlight .cm { color: #94a3b8; font-style: italic; } /* comments */
+
+.post-content .highlight .p,
+.lesson-content .highlight .p { color: #cbd5e1; } /* YAML punctuation */
+
 .post-content table {
   display: block;
   overflow-x: auto;
