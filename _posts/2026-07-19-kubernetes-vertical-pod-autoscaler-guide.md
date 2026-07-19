@@ -2,7 +2,7 @@
 title: "Kubernetes Vertical Pod Autoscaler: When to Use VPA, HPA, or Both"
 categories: [kubernetes, devops]
 date: 2026-07-19
-image: https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&q=80
+image: https://i.imghippo.com/files/EqV9778lDk.png?w=1200&q=80
 description: Learn how Kubernetes VPA right-sizes CPU and memory, when HPA is the better choice, and how to safely combine them without creating a scaling feedback loop.
 ---
 
